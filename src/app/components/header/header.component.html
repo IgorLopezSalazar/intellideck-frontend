@@ -1,0 +1,41 @@
+<header>
+  <mat-toolbar class="nav-bar">
+    <img src="../../../assets/IntelliDeck_Logo.png" routerLink="/" alt="IntelliDeck logo">
+    <button mat-button class="nav-bar__font-size nav-bar__button" routerLink="/explore">
+      <mat-icon class="big-icon">home</mat-icon>
+      Inicio
+    </button>
+    <button mat-button class="nav-bar__font-size nav-bar__button" routerLink="/followed">
+      <mat-icon class="big-icon">search</mat-icon>
+      Explorar
+    </button>
+    <button mat-button class="nav-bar__font-size nav-bar__button" routerLink="/">
+      <mat-icon class="big-icon">view_carousel</mat-icon>
+      Seguidos
+    </button>
+    <button mat-button class="nav-bar__font-size nav-bar__button" routerLink="/">
+      <mat-icon class="big-icon">dashboard_customize</mat-icon>
+      Mis mazos
+    </button>
+
+    <span class="spacer"></span>
+
+    <div class="search-bar">
+
+      <button mat-icon-button class="search-bar__button">
+        <mat-icon>search</mat-icon>
+      </button>
+      <input class="nav-bar__font-size" type="search" placeholder="Buscar">
+    </div>
+
+    <span class="spacer"></span>
+
+    <button mat-flat-button class="primary-button nav-bar__font-size">
+      Crear mazo
+    </button>
+    <button mat-button class="profile-button nav-bar__font-size nav-bar__button" routerLink="/profile">
+      <mat-icon class="big-icon">account_circle</mat-icon>
+      Perfil
+    </button>
+  </mat-toolbar>
+</header>
