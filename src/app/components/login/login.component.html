@@ -4,27 +4,29 @@
       <div class="container__login__avatar">
         <img src="../../../assets/IntelliDeck_Logo.png" alt="IntelliDeck logo">
       </div>
-      <!--        <form (submit)="login(userData)">-->
-      <form>
+      <form #loginForm="ngForm" (ngSubmit)="login(loginForm)">
         <div class="container__login__email form-field">
-          <label>Email : </label>
+          <label>Nombre de usuario : </label>
           <mat-form-field appearance="outline">
-            <input matInput type="text" name="email" class="form-control" placeholder="Email" >
+            <input matInput ngModel required type="text" name="username" class="form-control" placeholder="Nombre de usuario" >
           </mat-form-field>
         </div>
 
         <div class="container__login__password form-field">
-          <label >Contraseña : </label>
+          <label>Contraseña : </label>
           <mat-form-field appearance="outline">
-            <input matInput type="password" name="password" class="form-control" placeholder="Contraseña">
+            <input matInput ngModel required type="password" name="password" class="form-control" placeholder="Contraseña">
           </mat-form-field>
           <div class="text-right forget-pass">
             <a routerLink="/forget-password">¿Has olvidado la contraseña?</a>
           </div>
         </div>
 
+        <mat-error *ngIf="showErrorMessage" class="error-message" >
+          {{errorMessageText}}
+        </mat-error>
+
         <div class="container__login__submit">
-<!--          <input type="submit" class="btn btn-my" value="Login">-->
           <button mat-flat-button class="login-button">
             Acceder
           </button>

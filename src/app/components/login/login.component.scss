@@ -17,6 +17,7 @@
     padding: 2em;
     margin-top: 35px;
     box-shadow: 0 0 10px 6px #c3c3c3;
+    border-radius: 0.5em;
 
     &__avatar {
       text-align: center;
@@ -31,6 +32,14 @@
     &__submit {
       display: flex;
       justify-content: center;
+    }
+
+    .error-message {
+      margin: 1em 0;
+      padding: 1em;
+      background: colors.$light-red;
+      color: colors.$white-smoke;
+      border-radius: 0.5em;
     }
   }
 
