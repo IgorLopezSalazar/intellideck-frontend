@@ -3,6 +3,7 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {catchError, map, Observable, tap} from "rxjs";
 import {environment} from '../../environments/environments';
 import {error} from "@angular/compiler-cli/src/transformers/util";
+import {User} from "../models/user.model";
 
 @Injectable({
   providedIn: 'root'
@@ -25,23 +26,15 @@ export class AuthService {
     return this.http.post(this.END_POINT_LOGIN, userCredentials, options);
   }
 
-  register(name: string, username: string, email: string, password: string, role: string): any {
+  register(user: User): Observable<any> {
     const options: any = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json'
       }),
       observe: 'response'
     };
-    const body: any = {
-
-    };
-    this.http.post(this.END_POINT_LOGIN, body, options)
-      .subscribe(response => {
-        console.log(response)
-      },
-      error => {
-        console.log(error);
-      });
+    console.log(user.toJson());
+    return this.http.post(this.END_POINT, user.toJson(), options);
   }
   setToken(token: string) {
     sessionStorage.setItem('token', token);
