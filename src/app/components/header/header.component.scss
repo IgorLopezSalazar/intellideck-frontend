@@ -8,6 +8,9 @@
   background-color: colors.$white-smoke;
   box-shadow: 0 0 10px 3px colors.$light-grey;
   gap: 0.8em;
+  position: fixed;
+  top: 0;
+  z-index: 1000;
 
   &__font-size {
     font-size: 1rem;

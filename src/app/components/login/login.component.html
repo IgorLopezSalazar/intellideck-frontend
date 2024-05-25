@@ -5,15 +5,15 @@
         <img src="../../../assets/IntelliDeck_Logo.png" alt="IntelliDeck logo">
       </div>
       <form #loginForm="ngForm" (ngSubmit)="login(loginForm)">
-        <div class="container__login__email form-field">
-          <label>Nombre de usuario : </label>
+        <div class="form-field">
+          <label>Nombre de usuario :</label>
           <mat-form-field appearance="outline">
             <input matInput ngModel required type="text" name="username" class="form-control" placeholder="Nombre de usuario" >
           </mat-form-field>
         </div>
 
-        <div class="container__login__password form-field">
-          <label>Contraseña : </label>
+        <div class="form-field">
+          <label>Contraseña :</label>
           <mat-form-field appearance="outline">
             <input matInput ngModel required type="password" name="password" class="form-control" placeholder="Contraseña">
           </mat-form-field>

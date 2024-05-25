@@ -1,6 +1,4 @@
-<main class="main">
-  <app-header *ngIf="!isAuthPage()"></app-header>
-
+<app-header *ngIf="!isAuthPage()"></app-header>
+<main class="main" [ngClass]="{ 'headerPadding': !isAuthPage() }">
+  <router-outlet />
 </main>
-
-<router-outlet />
