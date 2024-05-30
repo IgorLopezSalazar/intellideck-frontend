@@ -1,0 +1,96 @@
+@use "../../../colors";
+
+.container__creation {
+
+  &__row {
+    display: grid;
+    grid-template-columns: 2fr 2fr 1fr;
+    gap: 3em;
+
+    &__first-column {
+      width: 100%;
+
+      .title_row {
+        height: 50%;
+
+        .form-field {
+          width: 100%;
+        }
+      }
+
+      .topic_tags_row {
+        display: flex;
+        gap: 1em;
+        height: 50%;
+
+        .form-field {
+          width: 50%;
+        }
+      }
+    }
+
+    &__description {
+
+      .form-field {
+        width: 100%;
+        height: 100%;
+
+        .text-area-input {
+          width: 100%;
+          height: 100%;
+        }
+      }
+    }
+
+    &__third-column {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+
+      .file-drop-zone {
+        background-color: colors.$white-smoke;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        border-radius: 0.5em;
+        padding: 1em;
+        border: 2px solid colors.$dark-grey;
+        cursor: pointer;
+        height: 50%;
+
+        .deck-image-name {
+          height: 0.8em;
+          padding-bottom: 0.4em;
+        }
+
+        label {
+          text-align: center;
+          cursor: pointer;
+        }
+
+        .big-icon {
+          color: colors.$light-black;
+          font-size: 40px;
+          height: 40px;
+          width: 40px;
+          line-height: 40px;
+          padding-bottom: 0.7em;
+        }
+      }
+    }
+
+    .primary-button {
+      background-color: colors.$primary-purple;
+      color: colors.$white-smoke;
+
+      &:hover {
+        background-color: colors.$dark-purple;
+      }
+    }
+  }
+}
+
+.form-field {
+  --mat-form-field-container-vertical-padding: 0.7em;
+}

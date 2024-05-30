@@ -10,7 +10,7 @@ import {User} from "../models/user.model";
 })
 export class AuthService {
 
-  private END_POINT = environment.API_URL + '/users';
+  private END_POINT_USERS = environment.API_URL + '/users';
   private END_POINT_LOGIN = environment.API_URL + '/login';
 
   constructor(private http: HttpClient) { }
@@ -34,7 +34,7 @@ export class AuthService {
       observe: 'response'
     };
     console.log(user.toJson());
-    return this.http.post(this.END_POINT, user.toJson(), options);
+    return this.http.post(this.END_POINT_USERS, user.toJson(), options);
   }
   setToken(token: string) {
     sessionStorage.setItem('token', token);
@@ -55,7 +55,7 @@ export class AuthService {
   //
   // login1(mobile: number, password: string): Observable<User> {
   //   return this.httpService.authBasic(mobile, password)
-  //     .post(AuthService.END_POINT)
+  //     .post(AuthService.END_POINT_USERS)
   //     .pipe(
   //       map(jsonToken => {
   //         const jwtHelper = new JwtHelperService();

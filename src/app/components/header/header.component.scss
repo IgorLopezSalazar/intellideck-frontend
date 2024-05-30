@@ -6,7 +6,7 @@
 
 .nav-bar {
   background-color: colors.$white-smoke;
-  box-shadow: 0 0 10px 3px colors.$light-grey;
+  box-shadow: 0 0 10px 3px colors.$grey;
   gap: 0.8em;
   position: fixed;
   top: 0;
@@ -27,7 +27,7 @@
   .search-bar {
     padding: 0 8px;
     background-color: colors.$white;
-    border: 3px solid colors.$light-grey;
+    border: 3px solid colors.$grey;
     border-radius: 32px;
     display: flex;
     align-items: center;
