@@ -1,0 +1,42 @@
+<div class="background">
+  <div class="container">
+    <div class="container__login">
+      <div class="container__login__avatar">
+        <img src="../../../assets/IntelliDeck_Logo.png" alt="IntelliDeck logo">
+      </div>
+      <form #loginForm="ngForm" (ngSubmit)="login(loginForm)">
+        <div class="form-field">
+          <label>Nombre de usuario :</label>
+          <mat-form-field appearance="outline">
+            <input matInput ngModel required type="text" name="username" class="form-control" placeholder="Nombre de usuario" >
+          </mat-form-field>
+        </div>
+
+        <div class="form-field">
+          <label>Contraseña :</label>
+          <mat-form-field appearance="outline">
+            <input matInput ngModel required type="password" name="password" class="form-control" placeholder="Contraseña">
+          </mat-form-field>
+          <div class="text-right forget-pass">
+            <a routerLink="/forget-password">¿Has olvidado la contraseña?</a>
+          </div>
+        </div>
+
+        <mat-error *ngIf="showErrorMessage" class="error-message" >
+          {{errorMessageText}}
+        </mat-error>
+
+        <div class="container__login__submit">
+          <button mat-flat-button class="login-button">
+            Acceder
+          </button>
+        </div>
+      </form>
+      <div class="text-center sign-up">
+        ¿Eres nuevo en IntelliDeck? <br/>
+        <a routerLink="/sign-up">Regístrate aquí.</a>
+      </div>
+    </div>
+  </div>
+</div>
+

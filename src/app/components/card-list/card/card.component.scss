@@ -1,0 +1,75 @@
+@use "../../../../colors";
+
+$card-image-heigth: 13em;
+
+
+.card {
+  background-color: colors.$white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px 0 colors.$grey;
+  word-wrap: break-word;
+
+  img {
+    width: 100%;
+    height: $card-image-heigth;
+    display: block;
+    margin: 0;
+    object-fit: cover;
+  }
+
+  .card__info {
+    height: 100%;
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+
+    &__question {
+      height: 100%;
+
+      p {
+        font-weight: bold;
+      }
+
+      img {
+        border-top-left-radius: 8px;
+        border-top-right-radius: 8px;
+      }
+    }
+
+    .without-img {
+      height: 100%;
+    }
+
+    &__answer {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+
+      img {
+        border-bottom-left-radius: 8px;
+        border-bottom-right-radius: 8px;
+      }
+    }
+
+    p {
+      font-size: 1rem;
+      padding: 0.5em;
+      margin: 0;
+    }
+  }
+
+  .card-text {
+    margin: 0 2em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+
+    &__question {
+      border-bottom: 3px solid colors.$primary-purple;
+    }
+
+    &__answer {
+      height: 100%;
+    }
+  }
+}

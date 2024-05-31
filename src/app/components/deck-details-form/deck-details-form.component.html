@@ -1,0 +1,75 @@
+<form #deckForm="ngForm" (ngSubmit)="createDeck(deckForm)">
+  <div class="container__creation">
+    <div>
+      <h2>Crear mazo</h2>
+    </div>
+    <div class="container__creation__row">
+      <div class="container__creation__row__first-column">
+        <div class="title_row">
+          <mat-form-field appearance="outline" subscriptSizing="dynamic" class="form-field">
+            <label>Titulo*</label>
+            <input matInput ngModel required type="text" name="title" class="form-control" placeholder="Añade un título que describa el mazo" >
+          </mat-form-field>
+          <mat-error *ngIf="fieldMissing">
+            El titulo del y/o el tema del mazo son necesarios
+          </mat-error>
+        </div>
+
+        <div class="description">
+          <mat-form-field appearance="outline" subscriptSizing="dynamic" class="form-field">
+            <label>Descripción</label>
+            <textarea matInput ngModel cdkTextareaAutosize cdkAutosizeMinRows="1" cdkAutosizeMaxRows="1" type="text" name="description" class="text-area-input" placeholder="Nombre" ></textarea>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="container__creation__row__topic_tags">
+        <mat-form-field appearance="outline" subscriptSizing="dynamic" class="form-field" >
+          <label>Tema*</label>
+          <mat-select name="topic" [(ngModel)]="selectedTopicIndex" required placeholder="Elige el tema del mazo">
+            <mat-option *ngFor="let topic of topicList; let i = index" [value]="i">
+              {{ topic.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" subscriptSizing="dynamic" class="form-field">
+          <label>Etiquetas</label>
+          <mat-chip-grid #chipSet aria-label="Tag selection">
+            <mat-chip-row *ngFor="let tag of deckTags; let i = index" [value]="i" (removed)="removeTag(tag)" class="tag-chip">
+              {{tag.name}}
+              <button matChipRemove class="tag-chip__remove">
+                <mat-icon>cancel</mat-icon>
+              </button>
+            </mat-chip-row>
+
+            <input #tagInput ngModel type="text" name="tags" class="form-control" placeholder="Añade etiquetas que describan el mazo"
+                   [(ngModel)]="currentTag"
+                   (ngModelChange)="filter(currentTag)"
+                   [matChipInputFor]="chipSet" [matAutocomplete]="auto"
+                   [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                   [matChipInputAddOnBlur]=false
+                   (matChipInputTokenEnd)="addTag($event)">
+            <mat-autocomplete #auto="matAutocomplete" (optionSelected)="autoCompleteTagSelected($event)">
+              <mat-option *ngFor="let tag of filteredTags" [value]="tag.name">
+                {{tag.name}}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-chip-grid>
+        </mat-form-field>
+      </div>
+      <div class="container__creation__row__third-column">
+        <div class="file-drop-zone" (dragover)="onDragOver($event)" (dragleave)="onDragLeave($event)" (drop)="onDrop($event)" (click)="triggerFileInput()">
+          <input type="file" [multiple]="false" #fileDropRef id="fileDropRef" style="display:none" (change)="onFileChange($event)" [accept]="allowedExtensions.join(',')"/>
+          <mat-icon class="big-icon">upload</mat-icon>
+          <label class="deck-image-name">{{fileDropText}}</label>
+          <label>Arrastra y suelta o elige la imagen para la portada del mazo</label>
+        </div>
+
+        <button mat-flat-button class="primary-button">
+          Crear mazo
+        </button>
+      </div>
+
+    </div>
+  </div>
+</form>
