@@ -1,5 +1,5 @@
-import {Component, ElementRef, HostListener, ViewChild} from '@angular/core';
-import {FormsModule, NgForm} from "@angular/forms";
+import {Component} from '@angular/core';
+import {FormsModule} from "@angular/forms";
 import {MatError, MatFormField, MatLabel} from "@angular/material/form-field";
 import {MatInput} from "@angular/material/input";
 import {CdkTextareaAutosize} from "@angular/cdk/text-field";
@@ -10,11 +10,7 @@ import {Deck} from "../../models/deck.model";
 import {NgIf} from "@angular/common";
 import {DeckDetailsFormComponent} from "../deck-details-form/deck-details-form.component";
 import {CardListComponent} from "../card-list/card-list.component";
-import {classNames} from "@angular/cdk/schematics";
 import {TagService} from "../../core/tag.service";
-import {Tag} from "../../models/tag.model";
-import {forkJoin} from "rxjs";
-import {createTemplateMiddle} from "@angular/compiler-cli/src/ngtsc/translator";
 import {ImagesService} from "../../core/images.service";
 
 @Component({
