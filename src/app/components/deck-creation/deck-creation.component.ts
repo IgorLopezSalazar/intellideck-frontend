@@ -10,6 +10,12 @@ import {Deck} from "../../models/deck.model";
 import {NgIf} from "@angular/common";
 import {DeckDetailsFormComponent} from "../deck-details-form/deck-details-form.component";
 import {CardListComponent} from "../card-list/card-list.component";
+import {classNames} from "@angular/cdk/schematics";
+import {TagService} from "../../core/tag.service";
+import {Tag} from "../../models/tag.model";
+import {forkJoin} from "rxjs";
+import {createTemplateMiddle} from "@angular/compiler-cli/src/ngtsc/translator";
+import {ImagesService} from "../../core/images.service";
 
 @Component({
   selector: 'app-deck-creation',
@@ -32,7 +38,57 @@ import {CardListComponent} from "../card-list/card-list.component";
 })
 export class DeckCreationComponent {
 
+  receivedDeck?: Deck;
 
+  constructor(private deckService: DeckService, private tagService: TagService, private imagesService: ImagesService) {
+  }
 
+  handleDeckCreation(data: any) {
+    this.receivedDeck = data;
 
+    if (this.receivedDeck == undefined) {
+      return;
+    }
+
+    const getTagsIdPromise = this.getDeckTagsId(this.receivedDeck);
+    let secondPromise;
+    if (this.receivedDeck.image){
+      secondPromise = this.saveDeckImage(this.receivedDeck);
+    }
+
+    Promise.all([getTagsIdPromise, secondPromise]).then(
+      ([deckWithTagsId, imagePath]) => {
+        if (imagePath) {
+          deckWithTagsId.imagePath = imagePath.body;
+        }
+        this.createDeck(deckWithTagsId);
+      }
+    );
+  }
+
+  createDeck(deck: Deck) {
+    this.deckService.createDeck(deck).subscribe(
+      response => {
+        console.log(response);
+      },
+      error => {
+        console.log(error);
+      }
+    );
+  }
+
+  async getDeckTagsId(deck: Deck) {
+    await Promise.all(
+      deck.tags?.map(async tag => {
+        const response = await this.tagService.getTag(tag).toPromise();
+        tag.id = response.body._id;
+      })
+    );
+
+    return deck;
+  }
+
+  async saveDeckImage(deck: Deck) {
+    return await this.imagesService.postImage(deck.image!).toPromise();
+  }
 }

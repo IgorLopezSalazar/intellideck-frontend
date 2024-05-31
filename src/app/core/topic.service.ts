@@ -1,20 +1,19 @@
 import { Injectable } from '@angular/core';
-import {environment} from "../../environments/environments";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {Observable, of} from "rxjs";
-import {Deck} from "../models/deck.model";
 import {AuthService} from "./auth.service";
+import {environment} from "../../environments/environments";
+import {Observable, of} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
 })
-export class DeckService {
+export class TopicService {
 
-  private END_POINT_DECKS = environment.API_URL + '/decks';
+  private END_POINT_TOPIC = environment.API_URL + '/topics';
 
   constructor(private http: HttpClient, private auth: AuthService) { }
 
-  createDeck(deck: Deck): Observable<any> {
+  getTopics(): Observable<any> {
     let token: string | null = this.auth.getToken();
     if (!token) {
       return of({ error: 'No token available' });
@@ -28,6 +27,6 @@ export class DeckService {
       observe: 'response'
     };
 
-    return this.http.post(this.END_POINT_DECKS, deck.toJson(), options);
+    return this.http.get(this.END_POINT_TOPIC, options);
   }
 }

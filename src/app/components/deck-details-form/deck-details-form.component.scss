@@ -1,43 +1,58 @@
 @use "../../../colors";
 
 .container__creation {
+  min-height: 20em;
+  padding: 2em 0;
+  display: flex;
+  flex-direction: column;
 
   &__row {
+    flex: 1;
     display: grid;
     grid-template-columns: 2fr 2fr 1fr;
-    gap: 3em;
+    gap: 2%;
 
     &__first-column {
       width: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
 
-      .title_row {
-        height: 50%;
+      .description {
 
         .form-field {
           width: 100%;
+          height: 100%;
+
+          .text-area-input {
+            width: 100%;
+            height: 100%;
+          }
         }
       }
 
-      .topic_tags_row {
-        display: flex;
-        gap: 1em;
-        height: 50%;
+      .title_row {
 
         .form-field {
-          width: 50%;
+          width: 100%;
         }
       }
     }
 
-    &__description {
+    &__topic_tags {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
 
       .form-field {
-        width: 100%;
-        height: 100%;
+      }
 
-        .text-area-input {
-          width: 100%;
-          height: 100%;
+      .tag-chip {
+        background-color: colors.$light-purple;
+        border-radius: 0.5em;
+
+        &__remove {
+          color: colors.$primary-purple;
         }
       }
     }
@@ -60,7 +75,6 @@
         height: 50%;
 
         .deck-image-name {
-          height: 0.8em;
           padding-bottom: 0.4em;
         }
 
@@ -75,14 +89,13 @@
           height: 40px;
           width: 40px;
           line-height: 40px;
-          padding-bottom: 0.7em;
         }
       }
     }
 
     .primary-button {
       background-color: colors.$primary-purple;
-      color: colors.$white-smoke;
+      color: colors.$white;
 
       &:hover {
         background-color: colors.$dark-purple;
@@ -93,4 +106,14 @@
 
 .form-field {
   --mat-form-field-container-vertical-padding: 0.7em;
+}
+
+.invalid-field {
+  border-color: rgba(244, 67, 54, 0.87);
+}
+
+::ng-deep .mdc-evolution-chip-set__chips {
+  flex-wrap: unset !important;
+  width: 100%;
+  overflow-x: auto;
 }

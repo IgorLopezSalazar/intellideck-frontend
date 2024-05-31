@@ -1,20 +1,20 @@
 import { Injectable } from '@angular/core';
 import {environment} from "../../environments/environments";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {Observable, of} from "rxjs";
-import {Deck} from "../models/deck.model";
 import {AuthService} from "./auth.service";
+import {Tag} from "../models/tag.model";
+import {Observable, of} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
 })
-export class DeckService {
+export class ImagesService {
 
-  private END_POINT_DECKS = environment.API_URL + '/decks';
+  private END_POINT_IMAGES = environment.API_URL + '/images';
 
   constructor(private http: HttpClient, private auth: AuthService) { }
 
-  createDeck(deck: Deck): Observable<any> {
+  postImage(image: File): Observable<any> {
     let token: string | null = this.auth.getToken();
     if (!token) {
       return of({ error: 'No token available' });
@@ -22,12 +22,14 @@ export class DeckService {
 
     const options: any = {
       headers: new HttpHeaders({
-        'Content-Type': 'application/json',
         'Authorization': token
       }),
       observe: 'response'
     };
 
-    return this.http.post(this.END_POINT_DECKS, deck.toJson(), options);
+    const formData: FormData = new FormData();
+    formData.append('file', image);
+
+    return this.http.post(this.END_POINT_IMAGES, formData, options);
   }
 }
