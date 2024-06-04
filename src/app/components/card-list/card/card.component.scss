@@ -1,13 +1,14 @@
 @use "../../../../colors";
 
-$card-image-heigth: 13em;
-
+$card-image-heigth: 12em;
 
 .card {
   background-color: colors.$white;
   border-radius: 8px;
   box-shadow: 0 2px 4px 0 colors.$grey;
   word-wrap: break-word;
+  position: relative;
+  height: 100%;
 
   img {
     width: 100%;
@@ -17,13 +18,56 @@ $card-image-heigth: 13em;
     object-fit: cover;
   }
 
-  .card__info {
+  &__overlay {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
     height: 100%;
-    display: grid;
-    grid-template-rows: 1fr 1fr;
+    background-color: colors.$transparent-light-purple;
+    z-index: 1;
+  }
+
+  &:hover .card__overlay {
+    display: block;
+  }
+
+  &:hover .card__buttons {
+    display: flex;
+  }
+
+  &__buttons {
+    display: none;
+    justify-content: flex-end;
+    padding: 0.5em;
+    gap: 0.5em;
+    position: absolute;
+    right: 0;
+    z-index: 2;
+
+    span {
+      border-radius: 5px;
+      color: colors.$white;
+      padding: 0.1em;
+    }
+
+    .edit {
+      background-color: colors.$blue-munsell;
+    }
+
+    .delete {
+      background-color: colors.$light-red;
+    }
+  }
+
+  &__info {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
 
     &__question {
-      height: 100%;
+      flex: 1;
 
       p {
         font-weight: bold;
@@ -40,6 +84,7 @@ $card-image-heigth: 13em;
     }
 
     &__answer {
+      flex: 1;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
@@ -52,7 +97,7 @@ $card-image-heigth: 13em;
 
     p {
       font-size: 1rem;
-      padding: 0.5em;
+      padding: 1em 0;
       margin: 0;
     }
   }
@@ -72,4 +117,9 @@ $card-image-heigth: 13em;
       height: 100%;
     }
   }
+}
+
+.material-symbols-outlined {
+  cursor: pointer;
+  user-select: none;
 }

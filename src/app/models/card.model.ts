@@ -1,17 +1,18 @@
-enum WhereImageEnum {
+export enum WhereImageEnum {
   NONE = 'NONE',
   QUESTION = 'QUESTION',
   ANSWER = 'ANSWER'
 }
 
 export class Card {
-  private _question : string;
-  private _answer : string;
-  private _image? : string;
+  private _question? : string;
+  private _answer? : string;
+  private _image? : File;
+  private _imagePath? : string;
   private _whereImage: WhereImageEnum;
-  private _deckId: string;
+  private _deckId?: string;
 
-  constructor(question: string, answer: string, whereImage: WhereImageEnum, deck: string) {
+  constructor(whereImage: WhereImageEnum, question?: string, answer?: string, deck?: string) {
     this._question = question;
     this._answer = answer;
     this._whereImage = whereImage;
@@ -19,7 +20,7 @@ export class Card {
   }
 
 
-  get question(): string {
+  get question(): string | undefined {
     return this._question;
   }
 
@@ -27,7 +28,7 @@ export class Card {
     this._question = value;
   }
 
-  get answer(): string {
+  get answer(): string | undefined {
     return this._answer;
   }
 
@@ -35,11 +36,11 @@ export class Card {
     this._answer = value;
   }
 
-  get image(): string | undefined {
+  get image(): File | undefined {
     return this._image;
   }
 
-  set image(value: string) {
+  set image(value: File) {
     this._image = value;
   }
 
@@ -51,7 +52,7 @@ export class Card {
     this._whereImage = value;
   }
 
-  get deckId(): string {
+  get deckId(): string | undefined {
     return this._deckId;
   }
 

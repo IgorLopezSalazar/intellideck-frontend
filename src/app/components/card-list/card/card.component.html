@@ -1,18 +1,27 @@
-<div class="card"> <!--*ngFor="let card of cards">-->
+<div class="card">
   <div class="card__buttons">
-
+        <span class="material-symbols-outlined edit">
+          edit_square
+        </span>
+    <span class="material-symbols-outlined delete">
+          delete_forever
+        </span>
   </div>
+
+  <div class="card__overlay"></div>
 
   <div class="card__info">
     <div class="card__info__question">
-      <div class="card-text card-text__question without-img">
-        <p>Question mmmmmmmmmm m m m mmmmmmmmmmmmm mmmmmmm mmmmmmmm mmmmmmmmm mmmmmmmmmm mmmmmmmmmm</p>
+      <img [src]="imageSrc" alt="" *ngIf="card.whereImage == WhereImageEnum.QUESTION">
+      <div class="card-text card-text__question" [ngClass]="{'without-img': card.whereImage != WhereImageEnum.QUESTION}">
+        <p>{{card.question}}</p>
       </div>
     </div>
     <div class="card__info__answer">
-      <div class="card-text card-text__answer">
-        <p>Answer</p>
+      <div class="card-text card-text__answer" [ngClass]="{'without-img': card.whereImage != WhereImageEnum.ANSWER}">
+        <p>{{card.answer}}</p>
       </div>
+      <img [src]="imageSrc" alt="" *ngIf="card.whereImage == WhereImageEnum.ANSWER">
     </div>
   </div>
 </div>

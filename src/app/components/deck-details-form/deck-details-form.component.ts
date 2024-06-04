@@ -15,8 +15,6 @@ import {COMMA, ENTER} from "@angular/cdk/keycodes";
 import {MatAutocomplete, MatAutocompleteSelectedEvent, MatAutocompleteTrigger} from "@angular/material/autocomplete";
 import {Tag} from "../../models/tag.model";
 import {TagService} from "../../core/tag.service";
-import {map} from "rxjs";
-import {convertOutputFile} from "@angular-devkit/build-angular/src/tools/esbuild/utils";
 
 @Component({
   selector: 'app-deck-details-form',

@@ -1,0 +1,197 @@
+@use "../../../../colors";
+
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  max-height: 100%;
+  background-color: colors.$white-smoke;
+
+  h2 {
+    margin: 0;
+  }
+}
+
+.dialog {
+
+  &__content {
+    flex: 1;
+    overflow: auto;
+    padding: 0 1.5em 0.2em;
+
+    label {
+      color: colors.$light-black;
+      font-weight: 550;
+      font-size: 1.05em;
+      margin-bottom: 0.15em;
+    }
+
+    &__question {
+      width: 100%;
+      padding-bottom: 1em;
+      display: flex;
+      flex-direction: column;
+    }
+
+    &__answer {
+      width: 100%;
+      padding-bottom: 1em;
+      display: flex;
+      flex-direction: column;
+    }
+
+    &__checkbox {
+
+      .css-checkbox {
+        position: absolute;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+        height: 1px;
+        width: 1px;
+        margin: -1px;
+        padding: 0;
+        border: 0;
+      }
+
+      .css-checkbox+label {
+        position: relative;
+        font-size: 1em;
+        font-weight: normal;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        height: 1em;
+        color: colors.$light-black;
+      }
+
+      .css-checkbox+label::before {
+        content: " ";
+        display: inline-block;
+        vertical-align: middle;
+        margin-right: 0.5em;
+        width: 1em;
+        height: 1em;
+        background-color: colors.$light-purple;
+        border-width: 3px;
+        border-style: solid;
+        border-color: colors.$primary-purple;
+        border-radius: 4px;
+      }
+
+      .css-checkbox:checked+label::after {
+        content: " ";
+        background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cGF0aCBmaWxsPSIjZjZlNGY2IiBkPSJNMTczLjg5OCA0MzkuNDA0bC0xNjYuNC0xNjYuNGMtOS45OTctOS45OTctOS45OTctMjYuMjA2IDAtMzYuMjA0bDM2LjIwMy0zNi4yMDRjOS45OTctOS45OTggMjYuMjA3LTkuOTk4IDM2LjIwNCAwTDE5MiAzMTIuNjkgNDMyLjA5NSA3Mi41OTZjOS45OTctOS45OTcgMjYuMjA3LTkuOTk3IDM2LjIwNCAwbDM2LjIwMyAzNi4yMDRjOS45OTcgOS45OTcgOS45OTcgMjYuMjA2IDAgMzYuMjA0bC0yOTQuNCAyOTQuNDAxYy05Ljk5OCA5Ljk5Ny0yNi4yMDcgOS45OTctMzYuMjA0LS4wMDF6Ii8+PC9zdmc+");
+        background-repeat: no-repeat;
+        background-size: 0.9em 0.9em;
+        background-position: center center;
+        position: absolute;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-left: 0;
+        left: 2px;
+        top: 0;
+        text-align: center;
+        background-color: colors.$primary-purple;
+        border-width: 1px;
+        font-size: 1em;
+        height: 1em;
+        width: 1em;
+      }
+    }
+
+    &__image-container {
+      .mat-button-toggle-group {
+        border: 3px solid colors.$primary-purple;
+        box-shadow: none;
+        border-radius: 0.2em;
+      }
+
+      .mat-button-toggle {
+        background-color: colors.$white-smoke;
+        color: colors.$light-black;
+
+        &:hover {
+          background-color: colors.$light-purple;
+        }
+
+        &-checked {
+          background-color: colors.$primary-purple;
+          color: colors.$white;
+          &:hover {
+            background-color: colors.$primary-purple;
+          }
+        }
+      }
+
+      p {
+        margin: 0;
+        padding: 0.5em 0;
+      }
+
+      .upload-container {
+        display: flex;
+        justify-content: center;
+        padding-bottom: 0.5em;
+
+        .file-drop-zone {
+          background-color: colors.$white;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          border-radius: 0.5em;
+          padding: 1em;
+          border: 2px solid colors.$grey;
+          cursor: pointer;
+          width: 40%;
+
+          .deck-image-name {
+            padding-bottom: 0.4em;
+          }
+
+          label {
+            text-align: center;
+            cursor: pointer;
+            color: colors.$very-dark-grey;
+            font-weight: normal;
+          }
+
+          .big-icon {
+            color: colors.$very-dark-grey;
+            font-size: 40px;
+            height: 40px;
+            width: 40px;
+            line-height: 40px;
+          }
+        }
+      }
+    }
+
+    .form-field {
+      width: 100%;
+      background-color: colors.$white;
+    }
+  }
+
+  &__actions {
+    display: flex;
+    justify-content: flex-end;
+    padding: 0 1.5rem 1.5rem;
+
+    .cancel {
+      background-color: colors.$light-purple;
+    }
+
+    .create-card {
+      background-color: colors.$primary-purple;
+      color: colors.$white;
+
+      &:hover {
+        background-color: colors.$dark-purple;
+      }
+    }
+  }
+}

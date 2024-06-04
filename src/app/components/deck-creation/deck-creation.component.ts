@@ -12,6 +12,7 @@ import {DeckDetailsFormComponent} from "../deck-details-form/deck-details-form.c
 import {CardListComponent} from "../card-list/card-list.component";
 import {TagService} from "../../core/tag.service";
 import {ImagesService} from "../../core/images.service";
+import {Card} from "../../models/card.model";
 
 @Component({
   selector: 'app-deck-creation',
@@ -35,6 +36,7 @@ import {ImagesService} from "../../core/images.service";
 export class DeckCreationComponent {
 
   receivedDeck?: Deck;
+  receivedCardList?: Card[];
 
   constructor(private deckService: DeckService, private tagService: TagService, private imagesService: ImagesService) {
   }
@@ -42,9 +44,16 @@ export class DeckCreationComponent {
   handleDeckCreation(data: any) {
     this.receivedDeck = data;
 
-    if (this.receivedDeck == undefined) {
+    this.createDeck();
+  }
+
+  createDeck() {
+    if (this.receivedDeck == undefined ||
+        this.receivedCardList == undefined) {
+      console.log("No lo hace");
       return;
     }
+    console.log("Se manda crear");
 
     const getTagsIdPromise = this.getDeckTagsId(this.receivedDeck);
     let secondPromise;
@@ -57,12 +66,12 @@ export class DeckCreationComponent {
         if (imagePath) {
           deckWithTagsId.imagePath = imagePath.body;
         }
-        this.createDeck(deckWithTagsId);
+        this.callCreateDeck(deckWithTagsId);
       }
     );
   }
 
-  createDeck(deck: Deck) {
+  callCreateDeck(deck: Deck) {
     this.deckService.createDeck(deck).subscribe(
       response => {
         console.log(response);
