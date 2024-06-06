@@ -12,13 +12,25 @@ export class Card {
   private _whereImage: WhereImageEnum;
   private _deckId?: string;
 
-  constructor(whereImage: WhereImageEnum, question?: string, answer?: string, deck?: string) {
+  constructor(whereImage: WhereImageEnum, question?: string, answer?: string, deck?: string, image?: File, imagePath?: string) {
     this._question = question;
     this._answer = answer;
     this._whereImage = whereImage;
     this._deckId = deck;
+    this._image = image;
+    this._imagePath = imagePath;
   }
 
+  copy() {
+    return new Card(
+      this.whereImage,
+      this.question,
+      this.answer,
+      this.deckId,
+      this.image,
+      this.imagePath
+    );
+  }
 
   get question(): string | undefined {
     return this._question;
@@ -44,6 +56,18 @@ export class Card {
     this._image = value;
   }
 
+  public deleteImage() {
+    this._image = undefined;
+  }
+
+  get imagePath(): string | undefined {
+    return this._imagePath;
+  }
+
+  set imagePath(value: string) {
+    this._imagePath = value;
+  }
+
   get whereImage(): WhereImageEnum {
     return this._whereImage;
   }
@@ -58,5 +82,15 @@ export class Card {
 
   set deckId(value: string) {
     this._deckId = value;
+  }
+
+  public toJson() {
+    return JSON.stringify({
+      question : this.question,
+      answer : this.answer,
+      image : this.imagePath,
+      whereImage: this.whereImage,
+      deckId: this.deckId
+    });
   }
 }

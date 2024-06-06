@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
 import {FormsModule} from "@angular/forms";
 import {MatError, MatFormField, MatLabel} from "@angular/material/form-field";
 import {MatInput} from "@angular/material/input";
@@ -13,6 +13,7 @@ import {CardListComponent} from "../card-list/card-list.component";
 import {TagService} from "../../core/tag.service";
 import {ImagesService} from "../../core/images.service";
 import {Card} from "../../models/card.model";
+import {CardService} from "../../core/card.service";
 
 @Component({
   selector: 'app-deck-creation',
@@ -35,51 +36,55 @@ import {Card} from "../../models/card.model";
 })
 export class DeckCreationComponent {
 
+  @ViewChild(CardListComponent) cardListComponent!: CardListComponent;
+
   receivedDeck?: Deck;
   receivedCardList?: Card[];
 
-  constructor(private deckService: DeckService, private tagService: TagService, private imagesService: ImagesService) {
+  constructor(private deckService: DeckService, private tagService: TagService,
+              private imagesService: ImagesService, private cardService: CardService) {
   }
 
-  handleDeckCreation(data: any) {
+  async handleDeckCreation(data: any) {
     this.receivedDeck = data;
 
-    this.createDeck();
+    let deckID  = await this.createDeck();
+    console.dir("DeckID: " + deckID);
+    if (deckID != '') await this.createCards(deckID);
   }
 
-  createDeck() {
+  async createDeck(): Promise<string> {
+    this.receivedCardList = this.cardListComponent.cardList;
     if (this.receivedDeck == undefined ||
         this.receivedCardList == undefined) {
-      console.log("No lo hace");
-      return;
+      return '';
     }
-    console.log("Se manda crear");
 
     const getTagsIdPromise = this.getDeckTagsId(this.receivedDeck);
-    let secondPromise;
+    let getDeckImagePathPromise;
     if (this.receivedDeck.image){
-      secondPromise = this.saveDeckImage(this.receivedDeck);
+      getDeckImagePathPromise = this.saveImage(this.receivedDeck.image);
     }
 
-    Promise.all([getTagsIdPromise, secondPromise]).then(
-      ([deckWithTagsId, imagePath]) => {
-        if (imagePath) {
-          deckWithTagsId.imagePath = imagePath.body;
-        }
-        this.callCreateDeck(deckWithTagsId);
-      }
-    );
+    const [deckWithTagsId, imagePath] = await Promise.all([getTagsIdPromise, getDeckImagePathPromise]);
+    if (imagePath) {
+      deckWithTagsId.imagePath = imagePath.body;
+    }
+    return await this.callCreateDeck(deckWithTagsId);
   }
 
-  callCreateDeck(deck: Deck) {
-    this.deckService.createDeck(deck).subscribe(
-      response => {
-        console.log(response);
-      },
-      error => {
-        console.log(error);
-      }
-    );
+  callCreateDeck(deck: Deck): Promise<string> {
+    return new Promise(resolve => {
+      this.deckService.createDeck(deck).subscribe(
+        response => {
+          console.log(response);
+          resolve(response.body._id);
+        },
+        error => {
+          console.log(error);
+        }
+      );
+    })
   }
 
   async getDeckTagsId(deck: Deck) {
@@ -93,7 +98,55 @@ export class DeckCreationComponent {
     return deck;
   }
 
-  async saveDeckImage(deck: Deck) {
-    return await this.imagesService.postImage(deck.image!).toPromise();
+  async saveImage(file: File) {
+    return await this.imagesService.postImage(file).toPromise();
+  }
+
+  async createCards(deckID: string) {
+    if (!this.receivedCardList) return;
+    console.log("deckID" +  deckID);
+
+    for (let i = 0; i < this.receivedCardList.length; i++) {
+      const card = this.receivedCardList[i];
+      let getCardImagePathPromise;
+      console.log(i)
+
+      if (card.image) {
+        getCardImagePathPromise = this.saveImage(card.image);
+      }
+
+      const [imagePath] = await Promise.all([getCardImagePathPromise]);
+      if (imagePath) {
+        card.imagePath = imagePath.body;
+      }
+
+      card.deckId = deckID;
+      await this.callCreateCard(card);
+    }
+
+    // for (const card of this.receivedCardList) {
+    //   let getCardImagePathPromise;
+    //   if (card.image){
+    //     getCardImagePathPromise = this.saveImage(card.image);
+    //   }
+    //
+    //   const [imagePath] = await Promise.all([getCardImagePathPromise]);
+    //   if (imagePath) {
+    //     card.image = imagePath.body;
+    //   }
+    //   card.deckId = deckID;
+    //   await this.callCreateCard(card);
+    // }
+  }
+
+  async callCreateCard(card: Card) {
+    this.cardService.createDeck(card).subscribe(
+      response => {
+        console.log(response);
+      },
+      error => {
+        console.log(error);
+      }
+    );
   }
 }

@@ -103,6 +103,10 @@
     }
 
     &__image-container {
+      .toggle-group {
+        height: 2em;
+      }
+
       .mat-button-toggle-group {
         border: 3px solid colors.$primary-purple;
         box-shadow: none;
@@ -157,6 +161,8 @@
             cursor: pointer;
             color: colors.$very-dark-grey;
             font-weight: normal;
+            width: 100%;
+            word-wrap: break-word;
           }
 
           .big-icon {

@@ -1,5 +1,5 @@
-import {Component, ElementRef, ViewChild} from '@angular/core';
-import {MatDialogModule, MatDialogRef} from "@angular/material/dialog";
+import {Component, ElementRef, Inject, ViewChild} from '@angular/core';
+import {MAT_DIALOG_DATA, MatDialogModule, MatDialogRef} from "@angular/material/dialog";
 import {MatError, MatFormField, MatLabel} from "@angular/material/form-field";
 import {FormsModule, NgForm} from "@angular/forms";
 import {MatButton} from "@angular/material/button";
@@ -8,7 +8,6 @@ import {NgIf} from "@angular/common";
 import {MatCheckbox} from "@angular/material/checkbox";
 import {MatButtonToggle, MatButtonToggleGroup} from "@angular/material/button-toggle";
 import {MatIcon} from "@angular/material/icon";
-import {Deck} from "../../../models/deck.model";
 import {Card, WhereImageEnum} from "../../../models/card.model";
 
 @Component({
@@ -36,15 +35,32 @@ export class CreateCardDialog {
   @ViewChild('fileDropRef', { static: false }) fileDropRef!: ElementRef;
 
   addImageChecked: boolean = false;
-  imageLocation: string = 'question';
+  imageLocation: string = 'QUESTION';
   allowedExtensions: string[] = ['.jpg', '.jpeg', '.png'];
   fileDropText: string = "";
-  cardImage?: File;
   formValid: boolean = true;
   errorText: string = '';
+  card: Card;
+  updateCard: boolean = false;
+  buttonText: string = "Crear carta";
 
-  constructor(private dialogRef: MatDialogRef<CreateCardDialog>) {
+  constructor(private dialogRef: MatDialogRef<CreateCardDialog>, @Inject(MAT_DIALOG_DATA) public cardToUpdate?: Card) {
     dialogRef.disableClose = true;
+
+    if (cardToUpdate) {
+      this.card = cardToUpdate.copy();
+      this.updateCard = true;
+      this.buttonText = "Actualizar carta";
+
+      if (this.card.whereImage != WhereImageEnum.NONE) {
+        this.addImageChecked = true;
+        this.imageLocation = this.card.whereImage.toString();
+      }
+      if (this.card.image) this.fileDropText = this.card.image.name;
+    }
+    else {
+      this.card = new Card(WhereImageEnum.NONE);
+    }
   }
 
   cancel(): void {
@@ -57,43 +73,32 @@ export class CreateCardDialog {
       return;
     }
 
-    let newCard = this.populateCard(cardForm);
-    console.log(newCard);
-
-    this.dialogRef.close(newCard);
-  }
-
-  populateCard(cardForm: NgForm): Card {
-    let card: Card;
-    const question = cardForm.value.question;
-    const answer = cardForm.value.answer;
-
-    if (this.addImageChecked && this.cardImage) {
-      const imageLocation = (this.imageLocation === 'answer') ? WhereImageEnum.ANSWER : WhereImageEnum.QUESTION;
-      card = new Card(imageLocation, question, answer);
-      card.image = this.cardImage;
-    } else {
-      card = new Card(WhereImageEnum.NONE, question, answer);
+    if (this.addImageChecked && this.card.image) {
+      this.card.whereImage = (this.imageLocation === 'ANSWER') ? WhereImageEnum.ANSWER : WhereImageEnum.QUESTION;
+    }
+    else {
+      this.card.whereImage = WhereImageEnum.NONE;
+      this.card.deleteImage();
     }
 
-    return card;
+    this.dialogRef.close(this.card);
   }
 
   isFormValid(cardForm: NgForm): boolean {
     let isValid = true;
 
     if (this.addImageChecked) {
-      if (!this.cardImage) {
+      if (!this.card.image) {
         isValid = false;
         this.errorText = "Hubo un error con la imagen.";
       }
-      if ((this.imageLocation === 'answer' && !cardForm.value.question) ||
-          (this.imageLocation === 'question' && !cardForm.value.answer)) {
+      else if ((this.imageLocation === 'answer' && !this.card.question) ||
+              (this.imageLocation === 'question' && !this.card.answer)) {
         isValid = false;
         this.errorText = "Es necesario rellenar el campo que no tiene imagen.";
       }
     }
-    else if (!cardForm.value.question || !cardForm.value.answer) {
+    else if (!this.card.question || !this.card.answer) {
       isValid = false;
       this.errorText = "La pregunta y la respuesta son necesarios.";
     }
@@ -134,7 +139,7 @@ export class CreateCardDialog {
 
       if (this.allowedExtensions.includes(fileExtension)) {
         this.fileDropText = file.name;
-        this.cardImage = file;
+        this.card.image = file;
       } else {
         this.fileDropText = 'Tipo de archivo no permitido.';
         alert('Tipo de archivo invalido. Por favor selecciona un archivo válido: \"' + this.allowedExtensions.join('\", \"') + '\"');

@@ -1,18 +1,18 @@
-<form #cardForm="ngForm" class="container" (ngSubmit)="saveCard(cardForm)">
+<form #cardForm="ngForm" class="container">
   <h2 mat-dialog-title>Crear carta</h2>
   <mat-dialog-content class="dialog__content">
     <p>Introduce la pregunta y la respuesta de la carta como texto, o seleccione si quiere añadir una imagen en la pregunta o la respuesta.</p>
     <div class="dialog__content__question">
       <label>Pregunta</label>
       <mat-form-field appearance="outline" subscriptSizing="dynamic" class="form-field">
-        <input matInput ngModel type="text" name="question" class="form-control" placeholder="Escribe la pregunta de la carta" >
+        <input matInput type="text" name="question" class="form-control" placeholder="Escribe la pregunta de la carta" [(ngModel)]="card.question">
       </mat-form-field>
     </div>
 
     <div class="dialog__content__answer">
       <label>Respuesta</label>
       <mat-form-field appearance="outline" subscriptSizing="dynamic" class="form-field">
-        <input matInput ngModel type="text" name="answer" class="form-control" placeholder="Escribe la respuesta de la carta" >
+        <input matInput type="text" name="answer" class="form-control" placeholder="Escribe la respuesta de la carta" [(ngModel)]="card.answer">
       </mat-form-field>
     </div>
 
@@ -21,9 +21,9 @@
       <label for="imageCheckbox">Añadir imagen</label>
     </div>
     <div class="dialog__content__image-container" *ngIf="addImageChecked">
-      <mat-button-toggle-group name="imageLocation" [(ngModel)]="imageLocation" hideSingleSelectionIndicator="true" appearance="legacy">
-        <mat-button-toggle value="question" disableRipple>Pregunta</mat-button-toggle>
-        <mat-button-toggle value="answer" disableRipple>Respuesta</mat-button-toggle>
+      <mat-button-toggle-group name="imageLocation" [(ngModel)]="imageLocation" hideSingleSelectionIndicator="true" appearance="legacy" class="toggle-group">
+        <mat-button-toggle value="QUESTION" disableRipple>Pregunta</mat-button-toggle>
+        <mat-button-toggle value="ANSWER" disableRipple>Respuesta</mat-button-toggle>
       </mat-button-toggle-group>
       <p>La imagen se puede añadir a la opción elegida sin añadir texto.</p>
 
@@ -42,6 +42,6 @@
   </mat-dialog-content>
   <mat-dialog-actions class="dialog__actions">
     <button mat-button class="cancel" (click)="cancel()">Cancelar</button>
-    <button mat-flat-button class="create-card" >Crear carta</button>
+    <button mat-flat-button class="create-card" (click)="saveCard(cardForm)">{{buttonText}}</button>
   </mat-dialog-actions>
 </form>

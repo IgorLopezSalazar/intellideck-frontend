@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {Card, WhereImageEnum} from "../../../models/card.model";
 import {NgClass, NgIf, NgOptimizedImage} from "@angular/common";
 
@@ -16,11 +16,22 @@ import {NgClass, NgIf, NgOptimizedImage} from "@angular/common";
 export class CardComponent {
 
   @Input() card!: Card;
+  @Input() index!: number;
+  @Output() editCardEvent = new EventEmitter<number>();
+  @Output() deleteCardEvent = new EventEmitter<number>();
   protected readonly WhereImageEnum = WhereImageEnum;
 
   imageSrc: string | ArrayBuffer | null = null;
 
   constructor() {
+  }
+
+  editCard() {
+    this.editCardEvent.emit(this.index);
+  }
+
+  deleteCard() {
+    this.deleteCardEvent.emit(this.index);
   }
 
   ngOnChanges() {
