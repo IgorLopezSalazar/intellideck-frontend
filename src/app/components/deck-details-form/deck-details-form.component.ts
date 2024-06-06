@@ -105,7 +105,7 @@ export class DeckDetailsFormComponent {
       this.deckTags.push(newTag);
     }
 
-    event.chipInput!.clear();
+    event.chipInput.clear();
     this.tagInput.nativeElement.value = '';
     this.filter('');
   }

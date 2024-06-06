@@ -124,20 +124,6 @@ export class DeckCreationComponent {
       card.deckId = deckID;
       await this.callCreateCard(card);
     }
-
-    // for (const card of this.receivedCardList) {
-    //   let getCardImagePathPromise;
-    //   if (card.image){
-    //     getCardImagePathPromise = this.saveImage(card.image);
-    //   }
-    //
-    //   const [imagePath] = await Promise.all([getCardImagePathPromise]);
-    //   if (imagePath) {
-    //     card.image = imagePath.body;
-    //   }
-    //   card.deckId = deckID;
-    //   await this.callCreateCard(card);
-    // }
   }
 
   async callCreateCard(card: Card) {

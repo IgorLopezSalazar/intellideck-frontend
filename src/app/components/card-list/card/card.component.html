@@ -1,9 +1,9 @@
 <div class="card">
   <div class="card__buttons">
-    <span class="material-symbols-outlined edit" (click)="editCard()">
+    <span class="material-symbols-outlined edit" (click)="editCard()" (keyup)="editCard()">
       edit_square
     </span>
-    <span class="material-symbols-outlined delete" (click)="deleteCard()">
+    <span class="material-symbols-outlined delete" (click)="deleteCard()" (keyup)="deleteCard()">
       delete_forever
     </span>
   </div>

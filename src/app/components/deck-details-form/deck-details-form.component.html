@@ -28,14 +28,14 @@
       </div>
       <div class="container__creation__row__topic_tags">
         <mat-form-field appearance="outline" subscriptSizing="dynamic" class="form-field" >
-          <label>
+          <span>
             Tema*
             <mat-select name="topic" [(ngModel)]="selectedTopicIndex" required placeholder="Elige el tema del mazo">
               <mat-option *ngFor="let topic of topicList; let i = index" [value]="i">
                 {{ topic.name }}
               </mat-option>
             </mat-select>
-          </label>
+          </span>
         </mat-form-field>
 
         <mat-form-field appearance="outline" subscriptSizing="dynamic" class="form-field">
