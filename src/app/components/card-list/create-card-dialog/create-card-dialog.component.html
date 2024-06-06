@@ -1,19 +1,23 @@
 <form #cardForm="ngForm" class="container">
-  <h2 mat-dialog-title>Crear carta</h2>
+  <h2 mat-dialog-title>{{ createUpdateText }}</h2>
   <mat-dialog-content class="dialog__content">
     <p>Introduce la pregunta y la respuesta de la carta como texto, o seleccione si quiere añadir una imagen en la pregunta o la respuesta.</p>
     <div class="dialog__content__question">
-      <label>Pregunta</label>
-      <mat-form-field appearance="outline" subscriptSizing="dynamic" class="form-field">
-        <input matInput type="text" name="question" class="form-control" placeholder="Escribe la pregunta de la carta" [(ngModel)]="card.question">
-      </mat-form-field>
+      <label>
+        Pregunta
+        <mat-form-field appearance="outline" subscriptSizing="dynamic" class="form-field">
+          <input matInput type="text" name="question" class="form-control" placeholder="Escribe la pregunta de la carta" [(ngModel)]="card.question">
+        </mat-form-field>
+      </label>
     </div>
 
     <div class="dialog__content__answer">
-      <label>Respuesta</label>
-      <mat-form-field appearance="outline" subscriptSizing="dynamic" class="form-field">
-        <input matInput type="text" name="answer" class="form-control" placeholder="Escribe la respuesta de la carta" [(ngModel)]="card.answer">
-      </mat-form-field>
+      <label>
+        Respuesta
+        <mat-form-field appearance="outline" subscriptSizing="dynamic" class="form-field">
+          <input matInput type="text" name="answer" class="form-control" placeholder="Escribe la respuesta de la carta" [(ngModel)]="card.answer">
+        </mat-form-field>
+      </label>
     </div>
 
     <div class="dialog__content__checkbox">
@@ -28,11 +32,12 @@
       <p>La imagen se puede añadir a la opción elegida sin añadir texto.</p>
 
       <div class="upload-container">
-        <div class="file-drop-zone" (dragover)="onDragOver($event)" (dragleave)="onDragLeave($event)" (drop)="onDrop($event)" (click)="triggerFileInput()">
+        <div class="file-drop-zone" (dragover)="onDragOver($event)" (dragleave)="onDragLeave($event)" (drop)="onDrop($event)" (click)="triggerFileInput()"
+             (keyup)="triggerFileInput()">
           <input type="file" [multiple]="false" #fileDropRef id="fileDropRef" style="display:none" (change)="onFileChange($event)" [accept]="allowedExtensions.join(',')"/>
           <mat-icon class="big-icon">upload</mat-icon>
-          <label class="deck-image-name">{{fileDropText}}</label>
-          <label>Arrastra y suelta o elige la imagen para la carta</label>
+          <span class="deck-image-name">{{fileDropText}}</span>
+          <span>Arrastra y suelta o elige la imagen para la carta</span>
         </div>
       </div>
     </div>
@@ -42,6 +47,6 @@
   </mat-dialog-content>
   <mat-dialog-actions class="dialog__actions">
     <button mat-button class="cancel" (click)="cancel()">Cancelar</button>
-    <button mat-flat-button class="create-card" (click)="saveCard(cardForm)">{{buttonText}}</button>
+    <button mat-flat-button class="create-card" (click)="saveCard()">{{createUpdateText}}</button>
   </mat-dialog-actions>
 </form>

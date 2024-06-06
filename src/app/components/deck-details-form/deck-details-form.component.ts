@@ -68,23 +68,23 @@ export class DeckDetailsFormComponent {
 
   getAllTopics() {
     this.topicService.getTopics().subscribe(
-      response => {
-        this.topicList = response.body.map((topic: any) => new Topic(topic._id, topic.name));
-      },
-      error => {
-        console.log(error);
+      {
+        next: response => {
+          this.topicList = response.body.map((topic: any) => new Topic(topic._id, topic.name));
+        },
+        error: (error: any) => { console.log(error) }
       }
     );
   }
 
   getAllTags() {
     this.tagService.getTags().subscribe(
-      response => {
-        this.allTagsList = response.body.map((topic: any) => new Tag(topic.name));
-        this.filteredTags = this.allTagsList;
-      },
-      error => {
-        console.log(error);
+      {
+        next: response => {
+          this.allTagsList = response.body.map((topic: any) => new Tag(topic.name));
+          this.filteredTags = this.allTagsList;
+        },
+        error: (error: any) => { console.log(error) }
       }
     );
   }
@@ -196,7 +196,7 @@ export class DeckDetailsFormComponent {
         this.deckImage = file;
       } else {
         this.fileDropText = 'Tipo de archivo no permitido.';
-        alert('Tipo de archivo invalido. Por favor selecciona un archivo válido: \"' + this.allowedExtensions.join('\", \"') + '\"');
+        alert('Tipo de archivo invalido. Por favor selecciona un archivo válido: "' + this.allowedExtensions.join('", "') + '"');
       }
     }
   }

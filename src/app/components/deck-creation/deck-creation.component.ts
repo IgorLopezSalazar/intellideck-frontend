@@ -14,6 +14,7 @@ import {TagService} from "../../core/tag.service";
 import {ImagesService} from "../../core/images.service";
 import {Card} from "../../models/card.model";
 import {CardService} from "../../core/card.service";
+import {lastValueFrom} from "rxjs";
 
 @Component({
   selector: 'app-deck-creation',
@@ -76,21 +77,21 @@ export class DeckCreationComponent {
   callCreateDeck(deck: Deck): Promise<string> {
     return new Promise(resolve => {
       this.deckService.createDeck(deck).subscribe(
-        response => {
-          console.log(response);
-          resolve(response.body._id);
-        },
-        error => {
-          console.log(error);
+        {
+          next: response => {
+            console.log(response);
+            resolve(response.body._id);
+          },
+          error: (error: any) => { console.log(error) }
         }
       );
-    })
+    });
   }
 
   async getDeckTagsId(deck: Deck) {
     await Promise.all(
       deck.tags?.map(async tag => {
-        const response = await this.tagService.getTag(tag).toPromise();
+        const response = await lastValueFrom(this.tagService.getTag(tag));
         tag.id = response.body._id;
       })
     );
@@ -99,7 +100,7 @@ export class DeckCreationComponent {
   }
 
   async saveImage(file: File) {
-    return await this.imagesService.postImage(file).toPromise();
+    return await lastValueFrom(this.imagesService.postImage(file));
   }
 
   async createCards(deckID: string) {
@@ -141,11 +142,11 @@ export class DeckCreationComponent {
 
   async callCreateCard(card: Card) {
     this.cardService.createDeck(card).subscribe(
-      response => {
-        console.log(response);
-      },
-      error => {
-        console.log(error);
+      {
+        next: response => {
+          console.log(response);
+        },
+        error: (error: any) => { console.log(error) }
       }
     );
   }

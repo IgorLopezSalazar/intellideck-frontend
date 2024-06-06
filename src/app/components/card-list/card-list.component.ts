@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Output} from '@angular/core';
+import {Component} from '@angular/core';
 import {CardComponent} from "./card/card.component";
 import {MatIcon} from "@angular/material/icon";
 import {CreateCardDialog} from "./create-card-dialog/create-card-dialog.component";
@@ -29,24 +29,34 @@ export class CardListComponent {
   }
 
   editCard(cardIndex: number) {
-    this.openCreateCardDialog(this.cardList.at(cardIndex)).subscribe((card: Card) => {
-      if (card !== undefined) {
-        this.cardList[cardIndex] = card;
-        console.log('The card was updated');
-      } else {
-        console.log('The dialog was canceled');
+    this.openCreateCardDialog(this.cardList.at(cardIndex)).subscribe(
+      {
+        next: (card: Card) => {
+          if (card !== undefined) {
+            this.cardList[cardIndex] = card;
+            console.log('The card was updated');
+          } else {
+            console.log('The dialog was canceled');
+          }
+        },
+        error: (error: any) => { console.log(error) }
       }
-    });
+    );
   }
 
   createCard() {
-    this.openCreateCardDialog().subscribe((card: Card) => {
-      if (card !== undefined) {
-        this.cardList.push(card);
-      } else {
-        console.log('The dialog was canceled');
+    this.openCreateCardDialog().subscribe(
+      {
+        next: (card: Card) => {
+          if (card !== undefined) {
+            this.cardList.push(card);
+          } else {
+            console.log('The dialog was canceled');
+          }
+        },
+        error: (error: any) => { console.log(error) }
       }
-    });
+    );
   }
 
   openCreateCardDialog(card?: Card) {

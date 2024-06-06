@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {catchError, map, Observable, tap} from "rxjs";
+import {Observable} from "rxjs";
 import {environment} from '../../environments/environment';
-import {error} from "@angular/compiler-cli/src/transformers/util";
 import {User} from "../models/user.model";
 
 @Injectable({
@@ -51,33 +50,4 @@ export class AuthService {
   isLoggedIn(): boolean {
     return !!this.getToken();
   }
-
-  //
-  // login1(mobile: number, password: string): Observable<User> {
-  //   return this.httpService.authBasic(mobile, password)
-  //     .post(AuthService.END_POINT_USERS)
-  //     .pipe(
-  //       map(jsonToken => {
-  //         const jwtHelper = new JwtHelperService();
-  //         this.user = jsonToken; // {token:jwt} => user.token = jwt
-  //         this.user.mobile = jwtHelper.decodeToken(jsonToken.token).user;  // secret key is not necessary
-  //         this.user.name = jwtHelper.decodeToken(jsonToken.token).name;
-  //         this.user.role = jwtHelper.decodeToken(jsonToken.token).role;
-  //         console.log(jsonToken);
-  //
-  //         if (this.untilOperator()) {
-  //           const sessionRecord: SessionRecord = {
-  //             mobile: mobile,
-  //             firstLogin: this.getNowFormattedDate(),
-  //           }
-  //           this.httpService.authBasic(mobile, password)
-  //             .post(EndPoints.SESSION_RECORDS, sessionRecord)
-  //             .subscribe(
-  //               sessionRecord => console.log('Session record:', sessionRecord)
-  //             );
-  //         }
-  //         return this.user;
-  //       })
-  //     );
-  // }
 }

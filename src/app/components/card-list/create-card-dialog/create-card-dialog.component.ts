@@ -1,7 +1,7 @@
 import {Component, ElementRef, Inject, ViewChild} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogModule, MatDialogRef} from "@angular/material/dialog";
 import {MatError, MatFormField, MatLabel} from "@angular/material/form-field";
-import {FormsModule, NgForm} from "@angular/forms";
+import {FormsModule} from "@angular/forms";
 import {MatButton} from "@angular/material/button";
 import {MatInput} from "@angular/material/input";
 import {NgIf} from "@angular/common";
@@ -42,7 +42,7 @@ export class CreateCardDialog {
   errorText: string = '';
   card: Card;
   updateCard: boolean = false;
-  buttonText: string = "Crear carta";
+  createUpdateText: string = "Crear carta";
 
   constructor(private dialogRef: MatDialogRef<CreateCardDialog>, @Inject(MAT_DIALOG_DATA) public cardToUpdate?: Card) {
     dialogRef.disableClose = true;
@@ -50,7 +50,7 @@ export class CreateCardDialog {
     if (cardToUpdate) {
       this.card = cardToUpdate.copy();
       this.updateCard = true;
-      this.buttonText = "Actualizar carta";
+      this.createUpdateText = "Actualizar carta";
 
       if (this.card.whereImage != WhereImageEnum.NONE) {
         this.addImageChecked = true;
@@ -67,8 +67,8 @@ export class CreateCardDialog {
     this.dialogRef.close();
   }
 
-  saveCard(cardForm: NgForm): void {
-    if (!this.isFormValid(cardForm)) {
+  saveCard(): void {
+    if (!this.isFormValid()) {
       this.formValid = false;
       return;
     }
@@ -84,7 +84,7 @@ export class CreateCardDialog {
     this.dialogRef.close(this.card);
   }
 
-  isFormValid(cardForm: NgForm): boolean {
+  isFormValid(): boolean {
     let isValid = true;
 
     if (this.addImageChecked) {
@@ -142,7 +142,7 @@ export class CreateCardDialog {
         this.card.image = file;
       } else {
         this.fileDropText = 'Tipo de archivo no permitido.';
-        alert('Tipo de archivo invalido. Por favor selecciona un archivo válido: \"' + this.allowedExtensions.join('\", \"') + '\"');
+        alert('Tipo de archivo invalido. Por favor selecciona un archivo válido: "' + this.allowedExtensions.join('", "') + '"');
       }
     }
   }
