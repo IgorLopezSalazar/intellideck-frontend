@@ -44,9 +44,6 @@
       flex-direction: column;
       justify-content: space-between;
 
-      .form-field {
-      }
-
       .tag-chip {
         background-color: colors.$light-purple;
         border-radius: 0.5em;
@@ -78,9 +75,11 @@
           padding-bottom: 0.4em;
         }
 
-        label {
+        span {
           text-align: center;
           cursor: pointer;
+          width: 100%;
+          word-wrap: break-word;
         }
 
         .big-icon {

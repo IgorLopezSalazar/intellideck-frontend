@@ -52,16 +52,19 @@ export class RegisterComponent {
       );
 
     this.authService.register(user).subscribe(
-      response => {
-        console.log(response);
-        this.showErrorMessage = false;
-        this.authService.setToken(response.body);
-      },
-      error => {
-        console.log(error);
-        this.showErrorMessage = true;
-        this.errorMessageText = "Las credenciales no son correctas. Por favor, inténtelo de nuevo.";
-      });
+      {
+        next: response => {
+          console.log(response);
+          this.showErrorMessage = false;
+          this.authService.setToken(response.body);
+        },
+        error: (error: any) => {
+          console.log(error);
+          this.showErrorMessage = true;
+          this.errorMessageText = "Las credenciales no son correctas. Por favor, inténtelo de nuevo.";
+        }
+      }
+    );
   }
 
   isFormValid(registerForm: NgForm): boolean {

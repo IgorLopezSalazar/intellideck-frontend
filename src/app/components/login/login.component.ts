@@ -44,14 +44,18 @@ export class LoginComponent {
     };
 
     this.authService.login(userCredentials).subscribe(
-      response => {
-        this.showErrorMessage = false;
-        this.authService.setToken(response.body);
-      },
-      error => {
-        this.showErrorMessage = true;
-        this.errorMessageText = "Las credenciales no son correctas. Por favor, inténtelo de nuevo.";
-      });
+      {
+        next: response => {
+          this.showErrorMessage = false;
+          this.authService.setToken(response.body);
+        },
+        error: (error: any) => {
+          console.log(error);
+          this.showErrorMessage = true;
+          this.errorMessageText = "Las credenciales no son correctas. Por favor, inténtelo de nuevo.";
+        }
+      }
+    );
   }
 
 }
