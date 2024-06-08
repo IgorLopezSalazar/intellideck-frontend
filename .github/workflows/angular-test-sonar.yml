@@ -14,6 +14,8 @@ jobs:
           node-version: '18.x'
       - run: npm ci
       - run: npm run-script build
+      - name: Test
+        run: ng test --code-coverage
       - name: SonarCloud Scan
         if: success()
         uses: SonarSource/sonarcloud-github-action@master
