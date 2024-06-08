@@ -15,7 +15,7 @@ jobs:
       - run: npm ci
       - run: npm run-script build
       - name: Test
-        run: ng test --code-coverage
+        run: npm test --code-coverage --browsers=ChromeHeadless
       - name: SonarCloud Scan
         if: success()
         uses: SonarSource/sonarcloud-github-action@master
