@@ -1,18 +1,32 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CreateCardDialogComponent } from './create-card-dialog.component';
+import { CreateCardDialog } from './create-card-dialog.component';
+import {provideHttpClient} from "@angular/common/http";
+import {provideHttpClientTesting} from "@angular/common/http/testing";
+import {provideRouter} from "@angular/router";
+import {provideAnimations} from "@angular/platform-browser/animations";
+import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
+import {Card, WhereImageEnum} from "../../../models/card.model";
 
-describe('CreateCardDialogComponent', () => {
-  let component: CreateCardDialogComponent;
-  let fixture: ComponentFixture<CreateCardDialogComponent>;
+describe('CreateCardDialog', () => {
+  let component: CreateCardDialog;
+  let fixture: ComponentFixture<CreateCardDialog>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [CreateCardDialogComponent]
+      imports: [CreateCardDialog],
+      providers: [
+        provideHttpClient(),
+        provideHttpClientTesting(),
+        provideRouter([]),
+        provideAnimations(),
+        {provide: MatDialogRef, useValue: {}},
+        {provide: MAT_DIALOG_DATA, useValue: new Card(WhereImageEnum.NONE)},
+      ],
     })
     .compileComponents();
-    
-    fixture = TestBed.createComponent(CreateCardDialogComponent);
+
+    fixture = TestBed.createComponent(CreateCardDialog);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
