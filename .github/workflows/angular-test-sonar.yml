@@ -22,7 +22,7 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
   deploy:
     name: Deploy
-    needs: [build]
+    needs: [build-angular]
     runs-on: ubuntu-latest
     steps:
       - name: Deploy to production
