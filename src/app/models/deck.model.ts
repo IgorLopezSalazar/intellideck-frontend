@@ -1,14 +1,16 @@
 import {Topic} from "./topic.model";
 import {Tag} from "./tag.model";
+import {User} from "./user.model";
 
 export class Deck {
+  private _id? : string;
   private _title : string;
   private _description : string | undefined;
   private _image? : File;
   private _imagePath? : string;
   private _isPublished : boolean | undefined;
   private _publishDate: Date | undefined;
-  private _creator? : string;
+  private _creator? : User;
   private _topic : Topic;
   private _tags: Tag[];
 
@@ -16,6 +18,14 @@ export class Deck {
     this._title = title;
     this._topic = topic;
     this._tags = [];
+  }
+
+  get id(): string | undefined {
+    return this._id;
+  }
+
+  set id(value: string) {
+    this._id = value;
   }
 
   get title(): string {
@@ -75,11 +85,11 @@ export class Deck {
     this._topic = value;
   }
 
-  get creator(): string | undefined {
+  get creator(): User | undefined {
     return this._creator;
   }
 
-  set creator(value: string) {
+  set creator(value: User) {
     this._creator = value;
   }
 

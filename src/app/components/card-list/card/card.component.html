@@ -12,7 +12,7 @@
 
   <div class="card__info">
     <div class="card__info__question">
-      <img [src]="imageSrc" alt="" *ngIf="card.whereImage == WhereImageEnum.QUESTION">
+      <img [src]="imageSrc" alt="Question image" *ngIf="card.whereImage == WhereImageEnum.QUESTION">
       <div class="card-text card-text__question" [ngClass]="{'without-img': card.whereImage != WhereImageEnum.QUESTION}">
         <p>{{card.question}}</p>
       </div>
@@ -21,7 +21,7 @@
       <div class="card-text card-text__answer" [ngClass]="{'without-img': card.whereImage != WhereImageEnum.ANSWER}">
         <p>{{card.answer}}</p>
       </div>
-      <img [src]="imageSrc" alt="" *ngIf="card.whereImage == WhereImageEnum.ANSWER">
+      <img [src]="imageSrc" alt="Answer image" *ngIf="card.whereImage == WhereImageEnum.ANSWER">
     </div>
   </div>
 </div>

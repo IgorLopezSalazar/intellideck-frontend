@@ -1,6 +1,6 @@
 @use "../../../../colors";
 
-$card-image-heigth: 12em;
+$card-image-height: 12em;
 
 .card {
   background-color: colors.$white;
@@ -12,7 +12,7 @@ $card-image-heigth: 12em;
 
   img {
     width: 100%;
-    height: $card-image-heigth;
+    height: $card-image-height;
     display: block;
     margin: 0;
     object-fit: cover;

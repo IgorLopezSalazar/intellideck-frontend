@@ -1,4 +1,4 @@
-import {Component, ElementRef, EventEmitter, Output, ViewChild} from '@angular/core';
+import {Component, ElementRef, EventEmitter, Input, Output, ViewChild} from '@angular/core';
 import {CdkTextareaAutosize} from "@angular/cdk/text-field";
 import {FormsModule, NgForm} from "@angular/forms";
 import {MatButton} from "@angular/material/button";
@@ -15,6 +15,9 @@ import {COMMA, ENTER} from "@angular/cdk/keycodes";
 import {MatAutocomplete, MatAutocompleteSelectedEvent, MatAutocompleteTrigger} from "@angular/material/autocomplete";
 import {Tag} from "../../models/tag.model";
 import {TagService} from "../../core/tag.service";
+import { cloneDeep } from 'lodash';
+import {lastValueFrom} from "rxjs";
+import {DeckService} from "../../core/deck.service";
 
 @Component({
   selector: 'app-deck-details-form',
@@ -44,6 +47,9 @@ import {TagService} from "../../core/tag.service";
 export class DeckDetailsFormComponent {
   separatorKeysCodes: number[] = [ENTER, COMMA];
 
+  @Input() receivedDeck?: Deck;
+  @Input() displayText: string = 'Crear mazo';
+  @Input() createdDeck: boolean = false;
   @Output() deckEmitter = new EventEmitter<any>();
 
   @ViewChild('fileDropRef', { static: false }) fileDropRef!: ElementRef;
@@ -60,33 +66,32 @@ export class DeckDetailsFormComponent {
   deckTags: Tag[] = [];
   filteredTags: Tag[] = [];
   currentTag: string = '';
+  deck: Deck;
 
   constructor(private topicService: TopicService, private tagService: TagService) {
-    this.getAllTopics();
-    this.getAllTags();
+    this.deck = new Deck('', new Topic('', ''));
   }
 
-  getAllTopics() {
-    this.topicService.getTopics().subscribe(
-      {
-        next: response => {
-          this.topicList = response.body.map((topic: any) => new Topic(topic._id, topic.name));
-        },
-        error: (error: any) => { console.log(error) }
-      }
-    );
+  async ngOnInit() {
+    const [allTopics, allTags] = await Promise.all([this.getAllTopics(), this.getAllTags()]);
+    this.topicList = allTopics.body.map((topic: any) => new Topic(topic._id, topic.name));
+    this.allTagsList = allTags.body.map((tag: any) => new Tag(tag.name));
+    this.filteredTags = this.allTagsList;
+
+    if (this.receivedDeck) {
+      this.deck = cloneDeep(this.receivedDeck);
+      this.selectedTopicIndex = this.topicList.findIndex(topic => topic.name === this.deck.topic.name && topic._id === this.deck.topic._id);
+      this.deckTags = this.deck.tags;
+      if (this.deck.image) this.fileDropText = this.deck.image;
+    }
   }
 
-  getAllTags() {
-    this.tagService.getTags().subscribe(
-      {
-        next: response => {
-          this.allTagsList = response.body.map((topic: any) => new Tag(topic.name));
-          this.filteredTags = this.allTagsList;
-        },
-        error: (error: any) => { console.log(error) }
-      }
-    );
+  async getAllTopics() {
+    return await lastValueFrom(this.topicService.getTopics());
+  }
+
+  async getAllTags() {
+    return await lastValueFrom(this.tagService.getTags());
   }
 
   removeTag(tag: Tag) {
@@ -125,15 +130,15 @@ export class DeckDetailsFormComponent {
     this.filteredTags = this.allTagsList.filter(tag => tag.name.toLowerCase().includes(filterValue));
   }
 
-  createDeck(deckForm: NgForm): void {
+  formSubmit(deckForm: NgForm, publish: boolean): void {
     if (!this.isFormValid(deckForm)) {
       return;
     }
     this.fieldMissing = false;
 
     const deck = this.populateDeck(deckForm);
-
-    this.deckEmitter.emit(deck);
+    console.log(deck)
+    this.deckEmitter.emit({deck: deck, publish: publish});
   }
 
   populateDeck(deckForm: NgForm): Deck {
@@ -141,7 +146,7 @@ export class DeckDetailsFormComponent {
     deck.description = deckForm.value.description;
     deck.tags = this.deckTags;
     if (this.deckImage){
-      deck.image = this.deckImage;
+      deck.imageFile = this.deckImage;
     }
 
     return deck;
@@ -150,8 +155,7 @@ export class DeckDetailsFormComponent {
   isFormValid(deckForm: NgForm): boolean {
     let isValid = true;
 
-    if (deckForm.controls['title'].getError('required') ||
-        (this.selectedTopicIndex == -1 || !deckForm.controls['topic']?.touched)) {
+    if (!this.deck.title || this.selectedTopicIndex == -1) {
       deckForm.controls['topic'].setErrors({ 'required': true });
       this.fieldMissing = true;
       isValid = false;
@@ -203,5 +207,12 @@ export class DeckDetailsFormComponent {
 
   private getFileExtension(filename: string): string {
     return filename.slice(filename.lastIndexOf('.')).toLowerCase();
+  }
+
+  async publishDeck(deckForm: NgForm) {
+    this.formSubmit(deckForm, true);
+
+    console.log("publish")
+
   }
 }
