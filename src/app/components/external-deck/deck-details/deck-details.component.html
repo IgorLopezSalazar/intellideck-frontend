@@ -1,1 +1,49 @@
-<p>deck-details works!</p>
+<div>
+  <div class="container__details">
+    <div class="title">
+      <h2>Datos del mazo</h2>
+    </div>
+    <div class="container__details__row">
+      <div class="first-column">
+        <img src="assets/IntelliDeck_Logo.png" alt="Deck image">
+
+        <div class="first-column__butons">
+          <button mat-flat-button class="primary-button">
+            Empezar entrenamiento
+          </button>
+
+          <button mat-flat-button class="secondary-button">
+            Seguir mazo
+          </button>
+        </div>
+      </div>
+
+      <div class="second-column">
+        <div class="second-column__first-row">
+          <h2>{{deck.title}}</h2>
+          <div class="star-rating">
+            <span class="material-symbols-outlined">
+              star
+            </span>
+          </div>
+        </div>
+
+        <div class="second-column__second-row">
+          <p>{{deck.description}}</p>
+        </div>
+
+        <div class="second-column__third-row">
+          <mat-chip-set aria-label="Topic and tags">
+            <mat-chip class="topic">{{ deck.topic.name }}</mat-chip>
+            <mat-chip class="tag" *ngFor="let tag of deck.tags">{{tag.name}}</mat-chip>
+          </mat-chip-set>
+        </div>
+
+        <div class="second-column__forth-row">
+          <app-user [user]="deck.creator!"></app-user>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

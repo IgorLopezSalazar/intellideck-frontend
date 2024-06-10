@@ -1,7 +1,7 @@
 <div class="background">
   <div class="container">
 <!--    <app-deck-details-form [receivedDeck]="deck" [displayText]="displayText" [createdDeck]="true" (deckEmitter)="handleDeckUpdate($event)"></app-deck-details-form>-->
-    <app-deck-details></app-deck-details>
+    <app-deck-details [deck]="deck!" ></app-deck-details>
     <app-card-list [cardListInput]="deckCards" [externalDeckCard]="true" ></app-card-list>
   </div>
 </div>

@@ -4,7 +4,7 @@ import {MatIcon} from "@angular/material/icon";
 import {CreateCardDialog} from "./create-card-dialog/create-card-dialog.component";
 import {MatDialog} from "@angular/material/dialog";
 import {Card} from "../../models/card.model";
-import {NgFor} from "@angular/common";
+import {NgFor, NgIf} from "@angular/common";
 
 @Component({
   selector: 'app-card-list',
@@ -12,7 +12,8 @@ import {NgFor} from "@angular/common";
   imports: [
     CardComponent,
     MatIcon,
-    NgFor
+    NgFor,
+    NgIf
   ],
   templateUrl: './card-list.component.html',
   styleUrl: './card-list.component.scss'
