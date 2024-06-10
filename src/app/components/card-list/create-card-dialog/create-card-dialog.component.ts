@@ -9,6 +9,8 @@ import {MatCheckbox} from "@angular/material/checkbox";
 import {MatButtonToggle, MatButtonToggleGroup} from "@angular/material/button-toggle";
 import {MatIcon} from "@angular/material/icon";
 import {Card, WhereImageEnum} from "../../../models/card.model";
+import {cloneDeep} from "lodash";
+import {Deck} from "../../../models/deck.model";
 
 @Component({
   selector: 'app-create-card-dialog',
@@ -32,7 +34,7 @@ import {Card, WhereImageEnum} from "../../../models/card.model";
 })
 export class CreateCardDialog {
 
-  @ViewChild('fileDropRef', { static: false }) fileDropRef!: ElementRef;
+  @ViewChild('fileDropRef', {static: false}) fileDropRef!: ElementRef;
 
   addImageChecked: boolean = false;
   imageLocation: string = 'QUESTION';
@@ -48,7 +50,15 @@ export class CreateCardDialog {
     dialogRef.disableClose = true;
 
     if (cardToUpdate) {
-      this.card = cardToUpdate.copy();
+      this.card = new Card(
+        this.cardToUpdate!.whereImage,
+        this.cardToUpdate!.question,
+        this.cardToUpdate!.answer,
+        this.cardToUpdate!.deckId,
+        this.cardToUpdate!.imageFile,
+        this.cardToUpdate!.image,
+        this.cardToUpdate!._id,
+      );
       this.updateCard = true;
       this.createUpdateText = "Actualizar carta";
 
@@ -56,9 +66,9 @@ export class CreateCardDialog {
         this.addImageChecked = true;
         this.imageLocation = this.card.whereImage.toString();
       }
-      if (this.card.image) this.fileDropText = this.card.image.name;
-    }
-    else {
+      if (this.card.imageFile) this.fileDropText = this.card.imageFile.name;
+      else if (this.card.image) this.fileDropText = this.card.image;
+    } else {
       this.card = new Card(WhereImageEnum.NONE);
     }
   }
@@ -73,14 +83,15 @@ export class CreateCardDialog {
       return;
     }
 
-    if (this.addImageChecked && this.card.image) {
+    if (this.addImageChecked) {
       this.card.whereImage = (this.imageLocation === 'ANSWER') ? WhereImageEnum.ANSWER : WhereImageEnum.QUESTION;
-    }
-    else {
+    } else {
       this.card.whereImage = WhereImageEnum.NONE;
-      this.card.deleteImage();
+      this.card.imageFile = undefined;
+      this.card.image = '';
     }
 
+    console.log(this.card);
     this.dialogRef.close(this.card);
   }
 
@@ -88,17 +99,15 @@ export class CreateCardDialog {
     let isValid = true;
 
     if (this.addImageChecked) {
-      if (!this.card.image) {
+      if (!this.card.image && !this.card.imageFile) {
         isValid = false;
         this.errorText = "Hubo un error con la imagen.";
-      }
-      else if ((this.imageLocation === 'answer' && !this.card.question) ||
-              (this.imageLocation === 'question' && !this.card.answer)) {
+      } else if ((this.imageLocation === 'answer' && !this.card.question) ||
+        (this.imageLocation === 'question' && !this.card.answer)) {
         isValid = false;
         this.errorText = "Es necesario rellenar el campo que no tiene imagen.";
       }
-    }
-    else if (!this.card.question || !this.card.answer) {
+    } else if (!this.card.question || !this.card.answer) {
       isValid = false;
       this.errorText = "La pregunta y la respuesta son necesarios.";
     }
@@ -139,7 +148,7 @@ export class CreateCardDialog {
 
       if (this.allowedExtensions.includes(fileExtension)) {
         this.fileDropText = file.name;
-        this.card.image = file;
+        this.card.imageFile = file;
       } else {
         this.fileDropText = 'Tipo de archivo no permitido.';
         alert('Tipo de archivo invalido. Por favor selecciona un archivo válido: "' + this.allowedExtensions.join('", "') + '"');

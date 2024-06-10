@@ -11,6 +11,7 @@ import {AuthService} from "./auth.service";
 export class DeckService {
 
   private END_POINT_DECKS = environment.API_URL + '/decks';
+  private END_POINT_PUBLISH = '/publish';
 
   constructor(private http: HttpClient, private auth: AuthService) { }
 
@@ -48,5 +49,38 @@ export class DeckService {
     };
 
     return this.http.get(this.END_POINT_DECKS + "/timeline", options);
+  }
+
+  updateDeck(deck: Deck): Observable<any> {
+    let token: string | null = this.auth.getToken();
+    if (!token) {
+      return of({ error: 'No token available' });
+    }
+
+    const options: any = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': token
+      }),
+      observe: 'response'
+    };
+
+    return this.http.put(this.END_POINT_DECKS + "/" + deck._id, deck.toJson(), options);
+  }
+
+  publishDeck(deckId: string): Observable<any> {
+    let token: string | null = this.auth.getToken();
+    if (!token) {
+      return of({ error: 'No token available' });
+    }
+
+    const options: any = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': token
+      }),
+      observe: 'response'
+    };
+    return this.http.put(this.END_POINT_DECKS + "/" + deckId + this.END_POINT_PUBLISH, {}, options);
   }
 }

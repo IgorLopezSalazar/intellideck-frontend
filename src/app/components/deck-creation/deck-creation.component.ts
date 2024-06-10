@@ -63,13 +63,13 @@ export class DeckCreationComponent {
 
     const getTagsIdPromise = this.getDeckTagsId(this.receivedDeck);
     let getDeckImagePathPromise;
-    if (this.receivedDeck.image){
-      getDeckImagePathPromise = this.saveImage(this.receivedDeck.image);
+    if (this.receivedDeck.imageFile){
+      getDeckImagePathPromise = this.saveImage(this.receivedDeck.imageFile);
     }
 
     const [deckWithTagsId, imagePath] = await Promise.all([getTagsIdPromise, getDeckImagePathPromise]);
     if (imagePath) {
-      deckWithTagsId.imagePath = imagePath.body;
+      deckWithTagsId.image = imagePath.body;
     }
     return await this.callCreateDeck(deckWithTagsId);
   }
@@ -112,13 +112,13 @@ export class DeckCreationComponent {
       let getCardImagePathPromise;
       console.log(i)
 
-      if (card.image) {
-        getCardImagePathPromise = this.saveImage(card.image);
+      if (card.imageFile) {
+        getCardImagePathPromise = this.saveImage(card.imageFile);
       }
 
       const [imagePath] = await Promise.all([getCardImagePathPromise]);
       if (imagePath) {
-        card.imagePath = imagePath.body;
+        card.image = imagePath.body;
       }
 
       card.deckId = deckID;
@@ -127,7 +127,7 @@ export class DeckCreationComponent {
   }
 
   async callCreateCard(card: Card) {
-    this.cardService.createDeck(card).subscribe(
+    this.cardService.createCard(card).subscribe(
       {
         next: response => {
           console.log(response);

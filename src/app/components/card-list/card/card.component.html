@@ -1,14 +1,22 @@
 <div class="card">
-  <div class="card__buttons">
-    <span class="material-symbols-outlined edit" (click)="editCard()" (keyup)="editCard()">
+  <div class="card__buttons" [ngClass]="{ 'show': !view }">
+    <span class="material-symbols-outlined view" (click)="viewCard()" (keyup)="viewCard()" *ngIf="externalDeckCard">
+      {{ view ? 'visibility' : 'visibility_off' }}
+    </span>
+    <span class="material-symbols-outlined edit" (click)="editCard()" (keyup)="editCard()" *ngIf="!externalDeckCard">
       edit_square
     </span>
-    <span class="material-symbols-outlined delete" (click)="deleteCard()" (keyup)="deleteCard()">
+    <span class="material-symbols-outlined delete" (click)="deleteCard()" (keyup)="deleteCard()" *ngIf="!externalDeckCard">
       delete_forever
     </span>
   </div>
 
-  <div class="card__overlay"></div>
+  <div class="card__overlay" *ngIf="view"></div>
+  <div [ngClass]="{ 'card__overlay-visibility-off': !view }" *ngIf="!view">
+    <span class="material-symbols-outlined card__overlay-visibility-off__icon">
+      visibility_off
+    </span>
+  </div>
 
   <div class="card__info">
     <div class="card__info__question">

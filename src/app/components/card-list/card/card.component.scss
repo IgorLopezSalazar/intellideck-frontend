@@ -18,6 +18,27 @@ $card-image-height: 12em;
     object-fit: cover;
   }
 
+  &__overlay-visibility-off {
+    display: flex;
+    background-color: colors.$transparent-grey;
+    border-radius: 8px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    justify-content: center;
+    align-items: center;
+
+    &__icon {
+      cursor: none;
+      font-size: 8em;
+      color: colors.$primary-purple;
+      font-variation-settings: 'FILL' 1;
+    }
+  }
+
   &__overlay {
     display: none;
     position: absolute;
@@ -25,6 +46,7 @@ $card-image-height: 12em;
     left: 0;
     width: 100%;
     height: 100%;
+    border-radius: 8px;
     background-color: colors.$transparent-light-purple;
     z-index: 1;
   }
@@ -34,6 +56,10 @@ $card-image-height: 12em;
   }
 
   &:hover .card__buttons {
+    display: flex;
+  }
+
+  .show {
     display: flex;
   }
 
@@ -52,11 +78,19 @@ $card-image-height: 12em;
       padding: 0.1em;
     }
 
+    .view {
+      cursor: pointer;
+      background-color: colors.$dark-grey;
+      font-variation-settings: 'FILL' 1;
+    }
+
     .edit {
+      cursor: pointer;
       background-color: colors.$blue-munsell;
     }
 
     .delete {
+      cursor: pointer;
       background-color: colors.$light-red;
     }
   }
@@ -120,6 +154,5 @@ $card-image-height: 12em;
 }
 
 .material-symbols-outlined {
-  cursor: pointer;
   user-select: none;
 }

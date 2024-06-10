@@ -1,9 +1,9 @@
 export class Topic {
-  private _id : string;
+  private __id : string;
   private _name : string;
 
   constructor(id: string, name: string) {
-    this._id = id;
+    this.__id = id;
     this._name = name;
   }
 
@@ -15,11 +15,13 @@ export class Topic {
     this._name = value;
   }
 
-  public get id(): string {
-    return this._id;
+  public get _id(): string {
+    return this.__id;
   }
 
-  public set id(value: string) {
-    this._id = value;
+  public set _id(value: string) {
+    this.__id = value;
   }
+
+
 }

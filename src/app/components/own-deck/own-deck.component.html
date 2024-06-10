@@ -1,0 +1,6 @@
+<div class="background">
+  <div class="container">
+    <app-deck-details-form [receivedDeck]="deck" [displayText]="displayText" [createdDeck]="true" (deckEmitter)="handleDeckUpdate($event)"></app-deck-details-form>
+    <app-card-list [cardListInput]="deckCards"></app-card-list>
+  </div>
+</div>

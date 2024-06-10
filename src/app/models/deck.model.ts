@@ -1,18 +1,20 @@
 import {Topic} from "./topic.model";
 import {Tag} from "./tag.model";
 import {User} from "./user.model";
+import {Card} from "./card.model";
 
 export class Deck {
-  private _id? : string;
+  private __id? : string;
   private _title : string;
   private _description : string | undefined;
-  private _image? : File;
-  private _imagePath? : string;
+  private _imageFile? : File;
+  private _image? : string;
   private _isPublished : boolean | undefined;
   private _publishDate: Date | undefined;
   private _creator? : User;
   private _topic : Topic;
   private _tags: Tag[];
+  private _cards?: Card[];
 
   constructor(title: string, topic: Topic) {
     this._title = title;
@@ -20,12 +22,12 @@ export class Deck {
     this._tags = [];
   }
 
-  get id(): string | undefined {
-    return this._id;
+  get _id(): string | undefined {
+    return this.__id;
   }
 
-  set id(value: string) {
-    this._id = value;
+  set _id(value: string) {
+    this.__id = value;
   }
 
   get title(): string {
@@ -44,20 +46,20 @@ export class Deck {
     this._description = value;
   }
 
-  get imagePath(): string | undefined {
-    return this._imagePath;
-  }
-
-  set imagePath(value: string) {
-    this._imagePath = value;
-  }
-
-  get image(): File | undefined {
+  get image(): string | undefined {
     return this._image;
   }
 
-  set image(value: File) {
+  set image(value: string) {
     this._image = value;
+  }
+
+  get imageFile(): File | undefined {
+    return this._imageFile;
+  }
+
+  set imageFile(value: File) {
+    this._imageFile = value;
   }
 
   get isPublished(): boolean | undefined {
@@ -101,12 +103,20 @@ export class Deck {
     this._tags = value;
   }
 
+  get cards(): Card[] | undefined {
+    return this._cards;
+  }
+
+  set cards(value: Card[]) {
+    this._cards = value;
+  }
+
   toJson(): string {
     return JSON.stringify({
       title: this._title,
-      topic: this._topic.id,
+      topic: this._topic._id,
       description: this._description,
-      image: this._imagePath,
+      image: this._image,
       tags: this._tags?.map(tag => tag.id)
     });
   }

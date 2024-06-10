@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {CardComponent} from "./card/card.component";
 import {MatIcon} from "@angular/material/icon";
 import {CreateCardDialog} from "./create-card-dialog/create-card-dialog.component";
@@ -19,9 +19,36 @@ import {NgFor} from "@angular/common";
 })
 export class CardListComponent {
 
+  @Input() externalDeckCard?: boolean;
+
   cardList: Card[] = [];
+  @Input()
+  set cardListInput(value: Card[] | undefined) {
+    if (value) {
+      value.forEach(card => {
+        const newCard = new Card(
+          card.whereImage,
+          card.question,
+          card.answer,
+          card.deckId,
+          card.imageFile,
+          card.image,
+          card._id,
+        );
+        this.cardList.push(newCard); // Add the new card to the destination array
+      });
+    }
+    else {
+      this.cardList = [];
+    }
+  }
 
   constructor(public dialog: MatDialog) {
+  }
+
+  viewCard(cardIndex: number) {
+    //this.cardList.splice(cardIndex, 1);
+    console.log("view" + cardIndex)
   }
 
   deleteCard(cardIndex: number) {
