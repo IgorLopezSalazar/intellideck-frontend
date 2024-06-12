@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CreateCardDialog } from './create-card-dialog.component';
+import { ExploreComponent } from './explore.component';
 
-describe('CreateCardDialogComponent', () => {
-  let component: CreateCardDialog;
-  let fixture: ComponentFixture<CreateCardDialog>;
+describe('ExploreComponent', () => {
+  let component: ExploreComponent;
+  let fixture: ComponentFixture<ExploreComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [CreateCardDialog]
+      imports: [ExploreComponent]
     })
     .compileComponents();
-
-    fixture = TestBed.createComponent(CreateCardDialog);
+    
+    fixture = TestBed.createComponent(ExploreComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

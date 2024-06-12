@@ -1,0 +1,42 @@
+@use "../../../colors";
+
+$recommended-user-image-height: 3.5em;
+
+.users-container {
+  border-right: 3px solid colors.$primary-purple;
+  max-width: 20em;
+
+  &__title {
+
+  }
+
+  .users {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+
+    .user {
+      display: flex;
+      align-items: center;
+      gap: 0.5em;
+
+      &__image {
+        img {
+          border-radius: 0.5em;
+          height: $recommended-user-image-height;
+          display: block;
+          margin: 0;
+          object-fit: cover;
+        }
+      }
+
+      &__name {
+        max-width: calc(100% - $recommended-user-image-height - 1em);
+
+        span {
+          word-wrap: break-word;
+        }
+      }
+    }
+  }
+}

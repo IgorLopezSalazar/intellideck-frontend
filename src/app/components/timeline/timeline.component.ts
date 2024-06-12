@@ -8,6 +8,7 @@ import {Topic} from "../../models/topic.model";
 import {CardComponent} from "../card-list/card/card.component";
 import {User} from "../../models/user.model";
 import {NgIf} from "@angular/common";
+import {RecommendedUserListComponent} from "../recommended-user-list/recommended-user-list.component";
 
 @Component({
   selector: 'app-timeline',
@@ -20,7 +21,8 @@ import {NgIf} from "@angular/common";
     MatChip,
     DeckListComponent,
     CardComponent,
-    NgIf
+    NgIf,
+    RecommendedUserListComponent
   ],
   templateUrl: './timeline.component.html',
   styleUrl: './timeline.component.scss'
@@ -41,6 +43,8 @@ export class TimelineComponent {
           this.exploreDecks = response.body.map(
             (response: Deck[]) => this.exploreDecks = response
           );
+          console.log(response.body);
+          console.log(this.exploreDecks);
         },
         error: (error: any) => { console.log(error) }
       }

@@ -6,6 +6,7 @@ import {authGuard} from "./auth.guard";
 import {TimelineComponent} from "./components/timeline/timeline.component";
 import {OwnDeckComponent} from "./components/own-deck/own-deck.component";
 import {ExternalDeckComponent} from "./components/external-deck/external-deck.component";
+import {ExploreComponent} from "./components/explore/explore.component";
 
 export const routes: Routes = [
   { path: '', component: TimelineComponent, canActivate: [authGuard] },
@@ -13,5 +14,6 @@ export const routes: Routes = [
   { path: 'sign-up', component: RegisterComponent},
   { path: 'deck-creation', component: DeckCreationComponent, canActivate: [authGuard]},
   { path: 'own-deck', component: OwnDeckComponent, canActivate: [authGuard]},
-  { path: 'deck', component: ExternalDeckComponent, canActivate: [authGuard]}
+  { path: 'deck', component: ExternalDeckComponent, canActivate: [authGuard]},
+  { path: 'explore', component: ExploreComponent, canActivate: [authGuard]}
 ];

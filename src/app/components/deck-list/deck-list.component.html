@@ -1,3 +1,6 @@
-<div class="decks">
-  <app-deck *ngFor="let deck of deckList" [deck]="deck"></app-deck>
+<div class="decks" *ngIf="deckList.length > 0; else emptyDeckList">
+  <app-deck *ngFor="let deck of deckList" [deck]="deck" ></app-deck>
 </div>
+<ng-template #emptyDeckList class>
+  <span class="emptyDeckList">No hay mazos a monstrar</span>
+</ng-template>

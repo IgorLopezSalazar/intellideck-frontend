@@ -1,0 +1,35 @@
+<div class="container">
+  <div class="side">
+    <app-recommended-user-list></app-recommended-user-list>
+  </div>
+
+  <div class="main">
+    <mat-tab-group>
+      <mat-tab label="Mazos">
+        <app-deck-list [deckList]="filteredDecks"></app-deck-list>
+      </mat-tab>
+      <mat-tab label="Usuarios">
+        Content 2
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+
+<!--  <div class="main">-->
+<!--    <div class="training-container">-->
+<!--      <div>-->
+<!--        <h2>Tus sesiones de estudio</h2>-->
+<!--      </div>-->
+<!--      <app-deck-list *ngIf="studySessions.length > 0; else noStudySessions"></app-deck-list>-->
+<!--      <ng-template #noStudySessions>-->
+<!--        <span class="training-container__empty">No hay sesiones de estudio</span>-->
+<!--      </ng-template>-->
+<!--    </div>-->
+
+<!--    <div class="decks-container">-->
+<!--      <div>-->
+<!--        <h2>Explorar mazos</h2>-->
+<!--      </div>-->
+<!--      <app-deck-list [deckList]="exploreDecks"></app-deck-list>-->
+<!--    </div>-->
+<!--  </div>-->
+</div>

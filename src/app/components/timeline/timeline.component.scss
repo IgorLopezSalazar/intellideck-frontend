@@ -1,8 +1,5 @@
 @use "../../../colors";
 
-$recommended-user-image-height: 3.5em;
-
-
 .container {
   display: grid;
   grid-template-columns: 1fr 5fr;
@@ -11,45 +8,6 @@ $recommended-user-image-height: 3.5em;
 
   .side {
     padding: 2em;
-
-    .users-container {
-      border-right: 3px solid colors.$primary-purple;
-      max-width: 20em;
-
-      &__title {
-
-      }
-
-      .users {
-        display: flex;
-        flex-direction: column;
-        gap: 1em;
-
-        .user {
-          display: flex;
-          align-items: center;
-          gap: 0.5em;
-
-          &__image {
-            img {
-              border-radius: 0.5em;
-              height: $recommended-user-image-height;
-              display: block;
-              margin: 0;
-              object-fit: cover;
-            }
-          }
-
-          &__name {
-            max-width: calc(100% - $recommended-user-image-height - 1em);
-
-            span {
-              word-wrap: break-word;
-            }
-          }
-        }
-      }
-    }
   }
 
   .main {

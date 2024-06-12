@@ -4,6 +4,7 @@ import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
 import {Observable, of} from "rxjs";
 import {Deck} from "../models/deck.model";
 import {AuthService} from "./auth.service";
+import {DeckFilters} from "../models/deckFilters.model";
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +13,7 @@ export class DeckService {
 
   private END_POINT_DECKS = environment.API_URL + '/decks';
   private END_POINT_PUBLISH = '/publish';
+  private END_POINT_FILTER = '/filter';
 
   constructor(private http: HttpClient, private auth: AuthService) { }
 
@@ -82,5 +84,27 @@ export class DeckService {
       observe: 'response'
     };
     return this.http.put(this.END_POINT_DECKS + "/" + deckId + this.END_POINT_PUBLISH, {}, options);
+  }
+
+  filterDecks(deckFilters: DeckFilters): Observable<any> {
+    let token: string | null = this.auth.getToken();
+    if (!token) {
+      return of({ error: 'No token available' });
+    }
+
+    let params = new HttpParams();
+
+    params = deckFilters.setDeckFiltersParams(params);
+
+    const options: any = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': token
+      }),
+      params: params,
+      observe: 'response'
+    };
+
+    return this.http.get(this.END_POINT_DECKS + this.END_POINT_FILTER, options);
   }
 }
