@@ -186,18 +186,5 @@
     display: flex;
     justify-content: flex-end;
     padding: 0 1.5rem 1.5rem;
-
-    .cancel {
-      background-color: colors.$light-purple;
-    }
-
-    .create-card {
-      background-color: colors.$primary-purple;
-      color: colors.$white;
-
-      &:hover {
-        background-color: colors.$dark-purple;
-      }
-    }
   }
 }

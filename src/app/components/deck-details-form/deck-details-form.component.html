@@ -1,7 +1,10 @@
-<form #deckForm="ngForm" (ngSubmit)="createDeck(deckForm)">
+<form #deckForm="ngForm" (ngSubmit)="formSubmit(deckForm, false)">
   <div class="container__creation">
-    <div>
-      <h2>Crear mazo</h2>
+    <div class="title">
+      <h2>{{ displayText }}</h2>
+      <button mat-flat-button class="primary-button" type="button" *ngIf="createdDeck" (click)="publishDeck(deckForm)">
+        Publicar mazo
+      </button>
     </div>
     <div class="container__creation__row">
       <div class="container__creation__row__first-column">
@@ -9,7 +12,7 @@
           <mat-form-field appearance="outline" subscriptSizing="dynamic" class="form-field">
             <label>
               Titulo*
-              <input matInput ngModel required type="text" name="title" class="form-control" placeholder="Añade un título que describa el mazo" >
+              <input matInput ngModel required type="text" name="title" class="form-control" placeholder="Añade un título que describa el mazo" [(ngModel)]="deck.title">
             </label>
           </mat-form-field>
           <mat-error *ngIf="fieldMissing">
@@ -21,7 +24,7 @@
           <mat-form-field appearance="outline" subscriptSizing="dynamic" class="form-field">
             <label>
               Descripción
-              <textarea matInput ngModel cdkTextareaAutosize cdkAutosizeMinRows="1" cdkAutosizeMaxRows="1" type="text" name="description" class="text-area-input" placeholder="Nombre" ></textarea>
+              <textarea matInput ngModel cdkTextareaAutosize cdkAutosizeMinRows="1" cdkAutosizeMaxRows="1" type="text" name="description" class="text-area-input" placeholder="Nombre" [(ngModel)]="deck.description"></textarea>
             </label>
           </mat-form-field>
         </div>
@@ -75,7 +78,7 @@
         </div>
 
         <button mat-flat-button class="primary-button">
-          Crear mazo
+          {{ displayText }}
         </button>
       </div>
 

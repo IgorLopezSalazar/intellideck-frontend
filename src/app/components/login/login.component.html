@@ -6,21 +6,21 @@
       </div>
       <form #loginForm="ngForm" (ngSubmit)="login(loginForm)">
         <div class="form-field">
-          <label>
+          <span>
             Nombre de usuario :
-            <mat-form-field appearance="outline">
-              <input matInput ngModel required type="text" name="username" class="form-control" placeholder="Nombre de usuario" >
-            </mat-form-field>
-          </label>
+          </span>
+          <mat-form-field appearance="outline">
+            <input matInput ngModel required type="text" name="username" class="form-control" placeholder="Nombre de usuario" >
+          </mat-form-field>
         </div>
 
         <div class="form-field">
-          <label>
+          <span>
             Contraseña :
-            <mat-form-field appearance="outline">
-              <input matInput ngModel required type="password" name="password" class="form-control" placeholder="Contraseña">
-            </mat-form-field>
-          </label>
+          </span>
+          <mat-form-field appearance="outline">
+            <input matInput ngModel required type="password" name="password" class="form-control" placeholder="Contraseña">
+          </mat-form-field>
           <div class="text-right forget-pass">
             <a routerLink="/forget-password">¿Has olvidado la contraseña?</a>
           </div>

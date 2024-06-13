@@ -1,0 +1,30 @@
+@use "../../../../colors";
+
+$deck-image-width: 3em;
+$deck-image-max-height: 25em;
+
+.user {
+  padding: 1em;
+
+  &-grid {
+    display: grid;
+    grid-template-columns: min-content 1fr min-content;
+    gap: 1.5em;
+    width: fit-content;
+    align-items: center;
+
+    &__image img {
+      height: 100%;
+      max-height: $deck-image-max-height;
+      width: $deck-image-width;
+      border-radius: 50%;
+      display: block;
+      margin: 0;
+      object-fit: cover;
+    }
+
+    &__details span {
+      font-size: 1.2em;
+    }
+  }
+}

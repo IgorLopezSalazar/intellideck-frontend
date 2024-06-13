@@ -5,14 +5,13 @@
 
   <div class="card-list__container">
 
-    <app-card *ngFor="let card of cardList; let i = index" [card]="card" [index]="i" (editCardEvent)="editCard($event)" (deleteCardEvent)="deleteCard($event)"></app-card>
+    <app-card *ngFor="let card of cardList; let i = index" [externalDeckCardInput]="externalDeckCard" [card]="card" [index]="i" (viewCardEvent)="viewCard($event)" (editCardEvent)="editCard($event)" (deleteCardEvent)="deleteCard($event)"></app-card>
 
-    <div class="add-card" (click)="createCard()" (keyup)="createCard()">
+    <div class="add-card" (click)="createCard()" (keyup)="createCard()" *ngIf="!externalDeckCard">
       <span class="material-symbols-outlined add-circle">
         add_circle
       </span>
     </div>
 
   </div>
-
 </div>

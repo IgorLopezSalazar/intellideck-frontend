@@ -4,7 +4,7 @@ import {MatButton, MatIconButton} from "@angular/material/button";
 import {MatError, MatFormField} from "@angular/material/form-field";
 import {MatInput} from "@angular/material/input";
 import {NgIf} from "@angular/common";
-import {RouterLink} from "@angular/router";
+import {Router, RouterLink} from "@angular/router";
 import {AuthService} from "../../core/auth.service";
 import {User} from "../../models/user.model";
 import {MatIcon} from "@angular/material/icon";
@@ -34,7 +34,7 @@ export class RegisterComponent {
   errorMessageText: string = "";
   hide = true;
 
-  constructor(private authService: AuthService) {
+  constructor(private authService: AuthService, private router: Router) {
   }
 
   register(registerForm: NgForm): void {
@@ -57,6 +57,12 @@ export class RegisterComponent {
           console.log(response);
           this.showErrorMessage = false;
           this.authService.setToken(response.body);
+
+          this.router.navigate(['/login']).then(() => {
+            console.log('Navigation to login page complete');
+          }).catch(error => {
+            console.error('Navigation error:', error);
+          });
         },
         error: (error: any) => {
           console.log(error);
@@ -68,16 +74,14 @@ export class RegisterComponent {
   }
 
   isFormValid(registerForm: NgForm): boolean {
-    let isValid = true;
-    if (!registerForm.valid) {
+    let isValid = this.isPasswordValid(registerForm);
+
+    if (isValid && !registerForm.valid) {
       this.showErrorMessage = true;
       this.errorMessageText = "Todos los campos son necesarios.";
 
       if (registerForm.controls['password'].getError('minlength')) {
         this.errorMessageText = "La contraseña tiene que ser de al menos 6 characteres.";
-      }
-      else if (registerForm.value.password != registerForm.value["repeated-password"]) {
-        this.errorMessageText = "Las contraseñas no coinciden.";
       }
       else if (registerForm.controls['email'].getError('email')) {
         this.errorMessageText = "Por favor introduce un email válido."
@@ -86,6 +90,16 @@ export class RegisterComponent {
       isValid = false;
     }
 
+    return isValid;
+  }
+
+  isPasswordValid(registerForm: NgForm) {
+    let isValid = true;
+    if (registerForm.value.password !== registerForm.value["repeated-password"]) {
+      this.showErrorMessage = true;
+      this.errorMessageText = "Las contraseñas no coinciden.";
+      isValid = false;
+    }
     return isValid;
   }
 

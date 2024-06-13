@@ -1,7 +1,14 @@
+@use "../colors";
+
 .main{
   height: 100%;
 }
 
 .headerPadding {
   padding-top: var(--mat-toolbar-standard-height);
+}
+
+html {
+  background-color: colors.$white;
+  height: 100vh;
 }

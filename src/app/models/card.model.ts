@@ -5,31 +5,30 @@ export enum WhereImageEnum {
 }
 
 export class Card {
+  private __id? : string;
   private _question? : string;
   private _answer? : string;
-  private _image? : File;
-  private _imagePath? : string;
+  private _imageFile? : File;
+  private _image? : string;
   private _whereImage: WhereImageEnum;
   private _deckId?: string;
 
-  constructor(whereImage: WhereImageEnum, question?: string, answer?: string, deck?: string, image?: File, imagePath?: string) {
+  constructor(whereImage: WhereImageEnum, question?: string, answer?: string, deck?: string, image?: File, imagePath?: string, _id?: string) {
     this._question = question;
     this._answer = answer;
     this._whereImage = whereImage;
     this._deckId = deck;
-    this._image = image;
-    this._imagePath = imagePath;
+    this._imageFile = image;
+    this._image = imagePath;
+    this.__id = _id;
   }
 
-  copy() {
-    return new Card(
-      this.whereImage,
-      this.question,
-      this.answer,
-      this.deckId,
-      this.image,
-      this.imagePath
-    );
+  get _id(): string | undefined {
+    return this.__id;
+  }
+
+  set _id(value: string) {
+    this.__id = value;
   }
 
   get question(): string | undefined {
@@ -48,24 +47,20 @@ export class Card {
     this._answer = value;
   }
 
-  get image(): File | undefined {
+  get imageFile(): File | undefined {
+    return this._imageFile;
+  }
+
+  set imageFile(value: File | undefined) {
+    this._imageFile = value;
+  }
+
+  get image(): string | undefined {
     return this._image;
   }
 
-  set image(value: File) {
+  set image(value: string | undefined) {
     this._image = value;
-  }
-
-  public deleteImage() {
-    this._image = undefined;
-  }
-
-  get imagePath(): string | undefined {
-    return this._imagePath;
-  }
-
-  set imagePath(value: string) {
-    this._imagePath = value;
   }
 
   get whereImage(): WhereImageEnum {
@@ -88,7 +83,7 @@ export class Card {
     return JSON.stringify({
       question : this.question,
       answer : this.answer,
-      image : this.imagePath,
+      image : this.image,
       whereImage: this.whereImage,
       deckId: this.deckId
     });

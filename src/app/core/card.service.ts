@@ -4,6 +4,7 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {AuthService} from "./auth.service";
 import {Observable, of} from "rxjs";
 import {Card} from "../models/card.model";
+import {Deck} from "../models/deck.model";
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,7 @@ export class CardService {
 
   constructor(private http: HttpClient, private auth: AuthService) { }
 
-  createDeck(card: Card): Observable<any> {
+  createCard(card: Card): Observable<any> {
     let token: string | null = this.auth.getToken();
     if (!token) {
       return of({ error: 'No token available' });
@@ -29,5 +30,40 @@ export class CardService {
     };
     let endPointUrl =   this.END_POINT_DECKS + '/' + card.deckId + this.END_POINT_CARDS;
     return this.http.post(endPointUrl, card.toJson(), options);
+  }
+
+  getCardsFromDeck(deckId: string): Observable<any> {
+    let token: string | null = this.auth.getToken();
+    if (!token) {
+      return of({ error: 'No token available' });
+    }
+
+    const options: any = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': token
+      }),
+      observe: 'response'
+    };
+
+    let endPointUrl =   this.END_POINT_DECKS + '/' + deckId + this.END_POINT_CARDS;
+    return this.http.get(endPointUrl, options);
+  }
+
+  updateCard(card: Card): Observable<any> {
+    let token: string | null = this.auth.getToken();
+    if (!token) {
+      return of({ error: 'No token available' });
+    }
+
+    const options: any = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': token
+      }),
+      observe: 'response'
+    };
+
+    return this.http.put(this.END_POINT_DECKS + "/" + card.deckId + this.END_POINT_CARDS + "/" + card._id, card.toJson(), options);
   }
 }
