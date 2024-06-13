@@ -12,7 +12,7 @@ import { CommonModule } from "@angular/common";
 })
 
 export class AppComponent {
-  title ="intellideck";
+  title = 'IntelliDeck';
 
   constructor(private router: Router) {}
 
