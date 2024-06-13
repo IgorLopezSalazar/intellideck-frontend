@@ -12,6 +12,7 @@ import {MatTabsModule} from "@angular/material/tabs";
 import {Topic} from "../../models/topic.model";
 import {DeckFilters} from "../../models/deckFilters.model";
 import {convertOutputFile} from "@angular-devkit/build-angular/src/tools/esbuild/utils";
+import {UserService} from "../../core/user.service";
 
 @Component({
   selector: 'app-explore',
@@ -31,7 +32,8 @@ export class ExploreComponent {
   filteredDecks: Deck[] = [];
   filteredUsers: User[] = [];
 
-  constructor(public dialog: MatDialog, private deckService: DeckService) {
+  constructor(public dialog: MatDialog, private deckService: DeckService,
+              private userService: UserService) {
     this.openExploreSearchDialog();
   }
 
@@ -61,22 +63,27 @@ export class ExploreComponent {
                     (filterResponse: Deck[]) => this.filteredDecks = filterResponse
                   );
                 }
-
-                // response.body.map((deck: any) => new Deck(deck._id, topic.name));
-                console.log(filterResponse.body);
-                console.log(this.filteredDecks);
-                // this.filteredDecks = filterResponse.body;
               },
               error: (error: any) => {
                 console.log(error);
               }
             }
           );
-          // if (card !== undefined) {
-          //   this.cardList.push(card);
-          // } else {
-          //   console.log('The dialog was canceled');
-          // }
+
+          this.userService.filterUsers(response.userFilters).subscribe(
+            {
+              next: (filterResponse) => {
+                if (filterResponse.body) {
+                  this.filteredUsers = filterResponse.body.map(
+                    (filterResponse: User[]) => this.filteredUsers = filterResponse
+                  );
+                }
+              },
+              error: (error: any) => {
+                console.log(error);
+              }
+            }
+          );
         },
         error: (error: any) => { console.log(error) }
       }
