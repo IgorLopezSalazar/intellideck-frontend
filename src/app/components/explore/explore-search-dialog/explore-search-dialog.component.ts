@@ -27,6 +27,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MAT_DATE_LOCALE, provideNativeDateAdapter} from '@angular/material/core';
 import {DeckFilters} from "../../../models/deckFilters.model";
 import {DeckService} from "../../../core/deck.service";
+import {RouterLink} from "@angular/router";
 
 @Component({
   selector: 'app-explore-search-dialog',
@@ -58,7 +59,8 @@ import {DeckService} from "../../../core/deck.service";
     MatIcon,
     MatDatepickerModule,
     MatInputModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    RouterLink
   ],
   templateUrl: './explore-search-dialog.component.html',
   styleUrl: './explore-search-dialog.component.scss'

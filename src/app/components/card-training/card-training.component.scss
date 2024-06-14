@@ -1,0 +1,22 @@
+@use "../../../colors";
+
+.background{
+  background-color: colors.$light-purple;
+  height: 100%;
+}
+
+.container {
+  height: 90%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &__card {
+    background-color: colors.$white-smoke;
+    width: 30%;
+    padding: 2em;
+    margin-top: 35px;
+    box-shadow: 0 0 10px 6px #c3c3c3;
+    border-radius: 0.5em;
+  }
+}

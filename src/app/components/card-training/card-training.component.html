@@ -1,0 +1,28 @@
+<div class="background">
+  <div class="container">
+    <div class="container__card">
+      <div class="question">
+        <img src="assets/IntelliDeck_Logo.png" alt="Question image">
+        <span>This is a placeholder for the question of the card</span>
+      </div>
+
+      <div class="answer">
+        <div class="answer__placeholder" *ngIf="false">
+          <span>Haz click en la carta cuando hayas pensado la respuesta</span>
+        </div>
+
+        <div class="answer__revealed" *ngIf="true">
+          <div class="answer__revealed__content">
+            <img src="assets/IntelliDeck_Logo.png" alt="Answer image">
+            <span>This is a placeholder for the answer content of the card</span>
+          </div>
+
+          <div class="answer__revealed__actions">
+            <button mat-button class="wrong-button" (click)="wrongAnswer()">Incorrecto</button>
+            <button mat-button class="correct-button" (click)="correctAnswer()">Correcto</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
