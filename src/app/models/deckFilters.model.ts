@@ -5,8 +5,8 @@ import {HttpParams} from "@angular/common/http";
 export class DeckFilters {
   private _title?: string;
   private _publishDate?: Date;
-  private _creator? : User;
-  private _topic?: Topic;
+  private _creator? : string;
+  private _topic?: string;
   private _tag?: string;
   private _minDeckRating?: number;
   private _onlyFollowerDecks?: boolean;
@@ -18,7 +18,7 @@ export class DeckFilters {
   //   onlyFollowerDecks: false
 
 
-  constructor(title?: string,publishDate?: Date, creator?: User, topic?: Topic,
+  constructor(title?: string,publishDate?: Date, creator?: string, topic?: string,
               tag?: string, minDeckRating?: number, onlyFollowerDecks?: boolean) {
     this._title = title;
     this._publishDate = publishDate;
@@ -45,19 +45,19 @@ export class DeckFilters {
     this._publishDate = value;
   }
 
-  get creator(): User | undefined {
+  get creator(): string | undefined {
     return this._creator;
   }
 
-  set creator(value: User) {
+  set creator(value: string) {
     this._creator = value;
   }
 
-  get topic(): Topic | undefined {
+  get topic(): string | undefined {
     return this._topic;
   }
 
-  set topic(value: Topic) {
+  set topic(value: string) {
     this._topic = value;
   }
 
@@ -88,10 +88,10 @@ export class DeckFilters {
   setDeckFiltersParams(params: HttpParams) {
     if (this._title) params = params.append('title', this._title);
     if (this._publishDate) params = params.append('date', this.formatDate(this._publishDate));
-    if (this._creator) params = params.append('creator', this._creator.username);
-    if (this._topic) params = params.append('topic', this._topic.name);
+    if (this._creator) params = params.append('creator', this._creator);
+    if (this._topic) params = params.append('topic', this._topic);
     if (this._tag) params = params.append('tag', this._tag);
-    if (this._minDeckRating) params = params.append('avgDeckRating', this._minDeckRating);
+    if (this._minDeckRating) params = params.append('avgDeckRating', this._minDeckRating * 2);
     if (this._onlyFollowerDecks) params = params.append('followed', this._onlyFollowerDecks);
 
     console.log(this)

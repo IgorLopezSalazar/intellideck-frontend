@@ -1,3 +1,5 @@
+import {Card} from "./card.model";
+
 export enum Backtrack {
   BACKTRACK_FIRST = 'BACKTRACK_FIRST',
   BACKTRACK_PRIOR = 'BACKTRACK_PRIOR'
@@ -9,12 +11,14 @@ export class DeckTraining {
   private _backtrack: Backtrack;
   private _userID?: string;
   private _deckID: string;
+  private _cards?: Card[];
   //private statistics: IStatistics;
 
-  constructor(boxAmount: number, backtrack: Backtrack, deckID: string) {
+  constructor(boxAmount: number, backtrack: Backtrack, deckID: string, cards?: Card[]) {
     this._boxAmount = boxAmount;
     this._backtrack = backtrack;
     this._deckID = deckID;
+    this._cards = cards;
   }
 
   get boxAmount(): number {
@@ -60,7 +64,8 @@ export class DeckTraining {
   toJson() {
     return JSON.stringify({
       boxAmount: this._boxAmount,
-      backtrack: this._backtrack
+      backtrack: this._backtrack,
+      cards: this._cards?.map(card => ({ id: card._id, isShown: card.isShown == undefined ? true : card.isShown }))
     });
   }
 }

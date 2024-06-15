@@ -1,6 +1,8 @@
 @use "../../../colors";
 
-.background{
+$card-image-height: 20em;
+
+.background {
   background-color: colors.$light-purple;
   height: 100%;
 }
@@ -11,12 +13,84 @@
   align-items: center;
   justify-content: center;
 
+  .no-pointer {
+    cursor: none;
+  }
+
   &__card {
     background-color: colors.$white-smoke;
     width: 30%;
     padding: 2em;
-    margin-top: 35px;
     box-shadow: 0 0 10px 6px #c3c3c3;
     border-radius: 0.5em;
+    cursor: pointer;
+
+    .question {
+
+      &__text {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        border-bottom: 3px solid colors.$primary-purple;
+
+        h1 {
+          margin: 0;
+          padding: 0.5em;
+          font-weight: 550;
+        }
+      }
+    }
+
+    .answer {
+      &__placeholder {
+        padding: 1em 1em 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        color: colors.$dark-grey;
+      }
+
+      &__revealed {
+        &__content {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+
+          &__text {
+            h2 {
+              margin: 0;
+              padding: 0.6em;
+            }
+          }
+
+          img {
+            padding-bottom: 1em;
+          }
+        }
+
+        &__actions {
+          display: flex;
+          justify-content: space-evenly;
+
+          .wrong-button {
+            background-color: colors.$light-red;
+          }
+
+          .correct-button {
+            background-color: colors.$blue-munsell;
+          }
+        }
+      }
+    }
   }
+}
+
+img {
+  width: 100%;
+  height: $card-image-height;
+  display: block;
+  margin: 0;
+  object-fit: cover;
+  border-radius: 8px;
 }

@@ -29,6 +29,9 @@ export class DeckTrainingService {
       observe: 'response'
     };
 
+    console.log(deckTraining.toJson());
+    console.log(deckTraining);
+
     let endPointUrl =   this.END_POINT_DECKS + '/' + deckTraining.deckID + this.END_POINT_DECK_TRAINING;
     return this.http.post(endPointUrl, deckTraining.toJson(), options);
   }

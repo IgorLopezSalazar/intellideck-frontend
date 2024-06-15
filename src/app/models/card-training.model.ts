@@ -7,13 +7,13 @@ import {DeckTraining} from "./deck-training.model";
 export class CardTraining {
   //private nextTraining: Date;
   private _isShown: boolean;
-  private _box?: number;
+  private _box: number;
   private _deckTraining?: DeckTraining;
   private _deckTrainingID?: string;
   private _card?: Card;
   private _cardID?: string;
 
-  constructor(isShown: boolean, box?: number, deckTraining?: DeckTraining, card?: Card) {
+  constructor(isShown: boolean, box: number, deckTraining?: DeckTraining, card?: Card) {
     this._isShown = isShown;
     this._box = box;
     this._deckTraining = deckTraining;
@@ -28,7 +28,7 @@ export class CardTraining {
     this._isShown = value;
   }
 
-  get box(): number | undefined {
+  get box(): number {
     return this._box;
   }
 

@@ -62,6 +62,9 @@ export class ExploreComponent {
                   this.filteredDecks = filterResponse.body.map(
                     (filterResponse: Deck[]) => this.filteredDecks = filterResponse
                   );
+                  console.log(filterResponse);
+                  console.log(filterResponse.body);
+                  console.log(this.filteredDecks);
                 }
               },
               error: (error: any) => {
@@ -70,20 +73,20 @@ export class ExploreComponent {
             }
           );
 
-          this.userService.filterUsers(response.userFilters).subscribe(
-            {
-              next: (filterResponse) => {
-                if (filterResponse.body) {
-                  this.filteredUsers = filterResponse.body.map(
-                    (filterResponse: User[]) => this.filteredUsers = filterResponse
-                  );
-                }
-              },
-              error: (error: any) => {
-                console.log(error);
-              }
-            }
-          );
+          // this.userService.filterUsers(response.userFilters).subscribe(
+          //   {
+          //     next: (filterResponse) => {
+          //       if (filterResponse.body) {
+          //         this.filteredUsers = filterResponse.body.map(
+          //           (filterResponse: User[]) => this.filteredUsers = filterResponse
+          //         );
+          //       }
+          //     },
+          //     error: (error: any) => {
+          //       console.log(error);
+          //     }
+          //   }
+          // );
         },
         error: (error: any) => { console.log(error) }
       }

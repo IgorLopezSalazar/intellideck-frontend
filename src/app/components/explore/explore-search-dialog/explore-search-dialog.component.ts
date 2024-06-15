@@ -70,33 +70,11 @@ export class ExploreSearchDialogComponent {
 
   toolTipText: string = 'Si se ha rellenado algún campo en la búsqueda de mazos, se tomará este campo como el creador del mazo';
 
-  // userFilters = {
-  //   username: '',
-  //   onlyFollowingUsers: false,
-  //   onlyFollowerUsers: false
-  // }
-
   username: string = '';
   onlyFollowingUsers: boolean = false;
   onlyFollowerUsers: boolean = false;
 
   deckFilters: DeckFilters = new DeckFilters();
-
-  // deckFilters = {
-  //   deckTitle: '',
-  //   deckTopic: '',
-  //   deckTags: [],
-  //   deckCreationData: '',
-  //   minDeckRating: '',
-  //   onlyFollowerDecks: false
-  // }
-
-  // deckTitle: string = '';
-  // deckTopic: string = '';
-  // deckTags: Tag[] = [];
-  // deckCreationData: string = '';
-  // minDeckRating: string = '';
-  // onlyFollowerDecks: boolean = false;
 
   topicList: Topic[] = [];
   allTagsList: Tag[] = [];
@@ -154,15 +132,16 @@ export class ExploreSearchDialogComponent {
     console.log(this.username);
     console.log(this.onlyFollowingUsers);
     console.log(this.onlyFollowerUsers);
+    console.log(this.deckFilters);
+    this.deckFilters.creator = this.username;
 
     this.dialogRef.close({ deckFilters: this.deckFilters, userFilters: 1 });
-
-    // console.log(this.deckTitle);
-    // console.log(this.deckTopic);
-    // console.log(this.deckTags);
-    // console.log(this.deckCreationData);
-    // console.log(this.minDeckRating);
-    // console.log(this.onlyFollowerDecks);
   }
 
+  checkMinDeckRating() {
+    if (!this.deckFilters.minDeckRating) return;
+    if (this.deckFilters.minDeckRating % 0.5 != 0) {
+      this.deckFilters.minDeckRating = Math.round(this.deckFilters.minDeckRating * 2) / 2;
+    }
+  }
 }
