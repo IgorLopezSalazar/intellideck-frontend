@@ -6,6 +6,7 @@ import {CardTraining} from "../../models/card-training.model";
 import {Card, WhereImageEnum} from "../../models/card.model";
 import {Router} from "@angular/router";
 import {Backtrack} from "../../models/deck-training.model";
+import {DeckTrainingService} from "../../core/trainings/deck-training.service";
 
 @Component({
   selector: 'app-card-training',
@@ -26,8 +27,10 @@ export class CardTrainingComponent {
   private index: number = 0;
   currentCard!: Card;
   showAnswer: boolean = false;
+  startTime?: number;
 
-  constructor(private currentDataService: CurrentDataService, private router: Router) {
+  constructor(private currentDataService: CurrentDataService, private router: Router,
+              private deckTrainingService: DeckTrainingService) {
     console.log("training");
     console.log(this.currentDataService.cardsTraining);
     if (!this.currentDataService.cardsTraining || !this.currentDataService.cardsTraining[0].card) {
@@ -41,6 +44,8 @@ export class CardTrainingComponent {
 
     this.cardsTraining = this.currentDataService.cardsTraining;
     this.loadCurrentCardInfo();
+
+    this.startTime = new Date().getTime();
   }
 
   loadCurrentCardInfo() {
@@ -50,7 +55,6 @@ export class CardTrainingComponent {
   }
 
   toggleShowAnswer() {
-    console.log("toggleShowAnswer")
     this.showAnswer = true;
   }
 
@@ -77,7 +81,7 @@ export class CardTrainingComponent {
   }
 
   continueTraining() {
-    if (this.index <= this.cardsTraining.length)
+    if (this.index < this.cardsTraining.length - 1)
       this.nextCard();
     else
       this.finishTraining();
@@ -90,9 +94,21 @@ export class CardTrainingComponent {
   }
 
   finishTraining() {
-    if (this.currentDataService.isOfficialTraining)
-      console.log("oficial")
-
-
+    if (this.currentDataService.isOfficialTraining) {
+      let completionTimeSeconds = (new Date().getTime() - this.startTime!) / 1000;
+      console.log(completionTimeSeconds)
+      console.log(this.cardsTraining)
+      console.log(this.cardsTraining.at(0)!.deckTraining?.deckID)
+      console.log(this.cardsTraining.at(0)!.deckTraining?.deck)
+      console.log(this.cardsTraining.at(0)!.deckTraining)
+      this.deckTrainingService.updateDeckTraining(this.cardsTraining, completionTimeSeconds).subscribe(
+        {
+          next: (response) => {
+            console.log(response);
+          },
+          error: (error) => console.log(error)
+        }
+      );
+    }
   }
 }

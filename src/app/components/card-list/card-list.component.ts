@@ -61,10 +61,8 @@ export class CardListComponent {
   }
 
   ngOnDestroy() {
-    this.eventsSubscription!.unsubscribe();
+    if (this.eventsSubscription) this.eventsSubscription.unsubscribe();
   }
-
-
 
   constructor(public dialog: MatDialog) {
   }

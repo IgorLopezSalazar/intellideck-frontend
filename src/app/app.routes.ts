@@ -8,6 +8,7 @@ import {OwnDeckComponent} from "./components/own-deck/own-deck.component";
 import {ExternalDeckComponent} from "./components/external-deck/external-deck.component";
 import {ExploreComponent} from "./components/explore/explore.component";
 import {CardTrainingComponent} from "./components/card-training/card-training.component";
+import {StatisticsComponent} from "./components/statistics/statistics.component";
 
 export const routes: Routes = [
   { path: '', component: TimelineComponent, canActivate: [authGuard] },
@@ -17,5 +18,6 @@ export const routes: Routes = [
   { path: 'own-deck', component: OwnDeckComponent, canActivate: [authGuard]},
   { path: 'deck', component: ExternalDeckComponent, canActivate: [authGuard]},
   { path: 'explore', component: ExploreComponent, canActivate: [authGuard]},
-  { path: 'training', component: CardTrainingComponent, canActivate:[authGuard]}
+  { path: 'training', component: CardTrainingComponent, canActivate: [authGuard]},
+  { path: 'statistics', component: StatisticsComponent, canActivate: [authGuard]}
 ];

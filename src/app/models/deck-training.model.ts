@@ -1,4 +1,5 @@
 import {Card} from "./card.model";
+import {Deck} from "./deck.model";
 
 export enum Backtrack {
   BACKTRACK_FIRST = 'BACKTRACK_FIRST',
@@ -11,6 +12,7 @@ export class DeckTraining {
   private _backtrack: Backtrack;
   private _userID?: string;
   private _deckID: string;
+  private _deck?: string;
   private _cards?: Card[];
   //private statistics: IStatistics;
 
@@ -59,6 +61,14 @@ export class DeckTraining {
 
   set deckID(value: string) {
     this._deckID = value;
+  }
+
+  get deck(): string | undefined {
+    return this._deck;
+  }
+
+  set deck(value: string) {
+    this._deck = value;
   }
 
   toJson() {
