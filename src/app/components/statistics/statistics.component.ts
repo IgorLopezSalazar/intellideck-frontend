@@ -53,7 +53,7 @@ export class StatisticsComponent {
   isValid() {
     let isValid = true;
     if (!this.currentDataService.cardsTraining?.at(0)?.card || !this.currentDataService.completionTimeSeconds ||
-      !this.currentDataService.deckTraining) {
+        !this.currentDataService.deckTraining) {
       this.router.navigate(['']).then(() => {
         console.log('Navigation complete ' + this.router.url);
       }).catch(error => {

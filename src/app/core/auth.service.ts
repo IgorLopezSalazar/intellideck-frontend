@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {Observable} from "rxjs";
+import {Observable, of} from "rxjs";
 import {environment} from '../../environments/environment';
 import {User} from "../models/user.model";
 
@@ -11,6 +11,7 @@ export class AuthService {
 
   private END_POINT_USERS = environment.API_URL + '/users';
   private END_POINT_LOGIN = environment.API_URL + '/login';
+  private END_POINT_LOGGED = '/logged';
 
   constructor(private http: HttpClient) { }
 
@@ -35,6 +36,24 @@ export class AuthService {
     console.log(user.toJson());
     return this.http.post(this.END_POINT_USERS, user.toJson(), options);
   }
+
+  getUserLogged(): Observable<any> {
+    let token: string | null = this.getToken();
+    if (!token) {
+      return of({ error: 'No token available' });
+    }
+
+    const options: any = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': token
+      }),
+      observe: 'response'
+    };
+
+    return this.http.get(this.END_POINT_USERS + this.END_POINT_LOGGED, options);
+  }
+
   setToken(token: string) {
     sessionStorage.setItem('token', token);
   }

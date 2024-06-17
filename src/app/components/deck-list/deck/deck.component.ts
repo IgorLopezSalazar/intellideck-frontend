@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {MatChip, MatChipSet} from "@angular/material/chips";
 import {Deck} from "../../../models/deck.model";
 import {NgFor, NgForOf, NgIf} from "@angular/common";
@@ -22,19 +22,21 @@ export class DeckComponent {
 
   @Input() deck!: Deck;
 
-  constructor(private router: Router, private currentDeck: CurrentDataService) {
-  }
-
-  ngOnChanges() {
-    if (this.deck) {
-
-    }
+  constructor(private router: Router, private currentDataService: CurrentDataService) {
   }
 
   openDeck() {
-    this.currentDeck.deck = this.deck;
+    this.currentDataService.deck = this.deck;
 
-    this.router.navigate(['/deck']).then(() => {
+    let url;
+    if (this.currentDataService.userLogged?._id === this.deck.creator?._id &&
+        !this.deck.isPublished){
+      url = '/own-deck';
+    }
+    else
+      url = '/deck';
+
+    this.router.navigate([url]).then(() => {
       console.log('Navigation complete');
     }).catch(error => {
       console.error('Navigation error:', error);

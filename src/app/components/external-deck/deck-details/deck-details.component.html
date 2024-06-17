@@ -5,15 +5,15 @@
     </div>
     <div class="container__details__row">
       <div class="first-column">
-        <img src="assets/IntelliDeck_Logo.png" alt="Deck image">
+        <img [src]="deck.image ? deck.image : 'assets/IntelliDeck_Logo.png'" alt="Deck">
 
         <div class="first-column__butons">
           <button mat-flat-button class="primary-button" (click)="startTraining()">
             Empezar entrenamiento
           </button>
 
-          <button mat-flat-button class="secondary-button">
-            Seguir mazo
+          <button mat-flat-button class="secondary-button"(click)="followDeck()">
+            {{ isFollowingDeck ? 'Dejar de seguir mazo' : 'Seguir mazo' }}
           </button>
         </div>
       </div>

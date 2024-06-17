@@ -1,1 +1,6 @@
-<p>user-list works!</p>
+<div class="users" *ngIf="userList.length > 0; else emptyUserList">
+  <app-user *ngFor="let user of userList" [user]="user"></app-user>
+</div>
+<ng-template #emptyUserList>
+  <span class="emptyDeckList">No hay usuarios a monstrar</span>
+</ng-template>

@@ -1,7 +1,7 @@
 <div class="user">
   <div class="user-grid">
     <div class="user-grid__image">
-      <img src="assets/IntelliDeck_Logo.png" alt="User image">
+      <img src='assets/IntelliDeck_Logo.png' alt="User">
     </div>
 
     <div class="user-grid__details">
@@ -9,8 +9,8 @@
     </div>
 
     <div class="user-grid__follow">
-      <button mat-flat-button class="primary-button">
-        Seguir
+      <button mat-flat-button class="primary-button" (click)="followUser()">
+        {{ isFollowing ? 'Dejar de seguir' : 'Seguir' }}
       </button>
     </div>
 

@@ -1,7 +1,6 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {Card, WhereImageEnum} from "../../../models/card.model";
 import {NgClass, NgIf, NgOptimizedImage} from "@angular/common";
-import {convertOutputFile} from "@angular-devkit/build-angular/src/tools/esbuild/utils";
 
 @Component({
   selector: 'app-card',
@@ -18,7 +17,6 @@ export class CardComponent {
 
   @Input() card!: Card;
   @Input() index!: number;
-  @Input() viewTemp?: boolean;
   @Output() viewCardEvent = new EventEmitter<{index: number, isShown: boolean}>();
   @Output() editCardEvent = new EventEmitter<number>();
   @Output() deleteCardEvent = new EventEmitter<number>();
@@ -54,8 +52,6 @@ export class CardComponent {
   ngOnChanges() {
     if (this.card) {
       this.loadImage();
-      console.log("card " + this.card.isShown)
-      console.log(this.card)
     }
   }
 

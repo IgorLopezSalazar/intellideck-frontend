@@ -1,7 +1,4 @@
-import {Topic} from "./topic.model";
-import {User} from "./user.model";
 import {HttpParams} from "@angular/common/http";
-import * as console from "console";
 
 export class UserFilters {
   private _username?: string;
@@ -40,7 +37,7 @@ export class UserFilters {
     this._onlyFollowerUsers = value;
   }
 
-  setDeckFiltersParams(params: HttpParams) {
+  setUserFiltersParams(params: HttpParams) {
     if (this._username) params = params.append('username', this._username);
     if (this._onlyFollowerUsers) params = params.append('follower', this._onlyFollowerUsers);
     if (this._onlyFollowingUsers) params = params.append('followed', this._onlyFollowingUsers);

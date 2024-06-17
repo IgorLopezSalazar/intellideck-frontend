@@ -84,7 +84,6 @@ export class ExternalDeckComponent {
       }
     );
 
-    console.log(this.cardsTrainingError)
     if (this.cardsTrainingError?.status !== 404) {
       this.eventsSubject.next(this.deckCards!);
       this.currentDataService.deckTraining = this.currentDataService.cardsTraining![0].deckTraining!;

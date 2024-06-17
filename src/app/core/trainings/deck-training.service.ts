@@ -5,7 +5,6 @@ import {AuthService} from "../auth.service";
 import {DeckTraining} from "../../models/deck-training.model";
 import {Observable, of} from "rxjs";
 import {CardTraining} from "../../models/card-training.model";
-import {convertOutputFile} from "@angular-devkit/build-angular/src/tools/esbuild/utils";
 
 @Injectable({
   providedIn: 'root'

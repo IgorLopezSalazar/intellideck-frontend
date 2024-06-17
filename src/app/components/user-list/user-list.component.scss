@@ -1,0 +1,16 @@
+@use "../../../colors";
+
+.users {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 2em;
+  grid-auto-rows: 1fr;
+  padding-bottom: 2em;
+}
+
+.emptyDeckList {
+  color: colors.$light-red;
+  font-weight: 550;
+  padding: 2em 0;
+  font-size: 1.2em;
+}

@@ -46,8 +46,8 @@ export class DeckCreationComponent {
               private imagesService: ImagesService, private cardService: CardService) {
   }
 
-  async handleDeckCreation(data: any) {
-    this.receivedDeck = data;
+  async handleDeckCreation(data: { deck: Deck, publish: boolean }) {
+    this.receivedDeck = data.deck;
 
     let deckID  = await this.createDeck();
     console.dir("DeckID: " + deckID);
@@ -61,6 +61,7 @@ export class DeckCreationComponent {
       return '';
     }
 
+    console.log(this.receivedDeck)
     const getTagsIdPromise = this.getDeckTagsId(this.receivedDeck);
     let getDeckImagePathPromise;
     if (this.receivedDeck.imageFile){
@@ -91,7 +92,11 @@ export class DeckCreationComponent {
   async getDeckTagsId(deck: Deck) {
     await Promise.all(
       deck.tags?.map(async tag => {
+        console.log(tag)
+
         const response = await lastValueFrom(this.tagService.getTag(tag));
+        console.log(tag)
+        console.log(response)
         tag.id = response.body._id;
       })
     );

@@ -12,6 +12,7 @@ export class UserService {
 
   private END_POINT_USERS = environment.API_URL + '/users';
   private END_POINT_FILTER = '/filter';
+  private END_POINT_TIMELINE = '/timeline';
 
   constructor(private http: HttpClient, private auth: AuthService) { }
 
@@ -23,7 +24,7 @@ export class UserService {
 
     let params = new HttpParams();
 
-    params = userFilters.setDeckFiltersParams(params);
+    params = userFilters.setUserFiltersParams(params);
 
     const options: any = {
       headers: new HttpHeaders({
@@ -35,5 +36,41 @@ export class UserService {
     };
 
     return this.http.get(this.END_POINT_USERS + this.END_POINT_FILTER, options);
+  }
+
+  getRecommendedUsers(): Observable<any> {
+    let token: string | null = this.auth.getToken();
+    if (!token) {
+      return of({ error: 'No token available' });
+    }
+
+    const options: any = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': token
+      }),
+      observe: 'response'
+    };
+
+    return this.http.get(this.END_POINT_USERS + this.END_POINT_TIMELINE, options);
+  }
+
+  updateUserFollowStatus(userID: string , follow: boolean): Observable<any> {
+    let token: string | null = this.auth.getToken();
+    if (!token) {
+      return of({ error: 'No token available' });
+    }
+
+    const options: any = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': token
+      }),
+      observe: 'response'
+    };
+
+    let endPointUrl =   this.END_POINT_USERS + '/' + userID;
+    endPointUrl += follow ? '/follow' : '/unfollow';
+    return this.http.put(endPointUrl, {}, options);
   }
 }

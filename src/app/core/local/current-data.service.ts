@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {Deck} from "../../models/deck.model";
 import {CardTraining} from "../../models/card-training.model";
 import {DeckTraining} from "../../models/deck-training.model";
-import {unwrapConstructorDependencies} from "@angular/compiler-cli/src/ngtsc/annotations/common";
+import {User} from "../../models/user.model";
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +15,8 @@ export class CurrentDataService {
   private _deckTraining?: DeckTraining;
   private _isOfficialTraining: boolean = false;
   private _completionTimeSeconds?: number;
+  private _userLogged?: User;
+
   constructor() { }
 
   get deck(): Deck | undefined {
@@ -63,6 +65,14 @@ export class CurrentDataService {
 
   set deckTraining(value: DeckTraining) {
     this._deckTraining = value;
+  }
+
+  get userLogged(): User | undefined {
+    return this._userLogged;
+  }
+
+  set userLogged(value: User) {
+    this._userLogged = value;
   }
 
   finishTraining(deleteDeck: boolean) {

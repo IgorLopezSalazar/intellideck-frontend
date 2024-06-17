@@ -1,7 +1,6 @@
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component } from '@angular/core';
 import {MatDialog} from "@angular/material/dialog";
 import {ExploreSearchDialogComponent} from "./explore-search-dialog/explore-search-dialog.component";
-import {Card} from "../../models/card.model";
 import {DeckService} from "../../core/deck.service";
 import {Deck} from "../../models/deck.model";
 import {User} from "../../models/user.model";
@@ -9,10 +8,10 @@ import {DeckListComponent} from "../deck-list/deck-list.component";
 import {NgIf} from "@angular/common";
 import {RecommendedUserListComponent} from "../recommended-user-list/recommended-user-list.component";
 import {MatTabsModule} from "@angular/material/tabs";
-import {Topic} from "../../models/topic.model";
 import {DeckFilters} from "../../models/deckFilters.model";
-import {convertOutputFile} from "@angular-devkit/build-angular/src/tools/esbuild/utils";
 import {UserService} from "../../core/user.service";
+import {UserListComponent} from "../user-list/user-list.component";
+import {UserFilters} from "../../models/userFilters.model";
 
 @Component({
   selector: 'app-explore',
@@ -21,9 +20,9 @@ import {UserService} from "../../core/user.service";
     DeckListComponent,
     NgIf,
     RecommendedUserListComponent,
-    MatTabsModule
+    MatTabsModule,
+    UserListComponent
   ],
-  //encapsulation: ViewEncapsulation.None,
   templateUrl: './explore.component.html',
   styleUrl: './explore.component.scss'
 })
@@ -31,10 +30,24 @@ export class ExploreComponent {
 
   filteredDecks: Deck[] = [];
   filteredUsers: User[] = [];
+  recommendedUserList: User[] = []
+  selectedTab: number = 0;
 
   constructor(public dialog: MatDialog, private deckService: DeckService,
               private userService: UserService) {
     this.openExploreSearchDialog();
+    this.getRecommendedUsers();
+  }
+
+  getRecommendedUsers() {
+    this.userService.getRecommendedUsers().subscribe(
+      {
+        next: response => {
+          this.recommendedUserList = response.body;
+        },
+        error: (error: any) => console.log(error)
+      }
+    );
   }
 
   openExploreSearchDialog() {
@@ -47,48 +60,48 @@ export class ExploreComponent {
 
     dialogRef.afterClosed().subscribe(
       {
-        next: (response: { deckFilters: DeckFilters, userFilters: any} ) => {
+        next: (response: { deckFilters: DeckFilters, userFilters: UserFilters} ) => {
           if (response == undefined) {
             console.log("cancel");
-            return
+            return;
           }
-          if (response.deckFilters !== undefined) console.log(response.deckFilters);
-          if (response.userFilters !== undefined) console.log(response.userFilters);
 
-          this.deckService.filterDecks(response.deckFilters).subscribe(
-            {
-              next: (filterResponse) => {
-                if (filterResponse.body) {
-                  this.filteredDecks = filterResponse.body.map(
-                    (filterResponse: Deck[]) => this.filteredDecks = filterResponse
-                  );
-                  console.log(filterResponse);
-                  console.log(filterResponse.body);
-                  console.log(this.filteredDecks);
-                }
-              },
-              error: (error: any) => {
-                console.log(error);
-              }
-            }
-          );
+          this.filterDecks(response.deckFilters);
+          this.filterUsers(response.userFilters);
 
-          // this.userService.filterUsers(response.userFilters).subscribe(
-          //   {
-          //     next: (filterResponse) => {
-          //       if (filterResponse.body) {
-          //         this.filteredUsers = filterResponse.body.map(
-          //           (filterResponse: User[]) => this.filteredUsers = filterResponse
-          //         );
-          //       }
-          //     },
-          //     error: (error: any) => {
-          //       console.log(error);
-          //     }
-          //   }
-          // );
+          if (response.deckFilters.isEmpty()) this.selectedTab = 1;
         },
         error: (error: any) => { console.log(error) }
+      }
+    );
+  }
+
+  filterDecks(deckFilters: DeckFilters) {
+    this.deckService.filterDecks(deckFilters).subscribe(
+      {
+        next: (filterResponse) => {
+          if (filterResponse.body) {
+            this.filteredDecks = filterResponse.body.map(
+              (filterResponse: Deck[]) => this.filteredDecks = filterResponse
+            );
+          }
+        },
+        error: (error: any) => console.log(error)
+      }
+    );
+  }
+
+  filterUsers(userFilters: UserFilters) {
+    this.userService.filterUsers(userFilters).subscribe(
+      {
+        next: (filterResponse) => {
+          if (filterResponse.body) {
+            this.filteredUsers = filterResponse.body.map(
+              (filterResponse: User[]) => this.filteredUsers = filterResponse
+            );
+          }
+        },
+        error: (error: any) => console.log(error)
       }
     );
   }
