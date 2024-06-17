@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 
 import { DeckService } from './deck.service';
-import {HttpClient, provideHttpClient} from "@angular/common/http";
+import {HttpClient} from "@angular/common/http";
 import {provideHttpClientTesting} from "@angular/common/http/testing";
 import {provideRouter} from "@angular/router";
 import {provideAnimations} from "@angular/platform-browser/animations";

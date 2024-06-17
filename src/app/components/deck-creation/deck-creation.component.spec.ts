@@ -5,7 +5,7 @@ import {provideHttpClient} from "@angular/common/http";
 import {provideHttpClientTesting} from "@angular/common/http/testing";
 import {provideRouter} from "@angular/router";
 import {provideAnimations} from "@angular/platform-browser/animations";
-import {Observable, of} from "rxjs";
+import {of} from "rxjs";
 import {ImagesService} from "../../core/images.service";
 import {Card, WhereImageEnum} from "../../models/card.model";
 import {Deck} from "../../models/deck.model";
@@ -13,8 +13,6 @@ import {Topic} from "../../models/topic.model";
 import {CardService} from "../../core/card.service";
 import {DeckService} from "../../core/deck.service";
 import {CardListComponent} from "../card-list/card-list.component";
-import {MatDialog} from "@angular/material/dialog";
-import Spy = jasmine.Spy;
 
 describe('DeckCreationComponent', () => {
   let component: DeckCreationComponent;
@@ -59,7 +57,7 @@ describe('DeckCreationComponent', () => {
     component.cardListComponent.cardList = [card];
     let spy = spyOn(cardService, 'createCard').and.returnValues(of(card.toJson));
     spyOn(deckService, 'createDeck').and.returnValues(of({body: {_id: "123456789abcdefg"}}));
-    component.handleDeckCreation(new Deck("Titulo", new Topic("123456789abcdefg", "nombre"))).then((data) => {
+    component.handleDeckCreation({deck: new Deck("Titulo", new Topic("123456789abcdefg", "nombre")), publish: false}).then(() => {
       expect(spy).toHaveBeenCalled();
       done();
     })

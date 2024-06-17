@@ -6,8 +6,6 @@ import {provideHttpClientTesting} from "@angular/common/http/testing";
 import {provideRouter} from "@angular/router";
 import {provideAnimations} from "@angular/platform-browser/animations";
 import {CurrentDataService} from "../../core/local/current-data.service";
-import {Deck} from "../../models/deck.model";
-import {Topic} from "../../models/topic.model";
 import {Backtrack, DeckTraining} from "../../models/deck-training.model";
 import {CardTraining} from "../../models/card-training.model";
 import {Card, WhereImageEnum} from "../../models/card.model";

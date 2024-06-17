@@ -7,11 +7,7 @@ import {provideRouter} from "@angular/router";
 import {provideAnimations} from "@angular/platform-browser/animations";
 import {Deck} from "../../models/deck.model";
 import {Topic} from "../../models/topic.model";
-import {User} from "../../models/user.model";
 import {CurrentDataService} from "../../core/local/current-data.service";
-import {CardTraining} from "../../models/card-training.model";
-import {Backtrack, DeckTraining} from "../../models/deck-training.model";
-import {Card, WhereImageEnum} from "../../models/card.model";
 
 describe('OwnDeckComponent', () => {
   let component: OwnDeckComponent;

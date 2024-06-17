@@ -5,7 +5,7 @@ import {provideHttpClient} from "@angular/common/http";
 import {provideHttpClientTesting} from "@angular/common/http/testing";
 import {provideRouter} from "@angular/router";
 import {provideAnimations} from "@angular/platform-browser/animations";
-import {of, throwError} from "rxjs";
+import {of} from "rxjs";
 import {TopicService} from "../../core/topic.service";
 import {TagService} from "../../core/tag.service";
 import {Tag} from "../../models/tag.model";
