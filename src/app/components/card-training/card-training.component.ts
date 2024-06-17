@@ -32,8 +32,6 @@ export class CardTrainingComponent {
 
   constructor(private currentDataService: CurrentDataService, private router: Router,
               private deckTrainingService: DeckTrainingService) {
-    console.log("training");
-    console.log(this.currentDataService.cardsTraining);
     if (!this.currentDataService.cardsTraining?.at(0)?.card) {
       this.router.navigate(['']).then(() => {
         console.log('Navigation complete');

@@ -36,8 +36,6 @@ export class StatisticsComponent {
 
     this.deckTraining = this.currentDataService.deckTraining!;
     this.completionTimeSeconds = this.currentDataService.completionTimeSeconds!;
-    console.log(this.currentDataService.cardsTraining)
-    console.log(this.deckTraining)
 
     for (let i = 0; i < this.deckTraining.boxAmount; i++) {
       this.barChartData.labels!.push(`Caja ${i + 1}`);
