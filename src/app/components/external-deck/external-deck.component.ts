@@ -133,7 +133,7 @@ export class ExternalDeckComponent {
     if (this.currentDataService.cardsTraining) {
       this.cardTrainingService.updateCardTrainingVisibility(this.deck!._id!, this.deckCards!.at(index)!._id!, isShown).subscribe(
         {
-          next: (response: any) => {
+          next: () => {
           },
           error: (error: any) => console.log(error)
         }

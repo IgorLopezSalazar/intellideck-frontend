@@ -47,7 +47,7 @@ describe('LoginComponent', () => {
         username: "Test",
         password: "Test"
       },
-      valid: true
+      valid: false
     });
     fixture.detectChanges();
     expect(component.showErrorMessage).toBeTruthy();
