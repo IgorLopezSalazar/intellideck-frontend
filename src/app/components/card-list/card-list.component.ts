@@ -53,11 +53,13 @@ export class CardListComponent {
   @Input() events?: Observable<Card[]>;
 
   ngOnInit(){
-    this.eventsSubscription = this.events!.subscribe(
-      (cards: Card[]) => {
-        this.cardList = cards;
-      }
-    );
+    if (this.events) {
+      this.eventsSubscription = this.events!.subscribe(
+        (cards: Card[]) => {
+          this.cardList = cards;
+        }
+      );
+    }
   }
 
   ngOnDestroy() {
