@@ -11,7 +11,6 @@ import {User} from "../../models/user.model";
 import {UserService} from "../../core/user.service";
 import {CurrentDataService} from "../../core/local/current-data.service";
 import {AuthService} from "../../core/auth.service";
-import {convertOutputFile} from "@angular-devkit/build-angular/src/tools/esbuild/utils";
 
 @Component({
   selector: 'app-timeline',

@@ -4,7 +4,6 @@ import {MatButton} from "@angular/material/button";
 import {UserService} from "../../../core/user.service";
 import {CurrentDataService} from "../../../core/local/current-data.service";
 import {lastValueFrom} from "rxjs";
-import {CardTraining} from "../../../models/card-training.model";
 
 @Component({
   selector: 'app-user',
@@ -38,7 +37,6 @@ export class UserComponent {
     }
 
     this.isFollowing = this.checkIfFollowing();
-    console.log(this.isFollowing)
   }
 
   checkIfFollowing(): boolean {

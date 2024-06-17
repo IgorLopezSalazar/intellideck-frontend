@@ -52,8 +52,6 @@ export class CardComponent {
   ngOnChanges() {
     if (this.card) {
       this.loadImage();
-      console.log("card " + this.card.isShown)
-      console.log(this.card)
     }
   }
 

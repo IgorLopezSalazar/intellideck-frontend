@@ -107,4 +107,23 @@ export class DeckService {
 
     return this.http.get(this.END_POINT_DECKS + this.END_POINT_FILTER, options);
   }
+
+  updateDeckFollowStatus(deckID: string , follow: boolean): Observable<any> {
+    let token: string | null = this.auth.getToken();
+    if (!token) {
+      return of({ error: 'No token available' });
+    }
+
+    const options: any = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': token
+      }),
+      observe: 'response'
+    };
+
+    let endPointUrl =   this.END_POINT_DECKS + '/' + deckID;
+    endPointUrl += follow ? '/follow' : '/unfollow';
+    return this.http.put(endPointUrl, {}, options);
+  }
 }

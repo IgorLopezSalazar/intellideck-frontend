@@ -1,3 +1,5 @@
+import {Deck} from "./deck.model";
+
 export class User {
   private __id? : string;
   private _name: string;
@@ -8,6 +10,7 @@ export class User {
   private _profilePicture?: string;
   private _role: string;
   private _followedUsers: User[] = [];
+  private _followedDecks: Deck[] = [];
 
   constructor(name: string, surname: string, email: string, username: string, password: string, role: string) {
     this._name = name;
@@ -88,6 +91,14 @@ export class User {
 
   set followedUsers(value: User[]) {
     this._followedUsers = value;
+  }
+
+  get followedDecks(): Deck[] {
+    return this._followedDecks;
+  }
+
+  set followedDecks(value: Deck[]) {
+    this._followedDecks = value;
   }
 
   toJson(): string {
