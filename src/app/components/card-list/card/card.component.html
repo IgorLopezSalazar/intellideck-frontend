@@ -1,7 +1,7 @@
 <div class="card">
-  <div class="card__buttons" [ngClass]="{ 'show': !view }">
+  <div class="card__buttons" [ngClass]="{ 'show': !card.isShown }">
     <span class="material-symbols-outlined view" (click)="viewCard()" (keyup)="viewCard()" *ngIf="externalDeckCard">
-      {{ view ? 'visibility' : 'visibility_off' }}
+      {{ card.isShown ? 'visibility' : 'visibility_off' }}
     </span>
     <span class="material-symbols-outlined edit" (click)="editCard()" (keyup)="editCard()" *ngIf="!externalDeckCard">
       edit_square
@@ -11,8 +11,8 @@
     </span>
   </div>
 
-  <div class="card__overlay" *ngIf="view"></div>
-  <div [ngClass]="{ 'card__overlay-visibility-off': !view }" *ngIf="!view">
+  <div class="card__overlay" *ngIf="card.isShown"></div>
+  <div [ngClass]="{ 'card__overlay-visibility-off': !card.isShown }" *ngIf="!card.isShown">
     <span class="material-symbols-outlined card__overlay-visibility-off__icon">
       visibility_off
     </span>

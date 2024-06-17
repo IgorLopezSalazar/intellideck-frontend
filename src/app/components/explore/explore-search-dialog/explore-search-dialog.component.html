@@ -41,7 +41,7 @@
 
       <div class="deck-search__date">
         <mat-form-field appearance="outline" class="form-field">
-          <mat-label>Fecha de publicacion</mat-label>
+          <mat-label>Fecha de publicación mínima</mat-label>
           <input matInput [matDatepicker]="picker" name="deckPublicationDatec" [(ngModel)]="deckFilters.publishDate">
           <mat-hint>DD/MM/YYYY</mat-hint>
           <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
@@ -51,9 +51,9 @@
 
       <div class="deck-search__rate">
         <mat-form-field appearance="outline" subscriptSizing="dynamic" class="form-field">
-          <mat-label>Valoración minima</mat-label>
-          <input matInput type="number" min="0" max="5" name="title" class="form-control" placeholder="Valoracion minima" [(ngModel)]="deckFilters.minDeckRating">
-          <mat-hint>Del 1 al 5</mat-hint>
+          <mat-label>Valoración mínima</mat-label>
+          <input matInput type="number" min="0" max="5" step="0.5" name="minDeckRating" class="form-control" placeholder="Valoración mínima" [(ngModel)]="deckFilters.minDeckRating" (focusout)="checkMinDeckRating()">
+          <mat-hint>Del 0 al 5</mat-hint>
         </mat-form-field>
       </div>
 
@@ -76,7 +76,7 @@
       <div class="user-search__name">
           <mat-form-field appearance="outline" subscriptSizing="dynamic" class="form-field">
             <mat-label>Nombre de usuario</mat-label>
-            <input matInput type="text" name="title" class="form-control" placeholder="Nombre de usuario" [(ngModel)]="username">
+            <input matInput type="text" name="username" class="form-control" placeholder="Nombre de usuario" [(ngModel)]="username">
           </mat-form-field>
       </div>
 
@@ -88,7 +88,7 @@
 
   </mat-dialog-content>
   <mat-dialog-actions class="dialog__actions">
-    <button mat-button class="secondary-button" (click)="cancel()">Cancelar</button>
+    <button mat-button class="secondary-button" (click)="cancel()" routerLink="/" >Cancelar</button>
     <button mat-flat-button class="primary-button" (click)="search()">Buscar</button>
   </mat-dialog-actions>
 </form>

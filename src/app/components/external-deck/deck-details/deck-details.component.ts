@@ -1,9 +1,10 @@
-import {Component, Input} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {Deck} from "../../../models/deck.model";
 import {MatChip, MatChipSet} from "@angular/material/chips";
 import {NgFor} from "@angular/common";
 import {MatButton} from "@angular/material/button";
 import {UserComponent} from "../../user-list/user/user.component";
+import {RouterLink} from "@angular/router";
 @Component({
   selector: 'app-deck-details',
   standalone: true,
@@ -12,7 +13,8 @@ import {UserComponent} from "../../user-list/user/user.component";
     MatChipSet,
     NgFor,
     MatButton,
-    UserComponent
+    UserComponent,
+    RouterLink
   ],
   templateUrl: './deck-details.component.html',
   styleUrl: './deck-details.component.scss'
@@ -20,5 +22,14 @@ import {UserComponent} from "../../user-list/user/user.component";
 export class DeckDetailsComponent {
 
   @Input() deck!: Deck;
+  @Output() startTrainingEmitter = new EventEmitter<any>();
+
+
+  constructor() {
+  }
+
+  startTraining() {
+    this.startTrainingEmitter.emit();
+  }
 
 }

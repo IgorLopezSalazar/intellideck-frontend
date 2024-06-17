@@ -3,7 +3,7 @@ import {CardListComponent} from "../card-list/card-list.component";
 import {DeckDetailsFormComponent} from "../deck-details-form/deck-details-form.component";
 import {Deck} from "../../models/deck.model";
 import {Router} from "@angular/router";
-import {CurrentDeckService} from "../../core/local/current-deck.service";
+import {CurrentDataService} from "../../core/local/current-data.service";
 import {Card} from "../../models/card.model";
 import {CardService} from "../../core/card.service";
 import {lastValueFrom, publish} from "rxjs";
@@ -31,7 +31,7 @@ export class OwnDeckComponent {
   receivedDeck?: Deck;
   receivedCardList?: Card[];
 
-  constructor(private router: Router, private currentDeck: CurrentDeckService, private cardService: CardService,
+  constructor(private router: Router, private currentDeck: CurrentDataService, private cardService: CardService,
               private tagService: TagService, private imagesService: ImagesService, private deckService: DeckService) {
     this.deck = this.currentDeck.deck
 

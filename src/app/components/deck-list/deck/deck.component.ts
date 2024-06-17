@@ -3,7 +3,7 @@ import {MatChip, MatChipSet} from "@angular/material/chips";
 import {Deck} from "../../../models/deck.model";
 import {NgFor, NgForOf, NgIf} from "@angular/common";
 import {Router} from "@angular/router";
-import {CurrentDeckService} from "../../../core/local/current-deck.service";
+import {CurrentDataService} from "../../../core/local/current-data.service";
 
 @Component({
   selector: 'app-deck',
@@ -22,7 +22,7 @@ export class DeckComponent {
 
   @Input() deck!: Deck;
 
-  constructor(private router: Router, private currentDeck: CurrentDeckService) {
+  constructor(private router: Router, private currentDeck: CurrentDataService) {
   }
 
   ngOnChanges() {

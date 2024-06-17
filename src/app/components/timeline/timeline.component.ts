@@ -43,8 +43,6 @@ export class TimelineComponent {
           this.exploreDecks = response.body.map(
             (response: Deck[]) => this.exploreDecks = response
           );
-          console.log(response.body);
-          console.log(this.exploreDecks);
         },
         error: (error: any) => { console.log(error) }
       }
