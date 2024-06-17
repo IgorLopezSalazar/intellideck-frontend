@@ -16,7 +16,6 @@ import {
   StartUnofficialTrainingDialog
 } from "./start-unofficial-training-dialog/start-unofficial-training-dialog.component";
 import {MatDialog} from "@angular/material/dialog";
-import {convertOutputFile} from "@angular-devkit/build-angular/src/tools/esbuild/utils";
 
 @Component({
   selector: 'app-external-deck',
