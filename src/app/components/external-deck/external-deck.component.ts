@@ -12,7 +12,11 @@ import {Backtrack, DeckTraining} from "../../models/deck-training.model";
 import {CardTrainingService} from "../../core/trainings/card-training.service";
 import {lastValueFrom, Subject} from "rxjs";
 import {CardTraining} from "../../models/card-training.model";
-import {extractResolvedTypeString} from "@angular/compiler-cli/src/ngtsc/docs/src/type_extractor";
+import {
+  StartUnofficialTrainingDialog
+} from "./start-unofficial-training-dialog/start-unofficial-training-dialog.component";
+import {MatDialog} from "@angular/material/dialog";
+import {convertOutputFile} from "@angular-devkit/build-angular/src/tools/esbuild/utils";
 
 @Component({
   selector: 'app-external-deck',
@@ -37,7 +41,7 @@ export class ExternalDeckComponent {
 
   constructor(private router: Router, private currentDeck: CurrentDataService, private cardService: CardService,
               private deckTrainingService: DeckTrainingService, private cardTrainingService: CardTrainingService,
-              private currentDataService: CurrentDataService) {
+              private currentDataService: CurrentDataService, private dialog: MatDialog) {
     this.deck = this.currentDeck.deck
 
     if (!this.deck) {
@@ -72,21 +76,23 @@ export class ExternalDeckComponent {
 
   async getCardTrainings() {
     await this.getTodayDeckTrainingCards();
-    await this.getDeckTrainingCards();
+    await this.getAllDeckTrainingCards();
 
     this.deckCards?.map(
       (card: Card) => {
         let index = this.currentDataService.allCardsTrainings?.findIndex((cardTraining: CardTraining) => cardTraining.card!._id == card._id);
-        console.log(this.currentDataService.allCardsTrainings?.at(index!)!.isShown!)
         if (index != undefined && index != -1) card.isShown = this.currentDataService.allCardsTrainings?.at(index)!.isShown!;
       }
     );
 
-    this.eventsSubject.next(this.deckCards!);
-    //this.cardListComponent.
+    console.log(this.cardsTrainingError)
+    if (this.cardsTrainingError?.status !== 404) {
+      this.eventsSubject.next(this.deckCards!);
+      this.currentDataService.deckTraining = this.currentDataService.cardsTraining![0].deckTraining!;
+    }
   }
 
-  async getDeckTrainingCards() {
+  async getAllDeckTrainingCards() {
     if (!this.deck?._id) return;
 
     try {
@@ -103,24 +109,8 @@ export class ExternalDeckComponent {
     }
     catch (error: any) {
       console.log(error)
-      console.log(error.status)
       this.cardsTrainingError = error;
     }
-    //
-    // this.cardTrainingService.getDeckTrainingCards(this.deck._id).subscribe(
-    //   {
-    //     next: (response: any) => {
-    //       this.currentDataService.cardsTraining = response.body.map(
-    //         (cardsTraining: CardTraining []) => this.currentDataService.cardsTraining = cardsTraining
-    //       );
-    //     },
-    //     error: (error: any) => {
-    //       console.log(error)
-    //       console.log(error.status)
-    //       this.cardsTrainingError = error;
-    //     }
-    //   }
-    // );
   }
 
   async getTodayDeckTrainingCards() {
@@ -137,27 +127,8 @@ export class ExternalDeckComponent {
     }
     catch (error: any) {
       console.log(error)
-      console.log(error.status)
       this.cardsTrainingError = error;
     }
-    // await this.cardTrainingService.getTodayDeckTrainingCards(this.deck._id).subscribe(
-    //   {
-    //     next: (response: any) => {
-    //       if (response.status === 200) {
-    //         this.currentDataService.cardsTraining = response.body.map(
-    //           (cardsTraining: CardTraining []) => this.currentDataService.cardsTraining = cardsTraining
-    //         );
-    //         this.currentDataService.isOfficialTraining = true;
-    //       }
-    //     },
-    //     error: (error: any) => {
-    //       console.log(error)
-    //       console.log(error.status)
-    //       this.cardsTrainingError = error;
-    //     }
-    //   }
-    // );
-
   }
 
   async handleViewCard({ index, isShown }: { index: number; isShown: boolean }) {
@@ -165,18 +136,13 @@ export class ExternalDeckComponent {
       this.cardTrainingService.updateCardTrainingVisibility(this.deck!._id!, this.deckCards!.at(index)!._id!, isShown).subscribe(
         {
           next: (response: any) => {
-            console.log(response);
-            console.log(response.body);
           },
           error: (error: any) => console.log(error)
         }
       );
     }
     else {
-      console.log(this.deckCards!.at(index)!);
-      console.log(isShown);
       this.deckCards!.at(index)!.isShown = isShown;
-      console.log(this.deckCards!.at(index)!);
     }
     this.currentDataService.cardsTraining!.at(index)!.isShown = isShown;
   }
@@ -192,18 +158,37 @@ export class ExternalDeckComponent {
         this.currentDataService.cardsTraining = response.body.map(
           (cardsTraining: CardTraining []) => this.currentDataService.cardsTraining = cardsTraining
         );
+        this.currentDataService.isOfficialTraining = true;
       }
       catch (error: any) {
         console.log(error);
       }
     }
 
+    let continueTraining = true;
+    if (!this.currentDataService.isOfficialTraining){
+      const dialogRef = this.dialog.open(StartUnofficialTrainingDialog, {
+        width: '30vw',
+        height: 'auto',
+        maxHeight: '80vh',
+        panelClass: 'custom-dialog-container'
+      });
 
-    this.router.navigate(['/training']).then(() => {
-      console.log('Navigation complete: ' + this.router.url);
-    }).catch(error => {
-      console.error('Navigation error:', error);
-    });
+      try {
+        continueTraining = await lastValueFrom(dialogRef.afterClosed());
+      }
+      catch (error: any) {
+        console.log(error);
+      }
+    }
+
+    if (continueTraining) {
+      this.router.navigate(['/training']).then(() => {
+        console.log('Navigation complete: ' + this.router.url);
+      }).catch(error => {
+        console.error('Navigation error:', error);
+      });
+    }
   }
 
   async createDeckTraining() {
@@ -217,7 +202,6 @@ export class ExternalDeckComponent {
     try {
       const response = await lastValueFrom(this.deckTrainingService.createDeckTraining(deckTraining));
       console.log(response);
-      console.log(response.body);
     } catch (error) {
       console.log(error);
     }

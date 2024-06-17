@@ -1,45 +1,45 @@
 <div class="background">
   <div class="container">
     <div class="main">
-      <div>
+      <div class="main__title">
         <h2>Tus sesiones de estudio</h2>
         <p>Resumen de su desempeño y actividad</p>
       </div>
 
       <div class="main__statistics">
         <div class="main__statistics__block">
-          <div class="statistics-title">
-            <h2>Intentos</h2>
+          <div class="statistic__title">
+            <h4>Intentos</h4>
             <span class="material-symbols-outlined">
               equalizer
             </span>
           </div>
-          <div class="statistics-text">
-            <h1>124</h1>
+          <div class="statistic__text">
+            <h1>{{deckTraining.statistics?.attempts}}</h1>
           </div>
         </div>
 
         <div class="main__statistics__block">
-          <div class="statistics-title">
-            <h2>Tiempo medio</h2>
+          <div class="statistic__title">
+            <h4>Tiempo medio</h4>
             <span class="material-symbols-outlined">
               schedule
             </span>
           </div>
-          <div class="statistics-text">
-            <h1>4min 32s</h1>
+          <div class="statistic__text">
+            <h1>{{ deckTraining.statistics?.avgCompletionTimeSeconds }}s</h1>
           </div>
         </div>
 
         <div class="main__statistics__block">
-          <div class="statistics-title">
-            <h2>Tiempo de intento</h2>
+          <div class="statistic__title">
+            <h4>Tiempo de intento</h4>
             <span class="material-symbols-outlined">
               schedule
             </span>
           </div>
-          <div class="statistics-text">
-            <h1>4min 32s</h1>
+          <div class="statistic__text">
+            <h1>{{ completionTimeSeconds }}s</h1>
           </div>
         </div>
       </div>
@@ -48,9 +48,21 @@
 
     <div class="diagram">
       <div>
-        <h2>Cartas pro mazo</h2>
+        <h2>Cartas por mazo</h2>
       </div>
 
+      <div class="diagram__chart">
+        <div style="display: block;">
+          <canvas baseChart
+                  class="chart"
+                  [data]="barChartData"
+                  [options]="barChartOptions"
+                  [plugins]="barChartPlugins"
+                  [legend]="barChartLegend"
+                  [type]="'bar'">
+          </canvas>
+        </div>
+      </div>
     </div>
   </div>
 </div>

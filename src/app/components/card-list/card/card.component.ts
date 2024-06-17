@@ -35,7 +35,7 @@ export class CardComponent {
   externalDeckCard: boolean = false;
 
   constructor() {
-    console.log("view " + this.viewTemp);
+
   }
 
   viewCard() {
@@ -54,9 +54,9 @@ export class CardComponent {
   ngOnChanges() {
     if (this.card) {
       this.loadImage();
+      console.log("card " + this.card.isShown)
+      console.log(this.card)
     }
-    console.log(this.card)
-    console.log("ngChange view " + this.viewTemp);
   }
 
   loadImage() {

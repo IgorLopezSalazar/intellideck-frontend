@@ -1,0 +1,9 @@
+<h2 mat-dialog-title style="margin: 0">Sin necesidad de estudio hoy</h2>
+<mat-dialog-content class="dialog__content">
+  <span class="dialog__content__text">Hoy no tienes estudio de este mazo. <br/>
+    ¿Quieres realizar un entrenamiento fuera del estudio?</span>
+</mat-dialog-content>
+<mat-dialog-actions class="dialog__actions">
+  <button mat-button class="secondary-button" (click)="close(false)">Cancelar</button>
+  <button mat-button class="primary-button" (click)="close(true)">Continuar</button>
+</mat-dialog-actions>

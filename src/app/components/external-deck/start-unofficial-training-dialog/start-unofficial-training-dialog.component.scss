@@ -1,0 +1,18 @@
+@use "../../../../colors";
+
+.dialog {
+
+  &__content {
+    padding-bottom: 0;
+
+    &__text {
+      color: colors.$light-black;
+    }
+  }
+
+  &__actions {
+    display: flex;
+    justify-content: space-evenly;
+    padding-bottom: 1.2em;
+  }
+}

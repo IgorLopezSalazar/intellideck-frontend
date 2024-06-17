@@ -7,6 +7,7 @@ import {Card, WhereImageEnum} from "../../models/card.model";
 import {Router} from "@angular/router";
 import {Backtrack} from "../../models/deck-training.model";
 import {DeckTrainingService} from "../../core/trainings/deck-training.service";
+import {lastValueFrom} from "rxjs";
 
 @Component({
   selector: 'app-card-training',
@@ -61,7 +62,7 @@ export class CardTrainingComponent {
   wrongAnswer(event: Event) {
     event.stopPropagation();
 
-    if (this.cardsTraining[this.index].deckTraining?.backtrack) {
+    if (this.cardsTraining[this.index].deckTraining?.backtrack && this.currentDataService.isOfficialTraining) {
       if (this.cardsTraining[this.index].deckTraining!.backtrack === Backtrack.BACKTRACK_PRIOR && this.cardsTraining[this.index].box > 1)
         this.cardsTraining[this.index].box = this.cardsTraining[this.index].box--;
       else if (this.cardsTraining[this.index].deckTraining!.backtrack === Backtrack.BACKTRACK_FIRST)
@@ -74,7 +75,8 @@ export class CardTrainingComponent {
   correctAnswer(event: Event) {
     event.stopPropagation();
 
-    if (this.cardsTraining[this.index].box < this.cardsTraining[this.index].deckTraining?.boxAmount!)
+    if (this.cardsTraining[this.index].box < this.cardsTraining[this.index].deckTraining?.boxAmount! &&
+        this.currentDataService.isOfficialTraining)
       this.cardsTraining[this.index].box++;
 
     this.continueTraining();
@@ -93,22 +95,36 @@ export class CardTrainingComponent {
     this.showAnswer = false;
   }
 
-  finishTraining() {
+  async finishTraining() {
+    let completionTimeSeconds = (new Date().getTime() - this.startTime!) / 1000;
+    this.currentDataService.completionTimeSeconds = completionTimeSeconds;
     if (this.currentDataService.isOfficialTraining) {
-      let completionTimeSeconds = (new Date().getTime() - this.startTime!) / 1000;
       console.log(completionTimeSeconds)
       console.log(this.cardsTraining)
-      console.log(this.cardsTraining.at(0)!.deckTraining?.deckID)
-      console.log(this.cardsTraining.at(0)!.deckTraining?.deck)
-      console.log(this.cardsTraining.at(0)!.deckTraining)
-      this.deckTrainingService.updateDeckTraining(this.cardsTraining, completionTimeSeconds).subscribe(
-        {
-          next: (response) => {
-            console.log(response);
-          },
-          error: (error) => console.log(error)
-        }
-      );
+
+      try {
+        const response = await lastValueFrom(this.deckTrainingService.updateDeckTraining(this.cardsTraining, completionTimeSeconds));
+        this.currentDataService.deckTraining = response.body;
+        console.log(response);
+      }
+      catch (error: any) {
+        console.log(error)
+      }
     }
+
+    let url;
+    if (this.currentDataService.isOfficialTraining) {
+      url = '/statistics';
+    }
+    else {
+      this.currentDataService.finishTraining(false);
+      url = '/deck';
+    }
+
+    this.router.navigate([url]).then(() => {
+      console.log('Navigation complete: ' + this.router.url);
+    }).catch(error => {
+      console.error('Navigation error:', error);
+    });
   }
 }

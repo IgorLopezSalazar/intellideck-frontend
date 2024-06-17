@@ -14,7 +14,7 @@ export class DeckTraining {
   private _deckID: string;
   private _deck?: string;
   private _cards?: Card[];
-  //private statistics: IStatistics;
+  private _statistics?: { attempts: number, avgCompletionTimeSeconds: number};
 
   constructor(boxAmount: number, backtrack: Backtrack, deckID: string, cards?: Card[]) {
     this._boxAmount = boxAmount;
@@ -69,6 +69,14 @@ export class DeckTraining {
 
   set deck(value: string) {
     this._deck = value;
+  }
+
+  get statistics(): { attempts: number; avgCompletionTimeSeconds: number } | undefined {
+    return this._statistics;
+  }
+
+  set statistics(value: { attempts: number; avgCompletionTimeSeconds: number }) {
+    this._statistics = value;
   }
 
   toJson() {
