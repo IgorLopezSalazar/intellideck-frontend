@@ -1,11 +1,7 @@
-import {Topic} from "./topic.model";
-import {Tag} from "./tag.model";
-import {User} from "./user.model";
 import {Card} from "./card.model";
 import {DeckTraining} from "./deck-training.model";
 
 export class CardTraining {
-  //private nextTraining: Date;
   private _isShown: boolean;
   private _box: number;
   private _deckTraining?: DeckTraining;

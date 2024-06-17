@@ -1,4 +1,5 @@
 export class User {
+  private __id? : string;
   private _name: string;
   private _surname: string;
   private _username: string;
@@ -6,6 +7,7 @@ export class User {
   private _password: string;
   private _profilePicture?: string;
   private _role: string;
+  private _followedUsers: User[] = [];
 
   constructor(name: string, surname: string, email: string, username: string, password: string, role: string) {
     this._name = name;
@@ -14,6 +16,14 @@ export class User {
     this._username = username;
     this._password = password;
     this._role = role;
+  }
+
+  get _id(): string | undefined {
+    return this.__id;
+  }
+
+  set _id(value: string) {
+    this.__id = value;
   }
 
   get name(): string {
@@ -70,6 +80,14 @@ export class User {
 
   set role(value: string) {
     this._role = value;
+  }
+
+  get followedUsers(): User[]{
+    return this._followedUsers;
+  }
+
+  set followedUsers(value: User[]) {
+    this._followedUsers = value;
   }
 
   toJson(): string {

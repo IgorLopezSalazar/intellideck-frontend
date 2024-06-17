@@ -1,10 +1,10 @@
 <div class="deck" (click)="openDeck()" (keyup)="openDeck()">
   <div class="deck__image" >
-    <img [src]="deck.image ? deck.image : 'assets/IntelliDeck_Logo.png'" alt="Deck image">
+    <img [src]="deck.image ? deck.image : 'assets/IntelliDeck_Logo.png'" alt="Deck">
   </div>
   <div class="deck__information">
     <div class="deck__information__image" (click)="openUser()" (keyup)="openUser()">
-      <img src="favicon.ico" alt="User profile image">
+      <img src="assets/IntelliDeck_Logo.png" alt="User profile">
     </div>
     <div class="deck__information__text">
       <span class="title">{{deck.title}}</span>

@@ -17,7 +17,6 @@ import {Tag} from "../../models/tag.model";
 import {TagService} from "../../core/tag.service";
 import { cloneDeep } from 'lodash';
 import {lastValueFrom} from "rxjs";
-import {DeckService} from "../../core/deck.service";
 
 @Component({
   selector: 'app-deck-details-form',

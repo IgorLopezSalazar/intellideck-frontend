@@ -76,13 +76,13 @@
       <div class="user-search__name">
           <mat-form-field appearance="outline" subscriptSizing="dynamic" class="form-field">
             <mat-label>Nombre de usuario</mat-label>
-            <input matInput type="text" name="username" class="form-control" placeholder="Nombre de usuario" [(ngModel)]="username">
+            <input matInput type="text" name="username" class="form-control" placeholder="Nombre de usuario" [(ngModel)]="userFilters.username">
           </mat-form-field>
       </div>
 
       <div class="user-search__slides">
-        <mat-slide-toggle class="slide" labelPosition="before" [(ngModel)]="onlyFollowerUsers" name="onlyFollowerUsers">Solo usuarios seguidos</mat-slide-toggle>
-        <mat-slide-toggle class="slide" labelPosition="before" [(ngModel)]="onlyFollowingUsers" name="onlyFollowingUsers">Solo usuarios seguidores</mat-slide-toggle>
+        <mat-slide-toggle class="slide" labelPosition="before" [(ngModel)]="userFilters.onlyFollowerUsers" name="onlyFollowerUsers">Solo usuarios seguidos</mat-slide-toggle>
+        <mat-slide-toggle class="slide" labelPosition="before" [(ngModel)]="userFilters.onlyFollowingUsers" name="onlyFollowingUsers">Solo usuarios seguidores</mat-slide-toggle>
       </div>
     </div>
 

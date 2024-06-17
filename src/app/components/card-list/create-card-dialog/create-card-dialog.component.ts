@@ -9,8 +9,6 @@ import {MatCheckbox} from "@angular/material/checkbox";
 import {MatButtonToggle, MatButtonToggleGroup} from "@angular/material/button-toggle";
 import {MatIcon} from "@angular/material/icon";
 import {Card, WhereImageEnum} from "../../../models/card.model";
-import {cloneDeep} from "lodash";
-import {Deck} from "../../../models/deck.model";
 
 @Component({
   selector: 'app-create-card-dialog',

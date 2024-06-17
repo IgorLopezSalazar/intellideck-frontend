@@ -27,7 +27,7 @@ $user-image-height: 3.5em;
 
     &__image {
       img {
-        border-radius: 0.5em;
+        border-radius: 50%;
         height: $user-image-height;
         display: block;
         margin: 0;

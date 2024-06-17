@@ -1,5 +1,4 @@
 import {Card} from "./card.model";
-import {Deck} from "./deck.model";
 
 export enum Backtrack {
   BACKTRACK_FIRST = 'BACKTRACK_FIRST',
@@ -83,7 +82,7 @@ export class DeckTraining {
     return JSON.stringify({
       boxAmount: this._boxAmount,
       backtrack: this._backtrack,
-      cards: this._cards?.map(card => ({ id: card._id, isShown: card.isShown == undefined ? true : card.isShown }))
+      cards: this._cards?.map(card => ({ id: card._id, isShown: card.isShown ?? true }))
     });
   }
 }

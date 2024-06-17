@@ -69,6 +69,10 @@ $deck-image-max-height: 25em;
       .tag {
         background-color: colors.$white-smoke;
       }
+
+      &__forth-row {
+        max-width: fit-content;
+      }
     }
   }
 }

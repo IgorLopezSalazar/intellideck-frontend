@@ -34,7 +34,7 @@ export class CardTrainingComponent {
               private deckTrainingService: DeckTrainingService) {
     console.log("training");
     console.log(this.currentDataService.cardsTraining);
-    if (!this.currentDataService.cardsTraining || !this.currentDataService.cardsTraining[0].card) {
+    if (!this.currentDataService.cardsTraining?.at(0)?.card) {
       this.router.navigate(['']).then(() => {
         console.log('Navigation complete');
       }).catch(error => {

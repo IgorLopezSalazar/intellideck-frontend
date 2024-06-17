@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, ViewChild} from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
 import {CardListComponent} from "../card-list/card-list.component";
 import {DeckDetailsFormComponent} from "../deck-details-form/deck-details-form.component";
 import {Deck} from "../../models/deck.model";
@@ -6,7 +6,7 @@ import {Router} from "@angular/router";
 import {CurrentDataService} from "../../core/local/current-data.service";
 import {Card} from "../../models/card.model";
 import {CardService} from "../../core/card.service";
-import {lastValueFrom, publish} from "rxjs";
+import {lastValueFrom} from "rxjs";
 import {TagService} from "../../core/tag.service";
 import {ImagesService} from "../../core/images.service";
 import {DeckService} from "../../core/deck.service";

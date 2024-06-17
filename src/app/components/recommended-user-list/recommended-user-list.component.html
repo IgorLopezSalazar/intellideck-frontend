@@ -3,22 +3,6 @@
     <h2>Usuarios que te podrían interesar</h2>
   </div>
   <div class="users">
-    <div class="user">
-      <div class="user__image">
-        <img src="favicon.ico" alt="User profile image">
-      </div>
-      <div class="user__name">
-        <span>Usuariommmm mmmmmmmm</span>
-      </div>
-    </div>
-
-    <div class="user">
-      <div class="user__image">
-        <img src="assets/IntelliDeck_Logo.png" alt="User profile image">
-      </div>
-      <div class="user__name">
-        <span>Usuariommmmmmmmmmmmmmmmmmmmmmmmmmm</span>
-      </div>
-    </div>
+    <app-user *ngFor="let user of userList" [user]="user"></app-user>
   </div>
 </div>

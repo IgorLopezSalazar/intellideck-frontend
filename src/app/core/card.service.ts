@@ -4,7 +4,6 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {AuthService} from "./auth.service";
 import {Observable, of} from "rxjs";
 import {Card} from "../models/card.model";
-import {Deck} from "../models/deck.model";
 
 @Injectable({
   providedIn: 'root'

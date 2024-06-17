@@ -1,5 +1,3 @@
-import {Topic} from "./topic.model";
-import {User} from "./user.model";
 import {HttpParams} from "@angular/common/http";
 
 export class DeckFilters {
@@ -10,13 +8,6 @@ export class DeckFilters {
   private _tag?: string;
   private _minDeckRating?: number;
   private _onlyFollowerDecks?: boolean;
-  //   deckTitle: '',
-  //   deckTopic: '',
-  //   deckTags: [],
-  //   deckCreationData: '',
-  //   minDeckRating: '',
-  //   onlyFollowerDecks: false
-
 
   constructor(title?: string,publishDate?: Date, creator?: string, topic?: string,
               tag?: string, minDeckRating?: number, onlyFollowerDecks?: boolean) {
@@ -49,7 +40,7 @@ export class DeckFilters {
     return this._creator;
   }
 
-  set creator(value: string) {
+  set creator(value: string | undefined) {
     this._creator = value;
   }
 
@@ -83,6 +74,17 @@ export class DeckFilters {
 
   set onlyFollowerDecks(value: boolean) {
     this._onlyFollowerDecks = value;
+  }
+
+  isEmpty() {
+    for (let key in this) {
+      if (this.hasOwnProperty(key)) {
+        if (this[key] !== undefined) {
+          return false;
+        }
+      }
+    }
+    return true;
   }
 
   setDeckFiltersParams(params: HttpParams) {

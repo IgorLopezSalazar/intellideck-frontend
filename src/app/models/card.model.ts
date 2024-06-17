@@ -24,6 +24,7 @@ export class Card {
     this._image = imagePath;
     this.__id = _id;
     this._isShown = isShown != undefined ? isShown : true;
+    this._isShown = this._isShown ?? true;
   }
 
   get _id(): string | undefined {

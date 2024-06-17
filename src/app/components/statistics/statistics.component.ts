@@ -3,7 +3,6 @@ import {ChartConfiguration} from 'chart.js';
 import {BaseChartDirective} from "ng2-charts";
 import {CurrentDataService} from "../../core/local/current-data.service";
 import {DeckTraining} from "../../models/deck-training.model";
-import {convertOutputFile} from "@angular-devkit/build-angular/src/tools/esbuild/utils";
 import {Router} from "@angular/router";
 
 @Component({
@@ -55,9 +54,8 @@ export class StatisticsComponent {
 
   isValid() {
     let isValid = true;
-    if (!this.currentDataService.cardsTraining || !this.currentDataService.cardsTraining[0].card ||
-      !this.currentDataService.cardsTraining![0].deckTraining || !this.currentDataService.completionTimeSeconds ||
-      !this.currentDataService.deckTraining) {
+    if (!this.currentDataService.cardsTraining?.at(0)?.card || !this.currentDataService.completionTimeSeconds ||
+        !this.currentDataService.deckTraining) {
       this.router.navigate(['']).then(() => {
         console.log('Navigation complete ' + this.router.url);
       }).catch(error => {

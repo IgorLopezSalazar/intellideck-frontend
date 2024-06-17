@@ -7,6 +7,8 @@ import {AuthService} from "../../core/auth.service";
 import {HttpClientModule} from "@angular/common/http";
 import {FormsModule, NgForm} from "@angular/forms";
 import {NgIf} from "@angular/common";
+import {lastValueFrom} from "rxjs";
+import {CurrentDataService} from "../../core/local/current-data.service";
 
 @Component({
   selector: 'app-login',
@@ -28,10 +30,10 @@ export class LoginComponent {
   showErrorMessage: boolean = false;
   errorMessageText: string = "";
 
-  constructor(private authService: AuthService) {
+  constructor(private authService: AuthService, private currentDataService: CurrentDataService) {
   }
 
-  login(loginForm: NgForm): void {
+  async login(loginForm: NgForm) {
     if (!loginForm.valid) {
       this.showErrorMessage = true;
       this.errorMessageText = "Los dos campos son necesarios.";
@@ -43,17 +45,31 @@ export class LoginComponent {
       password: loginForm.value.password
     };
 
-    this.authService.login(userCredentials).subscribe(
+    await this.executeLogin(userCredentials);
+  }
+
+  async executeLogin(userCredentials: {username: any, password: any}) {
+    try {
+      let loginResponse = await lastValueFrom(this.authService.login(userCredentials));
+      this.showErrorMessage = false;
+      this.authService.setToken(loginResponse.body);
+
+      this.saveUserLogged();
+    }
+    catch (error: any) {
+      console.log(error);
+      this.showErrorMessage = true;
+      this.errorMessageText = "Las credenciales no son correctas. Por favor, inténtelo de nuevo.";
+    }
+  }
+
+  saveUserLogged() {
+    this.authService.getUserLogged().subscribe(
       {
         next: response => {
-          this.showErrorMessage = false;
-          this.authService.setToken(response.body);
+          this.currentDataService.userLogged = response.body;
         },
-        error: (error: any) => {
-          console.log(error);
-          this.showErrorMessage = true;
-          this.errorMessageText = "Las credenciales no son correctas. Por favor, inténtelo de nuevo.";
-        }
+        error: (error: any) => console.log(error)
       }
     );
   }

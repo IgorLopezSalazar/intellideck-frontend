@@ -6,8 +6,6 @@ import {MatDialog} from "@angular/material/dialog";
 import {Card} from "../../models/card.model";
 import {NgFor, NgIf} from "@angular/common";
 import {Observable, Subscription} from "rxjs";
-import {convertOutputFile} from "@angular-devkit/build-angular/src/tools/esbuild/utils";
-import {CardTraining} from "../../models/card-training.model";
 
 @Component({
   selector: 'app-card-list',
@@ -53,11 +51,13 @@ export class CardListComponent {
   @Input() events?: Observable<Card[]>;
 
   ngOnInit(){
-    this.eventsSubscription = this.events!.subscribe(
-      (cards: Card[]) => {
-        this.cardList = cards;
-      }
-    );
+    if (this.events) {
+      this.eventsSubscription = this.events!.subscribe(
+        (cards: Card[]) => {
+          this.cardList = cards;
+        }
+      );
+    }
   }
 
   ngOnDestroy() {
@@ -68,13 +68,8 @@ export class CardListComponent {
   }
 
   viewCard({ index, isShown }: { index: number; isShown: boolean }) {
-    //this.cardList.splice(cardIndex, 1);
     console.log("view" + index);
     this.viewCardEvent.emit({index: index, isShown: isShown});
-    // let card = this.cardList.at(cardIndex);
-    // if (card) {
-    //
-    // }
   }
 
   deleteCard(cardIndex: number) {

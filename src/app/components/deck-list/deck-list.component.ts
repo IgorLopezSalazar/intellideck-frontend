@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {CardComponent} from "../card-list/card/card.component";
 import {NgForOf, NgIf} from "@angular/common";
 import {DeckComponent} from "./deck/deck.component";
