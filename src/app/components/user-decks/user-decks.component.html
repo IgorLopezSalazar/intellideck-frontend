@@ -1,0 +1,12 @@
+<div class="container">
+  <div class="main">
+    <div>
+      <h2>Tus mazos</h2>
+    </div>
+
+    <app-deck-list *ngIf="userDeckList.length > 0; else noDecks" [deckList]="userDeckList"></app-deck-list>
+    <ng-template #noDecks>
+      <span class="deck-container__empty">No hay mazos propios por el momento</span>
+    </ng-template>
+  </div>
+</div>

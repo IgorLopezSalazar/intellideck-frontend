@@ -57,7 +57,7 @@ export class DeckDetailsComponent {
     console.log(this.currentDataService.userLogged?.followedDecks)
     if (this.currentDataService.userLogged?.followedDecks) {
       console.log(this.deck)
-      return this.currentDataService.userLogged!.followedDecks.some(followedDeck => followedDeck._id === this.deck._id );
+      return this.currentDataService.userLogged.followedDecks.some(followedDeck => followedDeck._id === this.deck._id );
     }
     return false;
   }

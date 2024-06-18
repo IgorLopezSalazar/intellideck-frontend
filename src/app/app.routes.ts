@@ -9,6 +9,8 @@ import {ExternalDeckComponent} from "./components/external-deck/external-deck.co
 import {ExploreComponent} from "./components/explore/explore.component";
 import {CardTrainingComponent} from "./components/card-training/card-training.component";
 import {StatisticsComponent} from "./components/statistics/statistics.component";
+import {UserDecksComponent} from "./components/user-decks/user-decks.component";
+import {FollowingComponent} from "./components/following/following.component";
 
 export const routes: Routes = [
   { path: '', component: TimelineComponent, canActivate: [authGuard] },
@@ -19,5 +21,7 @@ export const routes: Routes = [
   { path: 'deck', component: ExternalDeckComponent, canActivate: [authGuard]},
   { path: 'explore', component: ExploreComponent, canActivate: [authGuard]},
   { path: 'training', component: CardTrainingComponent, canActivate: [authGuard]},
-  { path: 'statistics', component: StatisticsComponent, canActivate: [authGuard]}
+  { path: 'statistics', component: StatisticsComponent, canActivate: [authGuard]},
+  { path: 'user-decks', component: UserDecksComponent, canActivate: [authGuard]},
+  { path: 'following', component:FollowingComponent, canActivate: [authGuard]}
 ];

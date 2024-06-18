@@ -14,6 +14,7 @@ export class DeckService {
   private END_POINT_DECKS = environment.API_URL + '/decks';
   private END_POINT_PUBLISH = '/publish';
   private END_POINT_FILTER = '/filter';
+  private END_POINT_OWN = '/own';
 
   constructor(private http: HttpClient, private auth: AuthService) { }
 
@@ -32,6 +33,22 @@ export class DeckService {
     };
 
     return this.http.post(this.END_POINT_DECKS, deck.toJson(), options);
+  }
+
+  getUserDeckList(): Observable<any> {
+    let token = this.auth.getToken();
+    if (!token) {
+      return of({ error: 'No token available' });
+    }
+
+    const options: any = {
+      headers: new HttpHeaders({
+        'Authorization': token
+      }),
+      observe: 'response'
+    };
+
+    return this.http.get(this.END_POINT_DECKS + this.END_POINT_OWN , options);
   }
 
   getTimelineDecks(page: number): Observable<any> {

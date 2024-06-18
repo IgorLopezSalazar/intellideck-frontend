@@ -15,16 +15,14 @@ export class Card {
   private _isShown: boolean = true;
 
   constructor(whereImage: WhereImageEnum, question?: string, answer?: string, deck?: string,
-              image?: File, imagePath?: string, _id?: string, isShown?: boolean) {
+              image?: File, imagePath?: string, isShown?: boolean) {
     this._question = question;
     this._answer = answer;
     this._whereImage = whereImage;
     this._deckId = deck;
     this._imageFile = image;
     this._image = imagePath;
-    this.__id = _id;
-    this._isShown = isShown != undefined ? isShown : true;
-    this._isShown = this._isShown ?? true;
+    this._isShown = isShown ?? true;
   }
 
   get _id(): string | undefined {
