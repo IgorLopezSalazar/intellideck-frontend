@@ -1,9 +1,5 @@
 @use "../colors";
 
-.main{
-  height: calc(100vh - var(--mat-toolbar-standard-height));
-}
-
 .headerPadding {
   padding-top: var(--mat-toolbar-standard-height);
 }

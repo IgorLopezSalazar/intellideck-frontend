@@ -5,6 +5,9 @@
       <button mat-flat-button class="primary-button" type="button" *ngIf="createdDeck" (click)="publishDeck(deckForm)">
         Publicar mazo
       </button>
+      <button mat-flat-button class="delete-button" type="button" *ngIf="createdDeck" (click)="deleteDeck()">
+        Borrar mazo
+      </button>
     </div>
     <div class="container__creation__row">
       <div class="container__creation__row__first-column">

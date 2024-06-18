@@ -9,6 +9,15 @@
   .title {
     display: flex;
     gap: 2em;
+
+    .delete-button {
+      background-color: colors.$light-red;
+      color: colors.$white;
+
+      &:hover {
+        background-color: colors.$red;
+      }
+    }
   }
 
   &__row {
