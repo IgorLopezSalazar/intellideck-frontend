@@ -1,6 +1,6 @@
 <div class="background">
   <div class="container">
-    <app-deck-details [deck]="deck!" (startTrainingEmitter)="handleStartTraining()"></app-deck-details>
+    <app-deck-details [deck]="deck!" (startTrainingEmitter)="handleStartTraining()" (deleteDeckTrainingEmitter)="handleDeleteDeckTraining()"></app-deck-details>
 
     <app-card-list [cardListInput]="deckCards" [externalDeckCard]="true" (viewCardEvent)="handleViewCard($event)"
                    [events]="eventsSubject.asObservable()"></app-card-list>

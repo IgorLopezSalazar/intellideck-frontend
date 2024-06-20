@@ -55,10 +55,15 @@ $deck-image-max-height: 25em;
         }
 
         .star-rating {
+          display: flex;
           font-size: 2em;
           color: colors.$star-gold;
-          font-variation-settings: 'FILL' 1;
           margin-bottom: 0.2em;
+          cursor: pointer;
+
+          .fill-stars {
+            font-variation-settings: 'FILL' 1;
+          }
         }
       }
 

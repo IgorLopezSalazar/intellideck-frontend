@@ -50,8 +50,6 @@ export class ExternalDeckComponent {
         console.error('Navigation error:', error);
       });
     }
-
-
   }
 
   async ngOnInit() {
@@ -138,11 +136,11 @@ export class ExternalDeckComponent {
           error: (error: any) => console.log(error)
         }
       );
+      this.currentDataService.cardsTraining!.at(index)!.isShown = isShown;
     }
     else {
       this.deckCards!.at(index)!.isShown = isShown;
     }
-    this.currentDataService.cardsTraining!.at(index)!.isShown = isShown;
   }
 
   async handleStartTraining() {
@@ -161,6 +159,7 @@ export class ExternalDeckComponent {
       catch (error: any) {
         console.log(error);
       }
+
     }
 
     let continueTraining = true;
@@ -190,6 +189,20 @@ export class ExternalDeckComponent {
   }
 
   async createDeckTraining() {
+    const dialogRef = this.dialog.open(StartUnofficialTrainingDialog, {
+      width: '30vw',
+      height: 'auto',
+      maxHeight: '80vh',
+      panelClass: 'custom-dialog-container'
+    });
+
+    try {
+      continueTraining = await lastValueFrom(dialogRef.afterClosed());
+    }
+    catch (error: any) {
+      console.log(error);
+    }
+
     let deckTraining = new DeckTraining(
       7,
       Backtrack.BACKTRACK_FIRST,
@@ -203,5 +216,29 @@ export class ExternalDeckComponent {
     } catch (error) {
       console.log(error);
     }
+  }
+
+  handleDeleteDeckTraining() {
+    if (!this.deck?._id) return;
+    this.currentDataService.cardsTraining = undefined;
+    this.currentDataService.allCardsTrainings = undefined;
+    this.currentDataService.deckTraining = undefined;
+
+    this.deckTrainingService.deleteDeckTraining(this.deck._id).subscribe(
+      {
+        next: response => console.log(response),
+        error: error => console.log(error)
+      }
+    );
+
+    this.deckCards?.map(card => {
+      card.isShown = true;
+    });
+    this.eventsSubject.next(this.deckCards!);
+    // this.router.navigate(['/deck']).then(() => {
+    //   console.log('Navigation to login page complete');
+    // }).catch(error => {
+    //   console.error('Navigation error:', error);
+    // });
   }
 }

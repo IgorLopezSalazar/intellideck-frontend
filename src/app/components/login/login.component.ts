@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {RouterLink} from "@angular/router";
+import {Router, RouterLink} from "@angular/router";
 import {MatFormField} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
 import {MatButton} from "@angular/material/button";
@@ -30,7 +30,8 @@ export class LoginComponent {
   showErrorMessage: boolean = false;
   errorMessageText: string = "";
 
-  constructor(private authService: AuthService, private currentDataService: CurrentDataService) {
+  constructor(private authService: AuthService, private currentDataService: CurrentDataService,
+              private router: Router) {
   }
 
   async login(loginForm: NgForm) {
@@ -55,6 +56,12 @@ export class LoginComponent {
       this.authService.setToken(loginResponse.body);
 
       this.saveUserLogged();
+
+      this.router.navigate(['']).then(() => {
+        console.log('Navigation complete');
+      }).catch(error => {
+        console.error('Navigation error: ', error);
+      });
     }
     catch (error: any) {
       console.log(error);

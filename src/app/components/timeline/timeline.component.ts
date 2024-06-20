@@ -39,6 +39,7 @@ export class TimelineComponent {
               private currentDataService: CurrentDataService, private authService: AuthService) {
     this.getUserLogged();
 
+    this.studySessionsDecksToday();
     this.getTimelineDecks(0);
     this.getRecommendedUsers();
   }
@@ -54,6 +55,21 @@ export class TimelineComponent {
         }
       );
     }
+  }
+
+  studySessionsDecksToday() {
+    this.deckService.getStudyDecksToday().subscribe(
+      {
+        next: response => {
+          if (response.status == 200) {
+            this.studySessions = response.body.map(
+              (response: Deck[]) => this.studySessions = response
+            );
+          }
+        },
+        error: (error: any) => console.log(error)
+      }
+    );
   }
 
   getTimelineDecks(page: number) {

@@ -31,7 +31,7 @@ export class CurrentDataService {
     return this._cardsTraining;
   }
 
-  set cardsTraining(value: CardTraining[]) {
+  set cardsTraining(value: CardTraining[] | undefined) {
     this._cardsTraining = value;
   }
 
@@ -39,7 +39,7 @@ export class CurrentDataService {
     return this._allCardsTrainings;
   }
 
-  set allCardsTrainings(value: CardTraining[]) {
+  set allCardsTrainings(value: CardTraining[] | undefined) {
     this._allCardsTrainings = value;
   }
 
@@ -63,7 +63,7 @@ export class CurrentDataService {
     return this._deckTraining;
   }
 
-  set deckTraining(value: DeckTraining) {
+  set deckTraining(value: DeckTraining | undefined) {
     this._deckTraining = value;
   }
 
