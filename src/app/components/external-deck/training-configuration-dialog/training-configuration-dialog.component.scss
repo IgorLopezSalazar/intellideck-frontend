@@ -1,0 +1,61 @@
+@use "../../../../colors";
+
+.dialog {
+
+  &__content {
+    padding: 0.5em 1.5em !important;;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 1em;
+
+    &__row {
+      display: flex;
+      gap: 1em;
+
+      &__text {
+        color: colors.$light-black;
+        padding-bottom: 0.5em;
+      }
+
+      .field {
+        width: min-content;
+      }
+
+      .mat-button-toggle-group {
+        border: 3px solid colors.$primary-purple;
+        box-shadow: none;
+        border-radius: 0.2em;
+        height: min-content;
+      }
+
+      ::ng-deep .mat-button-toggle-label-content {
+        line-height: normal !important;
+      }
+
+      .mat-button-toggle {
+        background-color: colors.$white-smoke;
+        color: colors.$light-black;
+
+        &:hover {
+          background-color: colors.$light-purple;
+        }
+
+        &-checked {
+          background-color: colors.$primary-purple;
+          color: colors.$white;
+          &:hover {
+            background-color: colors.$primary-purple;
+          }
+        }
+      }
+    }
+
+  }
+
+  &__actions {
+    display: flex;
+    justify-content: space-evenly;
+    padding-bottom: 1.2em;
+  }
+}

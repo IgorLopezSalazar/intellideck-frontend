@@ -16,6 +16,7 @@ import {
   StartUnofficialTrainingDialog
 } from "./start-unofficial-training-dialog/start-unofficial-training-dialog.component";
 import {MatDialog} from "@angular/material/dialog";
+import {TrainingConfigurationDialog} from "./training-configuration-dialog/training-configuration-dialog.component";
 
 @Component({
   selector: 'app-external-deck',
@@ -34,7 +35,7 @@ export class ExternalDeckComponent {
 
   deck?: Deck;
   deckCards?: Card[];
-  cardsTrainingError: any;
+  cardsTrainingError?: number;
 
   eventsSubject: Subject<Card []> = new Subject<Card []>();
 
@@ -82,7 +83,7 @@ export class ExternalDeckComponent {
       }
     );
 
-    if (this.cardsTrainingError?.status !== 404) {
+    if (this.cardsTrainingError !== 404) {
       this.eventsSubject.next(this.deckCards!);
       this.currentDataService.deckTraining = this.currentDataService.cardsTraining![0].deckTraining!;
     }
@@ -105,7 +106,7 @@ export class ExternalDeckComponent {
     }
     catch (error: any) {
       console.log(error)
-      this.cardsTrainingError = error;
+      this.cardsTrainingError = error.status;
     }
   }
 
@@ -123,7 +124,7 @@ export class ExternalDeckComponent {
     }
     catch (error: any) {
       console.log(error)
-      this.cardsTrainingError = error;
+      this.cardsTrainingError = error.status;
     }
   }
 
@@ -146,7 +147,7 @@ export class ExternalDeckComponent {
   async handleStartTraining() {
     console.log("startTraining");
 
-    if (!this.currentDataService.cardsTraining && this.cardsTrainingError.status === 404) {
+    if (!this.currentDataService.cardsTraining && this.cardsTrainingError === 404) {
       await this.createDeckTraining();
 
       try {
@@ -189,37 +190,39 @@ export class ExternalDeckComponent {
   }
 
   async createDeckTraining() {
-    const dialogRef = this.dialog.open(StartUnofficialTrainingDialog, {
-      width: '30vw',
+    const dialogRef = this.dialog.open(TrainingConfigurationDialog, {
+      width: '35vw',
       height: 'auto',
       maxHeight: '80vh',
       panelClass: 'custom-dialog-container'
     });
 
     try {
-      continueTraining = await lastValueFrom(dialogRef.afterClosed());
+      let configuration: {backtrack: Backtrack, boxNumber: number} = await lastValueFrom(dialogRef.afterClosed());
+      if (configuration == undefined) return;
+
+      let deckTraining =  new DeckTraining(
+        configuration.boxNumber,
+        configuration.backtrack,
+        this.deck!._id!,
+        this.deckCards
+      );
+
+      try {
+        const response = await lastValueFrom(this.deckTrainingService.createDeckTraining(deckTraining));
+        console.log(response);
+      } catch (error) {
+        console.log(error);
+      }
     }
     catch (error: any) {
-      console.log(error);
-    }
-
-    let deckTraining = new DeckTraining(
-      7,
-      Backtrack.BACKTRACK_FIRST,
-      this.deck!._id!,
-      this.deckCards
-    );
-
-    try {
-      const response = await lastValueFrom(this.deckTrainingService.createDeckTraining(deckTraining));
-      console.log(response);
-    } catch (error) {
       console.log(error);
     }
   }
 
   handleDeleteDeckTraining() {
     if (!this.deck?._id) return;
+    this.cardsTrainingError = 404;
     this.currentDataService.cardsTraining = undefined;
     this.currentDataService.allCardsTrainings = undefined;
     this.currentDataService.deckTraining = undefined;
