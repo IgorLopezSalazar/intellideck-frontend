@@ -1,0 +1,22 @@
+<h2 mat-dialog-title style="margin: 0">Configuración del entrenamiento</h2>
+<mat-dialog-content class="dialog__content">
+  <div class="dialog__content__row">
+    <span class="dialog__content__row__text">Indica el número máximo de cajas para mover las cartas</span>
+    <mat-form-field appearance="outline" subscriptSizing="dynamic" class="field">
+      <mat-label>Número de cajas</mat-label>
+      <input matInput type="number" min="0" step="1" name="boxNumber" class="form-control" placeholder="Número de cajas" [(ngModel)]="boxNumber">
+    </mat-form-field>
+  </div>
+  <div class="dialog__content__row">
+    <span class="dialog__content__row__text">Método de regresión al fallar</span>
+    <mat-button-toggle-group name="backtrack" [(ngModel)]="backtrack" hideSingleSelectionIndicator="true" appearance="legacy" class="toggle-group">
+      <mat-button-toggle value="{{Backtrack.BACKTRACK_FIRST}}" disableRipple>Regresar al <br/> principio</mat-button-toggle>
+      <mat-button-toggle value="{{Backtrack.BACKTRACK_PRIOR}}" disableRipple>Regresar a la <br/> caja anterior</mat-button-toggle>
+    </mat-button-toggle-group>
+  </div>
+
+</mat-dialog-content>
+<mat-dialog-actions class="dialog__actions">
+  <button mat-button class="secondary-button" (click)="close(true)">Cancelar</button>
+  <button mat-button class="primary-button" (click)="close()">Empezar entrenamiento</button>
+</mat-dialog-actions>

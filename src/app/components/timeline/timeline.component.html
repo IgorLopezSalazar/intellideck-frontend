@@ -8,7 +8,7 @@
       <div>
         <h2>Tus sesiones de estudio</h2>
       </div>
-      <app-deck-list *ngIf="studySessions.length > 0; else noStudySessions"></app-deck-list>
+      <app-deck-list *ngIf="studySessions.length > 0; else noStudySessions" [deckList]="studySessions"></app-deck-list>
       <ng-template #noStudySessions>
         <span class="training-container__empty">No hay sesiones de estudio</span>
       </ng-template>

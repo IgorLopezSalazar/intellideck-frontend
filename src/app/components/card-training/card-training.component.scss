@@ -4,7 +4,7 @@ $card-image-height: 20em;
 
 .background {
   background-color: colors.$light-purple;
-  height: 100%;
+  height: calc(100vh - var(--mat-toolbar-standard-height));
 }
 
 .container {

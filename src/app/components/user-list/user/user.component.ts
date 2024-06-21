@@ -41,7 +41,7 @@ export class UserComponent {
 
   checkIfFollowing(): boolean {
     if (this.currentDataService.userLogged?.followedUsers) {
-      return this.currentDataService.userLogged!.followedUsers.some(followedUser => followedUser._id === this.user._id );
+      return this.currentDataService.userLogged.followedUsers.some(followedUser => followedUser._id === this.user._id );
     }
     return false;
   }

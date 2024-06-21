@@ -55,8 +55,9 @@ export class CreateCardDialog {
         this.cardToUpdate!.deckId,
         this.cardToUpdate!.imageFile,
         this.cardToUpdate!.image,
-        this.cardToUpdate!._id,
       );
+      if (this.cardToUpdate?._id) this.card._id = this.cardToUpdate._id;
+
       this.updateCard = true;
       this.createUpdateText = "Actualizar carta";
 

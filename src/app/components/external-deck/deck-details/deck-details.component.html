@@ -2,6 +2,27 @@
   <div class="container__details">
     <div class="title">
       <h2>Datos del mazo</h2>
+      <button mat-flat-button class="secondary-button" type="button" (click)="copyDeck()">
+        Copiar mazo
+      </button>
+      <button mat-flat-button class="delete-button" type="button" *ngIf="userIsCreator()" (click)="deleteDeck()">
+        <span class="material-symbols-outlined">
+          delete_forever
+        </span>
+        Borrar mazo
+      </button>
+      <button mat-flat-button class="delete-button" type="button" *ngIf="existTrainingCards()" (click)="deleteDeckTraining()">
+        <span class="material-symbols-outlined">
+          delete_forever
+        </span>
+        Borrar estudio actual
+      </button>
+      <button mat-flat-button class="delete-button" type="button" *ngIf="existTrainingCards()" (click)="restartDeckTraining()">
+        <span class="material-symbols-outlined">
+          refresh
+        </span>
+        Reiniciar estudio actual
+      </button>
     </div>
     <div class="container__details__row">
       <div class="first-column">
@@ -21,9 +42,18 @@
       <div class="second-column">
         <div class="second-column__first-row">
           <h2>{{deck.title}}</h2>
-          <div class="star-rating">
-            <span class="material-symbols-outlined">
-              star
+          <div class="star-rating" (click)="setRating()">
+            <div *ngIf="this.deckAverageRating">
+              <span class="material-symbols-outlined fill-stars" *ngFor="let star of [].constructor(deckAverageRating)">
+                star
+              </span>
+            </div>
+
+            <span class="material-symbols-outlined" *ngIf="isHalfStar">
+                star_half
+              </span>
+            <span class="material-symbols-outlined" *ngFor="let star of [].constructor(emptyStars)">
+                star
             </span>
           </div>
         </div>

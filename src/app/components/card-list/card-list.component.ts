@@ -37,10 +37,11 @@ export class CardListComponent {
           card.deckId,
           card.imageFile,
           card.image,
-          card._id,
           card.isShown
         );
-        this.cardList.push(newCard); // Add the new card to the destination array
+        if (card._id) newCard._id = card._id;
+
+        this.cardList.push(newCard);
       });
     }
     else {
@@ -52,7 +53,7 @@ export class CardListComponent {
 
   ngOnInit(){
     if (this.events) {
-      this.eventsSubscription = this.events!.subscribe(
+      this.eventsSubscription = this.events.subscribe(
         (cards: Card[]) => {
           this.cardList = cards;
         }

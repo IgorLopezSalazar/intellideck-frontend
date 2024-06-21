@@ -15,6 +15,7 @@ export class Deck {
   private _topic : Topic;
   private _tags: Tag[];
   private _cards?: Card[];
+  private _avgDeckRating?: number;
 
   constructor(title: string, topic: Topic) {
     this._title = title;
@@ -109,6 +110,14 @@ export class Deck {
 
   set cards(value: Card[]) {
     this._cards = value;
+  }
+
+  get avgDeckRating(): number | undefined {
+    return this._avgDeckRating;
+  }
+
+  set avgDeckRating(value: number) {
+    this._avgDeckRating = value;
   }
 
   toJson(): string {

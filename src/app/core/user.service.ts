@@ -13,6 +13,7 @@ export class UserService {
   private END_POINT_USERS = environment.API_URL + '/users';
   private END_POINT_FILTER = '/filter';
   private END_POINT_TIMELINE = '/timeline';
+  private END_POINT_FOLLOWED = '/followed';
 
   constructor(private http: HttpClient, private auth: AuthService) { }
 
@@ -53,6 +54,22 @@ export class UserService {
     };
 
     return this.http.get(this.END_POINT_USERS + this.END_POINT_TIMELINE, options);
+  }
+
+  getUserFollowedUsers(userID: string): Observable<any> {
+    let token = this.auth.getToken();
+    if (!token) {
+      return of({ error: 'No token available' });
+    }
+
+    const options: any = {
+      headers: new HttpHeaders({
+        'Authorization': token
+      }),
+      observe: 'response'
+    };
+
+    return this.http.get(this.END_POINT_USERS + this.END_POINT_FOLLOWED + '/' + userID, options);
   }
 
   updateUserFollowStatus(userID: string , follow: boolean): Observable<any> {

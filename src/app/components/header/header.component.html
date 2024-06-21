@@ -9,11 +9,11 @@
       <mat-icon class="big-icon">search</mat-icon>
       Explorar
     </button>
-    <button mat-button class="nav-bar__font-size nav-bar__button" routerLink="/followed">
+    <button mat-button class="nav-bar__font-size nav-bar__button" routerLink="/following">
       <mat-icon class="big-icon">view_carousel</mat-icon>
       Seguidos
     </button>
-    <button mat-button class="nav-bar__font-size nav-bar__button" routerLink="/">
+    <button mat-button class="nav-bar__font-size nav-bar__button" routerLink="/user-decks">
       <mat-icon class="big-icon">dashboard_customize</mat-icon>
       Mis mazos
     </button>
@@ -33,9 +33,21 @@
     <button mat-flat-button class="primary-button nav-bar__font-size" routerLink="/deck-creation">
       Crear mazo
     </button>
-    <button mat-button class="profile-button nav-bar__font-size nav-bar__button" routerLink="/profile">
+
+    <button mat-button class="profile-button nav-bar__font-size nav-bar__button" [matMenuTriggerFor]="menu">
       <mat-icon class="big-icon">account_circle</mat-icon>
-      Perfil
+      {{ username }}
     </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item  routerLink="/profile">
+        <mat-icon class="big-icon">account_circle</mat-icon>
+        Perfil
+      </button>
+
+      <button mat-menu-item class="logout" (click)="logout()">
+        <mat-icon class="logout__icon">logout</mat-icon>
+        Cerrar sesión
+      </button>
+    </mat-menu>
   </mat-toolbar>
 </header>

@@ -17,6 +17,8 @@ import {Tag} from "../../models/tag.model";
 import {TagService} from "../../core/tag.service";
 import { cloneDeep } from 'lodash';
 import {lastValueFrom} from "rxjs";
+import {DeckService} from "../../core/deck.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-deck-details-form',
@@ -67,7 +69,8 @@ export class DeckDetailsFormComponent {
   currentTag: string = '';
   deck: Deck;
 
-  constructor(private topicService: TopicService, private tagService: TagService) {
+  constructor(private topicService: TopicService, private tagService: TagService,
+              private deckService: DeckService, private router: Router) {
     this.deck = new Deck('', new Topic('', ''));
   }
 
@@ -210,8 +213,22 @@ export class DeckDetailsFormComponent {
 
   async publishDeck(deckForm: NgForm) {
     this.formSubmit(deckForm, true);
+  }
 
-    console.log("publish")
+  async deleteDeck() {
+    try {
+      if (this.deck._id) {
+        await lastValueFrom(this.deckService.deleteDeck(this.deck._id));
+      }
 
+      this.router.navigate(['']).then(() => {
+        console.log('Navigation complete');
+      }).catch(error => {
+        console.error('Navigation error:', error);
+      });
+    }
+    catch (error: any) {
+      console.log(error);
+    }
   }
 }

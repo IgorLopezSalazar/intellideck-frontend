@@ -32,7 +32,8 @@ export class OwnDeckComponent {
   receivedCardList?: Card[];
 
   constructor(private router: Router, private currentDeck: CurrentDataService, private cardService: CardService,
-              private tagService: TagService, private imagesService: ImagesService, private deckService: DeckService) {
+              private tagService: TagService, private imagesService: ImagesService, private deckService: DeckService,
+              private currentDataService: CurrentDataService) {
     this.deck = this.currentDeck.deck
 
     if (!this.deck) {
@@ -74,6 +75,13 @@ export class OwnDeckComponent {
       {
         next: response => {
           console.log(response)
+          this.deck!.isPublished = true;
+          this.currentDataService.deck = this.deck!;
+          this.router.navigate(['/deck']).then(() => {
+            console.log('Navigation complete: ' + this.router.url);
+          }).catch(error => {
+            console.error('Navigation error:', error);
+          });
         },
         error: (error: any) => {
           console.log(error);
