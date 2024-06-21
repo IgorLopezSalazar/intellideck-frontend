@@ -8,12 +8,8 @@ import {Router, RouterLink} from "@angular/router";
 import {CurrentDataService} from "../../../core/local/current-data.service";
 import {lastValueFrom} from "rxjs";
 import {DeckService} from "../../../core/deck.service";
-import {ExploreSearchDialogComponent} from "../../explore/explore-search-dialog/explore-search-dialog.component";
-import {DeckFilters} from "../../../models/deckFilters.model";
-import {UserFilters} from "../../../models/userFilters.model";
 import {MatDialog} from "@angular/material/dialog";
 import {DeckRatingDialog} from "./deck-rating-dialog/deck-rating-dialog.component";
-import {classNames} from "@angular/cdk/schematics";
 
 @Component({
   selector: 'app-deck-details',
@@ -36,6 +32,7 @@ export class DeckDetailsComponent {
   @Input() deck!: Deck;
   @Output() startTrainingEmitter = new EventEmitter<any>();
   @Output() deleteDeckTrainingEmitter = new EventEmitter<any>();
+  @Output() restartDeckTrainingEmitter = new EventEmitter<any>();
   isFollowingDeck: boolean = false;
   deckAverageRating?: number;
   isHalfStar: boolean = false;
@@ -212,5 +209,9 @@ export class DeckDetailsComponent {
 
   deleteDeckTraining() {
     this.deleteDeckTrainingEmitter.emit();
+  }
+
+  restartDeckTraining() {
+    this.restartDeckTrainingEmitter.emit();
   }
 }

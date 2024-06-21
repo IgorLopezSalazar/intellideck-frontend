@@ -6,10 +6,22 @@
         Copiar mazo
       </button>
       <button mat-flat-button class="delete-button" type="button" *ngIf="userIsCreator()" (click)="deleteDeck()">
+        <span class="material-symbols-outlined">
+          delete_forever
+        </span>
         Borrar mazo
       </button>
       <button mat-flat-button class="delete-button" type="button" *ngIf="existTrainingCards()" (click)="deleteDeckTraining()">
-        Borrar sesion de estudio actual
+        <span class="material-symbols-outlined">
+          delete_forever
+        </span>
+        Borrar estudio actual
+      </button>
+      <button mat-flat-button class="delete-button" type="button" *ngIf="existTrainingCards()" (click)="restartDeckTraining()">
+        <span class="material-symbols-outlined">
+          refresh
+        </span>
+        Reiniciar estudio actual
       </button>
     </div>
     <div class="container__details__row">

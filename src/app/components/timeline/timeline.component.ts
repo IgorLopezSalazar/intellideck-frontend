@@ -39,7 +39,7 @@ export class TimelineComponent {
               private currentDataService: CurrentDataService, private authService: AuthService) {
     this.getUserLogged();
 
-    this.studySessionsDecksToday();
+    this.getStudySessionsDecksToday();
     this.getTimelineDecks(0);
     this.getRecommendedUsers();
   }
@@ -57,11 +57,13 @@ export class TimelineComponent {
     }
   }
 
-  studySessionsDecksToday() {
+  getStudySessionsDecksToday() {
     this.deckService.getStudyDecksToday().subscribe(
       {
         next: response => {
           if (response.status == 200) {
+            console.log("estaTime")
+            console.log(response)
             this.studySessions = response.body.map(
               (response: Deck[]) => this.studySessions = response
             );

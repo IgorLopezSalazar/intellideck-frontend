@@ -42,7 +42,8 @@ export class ExternalDeckComponent {
   constructor(private router: Router, private currentDeck: CurrentDataService, private cardService: CardService,
               private deckTrainingService: DeckTrainingService, private cardTrainingService: CardTrainingService,
               private currentDataService: CurrentDataService, private dialog: MatDialog) {
-    this.deck = this.currentDeck.deck
+    this.deck = this.currentDeck.deck;
+    this.restartCurrentData();
 
     if (!this.deck) {
       this.router.navigate(['']).then(() => {
@@ -51,6 +52,14 @@ export class ExternalDeckComponent {
         console.error('Navigation error:', error);
       });
     }
+  }
+
+  restartCurrentData() {
+    this.cardsTrainingError = 404;
+    this.currentDataService.cardsTraining = undefined;
+    this.currentDataService.allCardsTrainings = undefined;
+    this.currentDataService.deckTraining = undefined;
+    this.currentDataService.isOfficialTraining = false;
   }
 
   async ngOnInit() {
@@ -116,6 +125,8 @@ export class ExternalDeckComponent {
     try {
       const response = await lastValueFrom(this.cardTrainingService.getTodayDeckTrainingCards(this.deck._id));
       if (response.status === 200) {
+        console.log("esta")
+        console.log(response)
         this.currentDataService.cardsTraining = response.body.map(
           (cardsTraining: CardTraining []) => this.currentDataService.cardsTraining = cardsTraining
         );
@@ -238,10 +249,60 @@ export class ExternalDeckComponent {
       card.isShown = true;
     });
     this.eventsSubject.next(this.deckCards!);
-    // this.router.navigate(['/deck']).then(() => {
-    //   console.log('Navigation to login page complete');
-    // }).catch(error => {
-    //   console.error('Navigation error:', error);
+  }
+
+  async handleRestartDeckTraining() {
+    if (!this.deck?._id) return;
+    let tempAllCardsTrainings = this.currentDataService.allCardsTrainings;
+    this.restartCurrentData();
+    this.currentDataService.allCardsTrainings = tempAllCardsTrainings;
+    // this.cardsTrainingError = 404;
+    // this.currentDataService.cardsTraining = undefined;
+    // this.currentDataService.allCardsTrainings = undefined;
+    // this.currentDataService.deckTraining = undefined;
+
+    const dialogRef = this.dialog.open(TrainingConfigurationDialog, {
+      width: '35vw',
+      height: 'auto',
+      maxHeight: '80vh',
+      panelClass: 'custom-dialog-container'
+    });
+
+    try {
+      let configuration: {backtrack: Backtrack, boxNumber: number} = await lastValueFrom(dialogRef.afterClosed());
+      if (configuration == undefined) return;
+
+      try {
+        const response = await lastValueFrom(
+          this.deckTrainingService.restartDeckTraining(
+            this.deck._id,
+            configuration.backtrack,
+            configuration.boxNumber
+          )
+        );
+        this.currentDataService.isOfficialTraining = true;
+        console.log(response);
+
+        try {
+          const cardTrainingsResponse = await lastValueFrom(
+            this.cardTrainingService.getTodayDeckTrainingCards(this.deck._id)
+          );
+          console.log(cardTrainingsResponse);
+          this.currentDataService.cardsTraining = cardTrainingsResponse.body;
+        } catch (error) {
+          console.log(error);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    catch (error: any) {
+      console.log(error);
+    }
+
+    // this.deckCards?.map(card => {
+    //   card.isShown = true;
     // });
+    // this.eventsSubject.next(this.deckCards!);
   }
 }

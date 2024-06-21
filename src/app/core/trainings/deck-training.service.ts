@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {environment} from "../../../environments/environment";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {AuthService} from "../auth.service";
-import {DeckTraining} from "../../models/deck-training.model";
+import {Backtrack, DeckTraining} from "../../models/deck-training.model";
 import {Observable, of} from "rxjs";
 import {CardTraining} from "../../models/card-training.model";
 
@@ -101,5 +101,30 @@ export class DeckTrainingService {
 
     let endPointUrl =   this.END_POINT_DECKS + '/' + deckID + this.END_POINT_DECK_TRAINING;
     return this.http.delete(endPointUrl, options);
+  }
+
+  restartDeckTraining(deckID: string, backtrack: Backtrack, boxNumber: number): Observable<any> {
+    let token: string | null = this.auth.getToken();
+    if (!token) {
+      return of({error: 'No token available'});
+    }
+
+    const options: any = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': token
+      }),
+      observe: 'response'
+    };
+
+    let deckTrainingInfo = JSON.stringify({
+      resetDate: "true",
+      backtrack: backtrack,
+      boxAmount: boxNumber
+    });
+    console.log(deckTrainingInfo)
+
+    let endPointUrl = this.END_POINT_DECKS + '/' + deckID + this.END_POINT_DECK_TRAINING;
+    return this.http.put(endPointUrl, deckTrainingInfo, options);
   }
 }

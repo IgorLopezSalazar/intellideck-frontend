@@ -12,6 +12,7 @@ $deck-image-max-height: 25em;
   .title {
     display: flex;
     gap: 2em;
+
   }
 
   &__row {
@@ -82,7 +83,10 @@ $deck-image-max-height: 25em;
   }
 }
 
-
+::ng-deep .mdc-button__label {
+  display: flex !important;
+  align-items: center !important;
+}
 
 .form-field {
   --mat-form-field-container-vertical-padding: 0.7em;

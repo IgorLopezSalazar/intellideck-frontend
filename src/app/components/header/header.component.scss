@@ -62,4 +62,9 @@
   }
 }
 
-
+.logout {
+  color: colors.$light-red;
+  &__icon {
+    color: colors.$light-red !important;
+  }
+ }

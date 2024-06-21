@@ -34,17 +34,18 @@
       Crear mazo
     </button>
 
-    <button mat-button class="profile-button nav-bar__font-size nav-bar__button" [matMenuTriggerFor]="menu" routerLink="/profile">
+    <button mat-button class="profile-button nav-bar__font-size nav-bar__button" [matMenuTriggerFor]="menu">
       <mat-icon class="big-icon">account_circle</mat-icon>
-      Perfil
+      {{ username }}
     </button>
     <mat-menu #menu="matMenu">
-      <button mat-menu-item>
+      <button mat-menu-item  routerLink="/profile">
         <mat-icon class="big-icon">account_circle</mat-icon>
         Perfil
       </button>
-      <button mat-menu-item>
-        <mat-icon class="big-icon">account_circle</mat-icon>
+
+      <button mat-menu-item class="logout" (click)="logout()">
+        <mat-icon class="logout__icon">logout</mat-icon>
         Cerrar sesión
       </button>
     </mat-menu>
