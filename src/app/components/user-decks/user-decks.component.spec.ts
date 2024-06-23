@@ -5,6 +5,8 @@ import {provideHttpClient} from "@angular/common/http";
 import {provideHttpClientTesting} from "@angular/common/http/testing";
 import {provideRouter} from "@angular/router";
 import {provideAnimations} from "@angular/platform-browser/animations";
+import {Deck} from "../../models/deck.model";
+import {Topic} from "../../models/topic.model";
 
 describe('UserDecksComponent', () => {
   let component: UserDecksComponent;
@@ -24,6 +26,7 @@ describe('UserDecksComponent', () => {
 
     fixture = TestBed.createComponent(UserDecksComponent);
     component = fixture.componentInstance;
+    component.userDeckList = [new Deck("titulo", new Topic("123456789abcdef", "name"))];
     fixture.detectChanges();
   });
 

@@ -148,7 +148,7 @@ export class ExternalDeckComponent {
           error: (error: any) => console.log(error)
         }
       );
-      this.currentDataService.cardsTraining!.at(index)!.isShown = isShown;
+      this.currentDataService.cardsTraining.at(index)!.isShown = isShown;
     }
     else {
       this.deckCards!.at(index)!.isShown = isShown;
@@ -265,16 +265,13 @@ export class ExternalDeckComponent {
     let tempAllCardsTrainings = this.currentDataService.allCardsTrainings;
     this.restartCurrentData();
     this.currentDataService.allCardsTrainings = tempAllCardsTrainings;
-    // this.cardsTrainingError = 404;
-    // this.currentDataService.cardsTraining = undefined;
-    // this.currentDataService.allCardsTrainings = undefined;
-    // this.currentDataService.deckTraining = undefined;
 
     const dialogRef = this.dialog.open(TrainingConfigurationDialog, {
       width: '35vw',
       height: 'auto',
       maxHeight: '80vh',
-      panelClass: 'custom-dialog-container'
+      panelClass: 'custom-dialog-container',
+      data: true
     });
 
     try {
@@ -308,10 +305,5 @@ export class ExternalDeckComponent {
     catch (error: any) {
       console.log(error);
     }
-
-    // this.deckCards?.map(card => {
-    //   card.isShown = true;
-    // });
-    // this.eventsSubject.next(this.deckCards!);
   }
 }

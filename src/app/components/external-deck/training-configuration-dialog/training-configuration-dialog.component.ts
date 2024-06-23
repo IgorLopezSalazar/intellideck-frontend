@@ -1,6 +1,6 @@
-import {Component} from '@angular/core';
+import {Component, Inject} from '@angular/core';
 import {FormsModule} from "@angular/forms";
-import {MatDialogModule, MatDialogRef} from "@angular/material/dialog";
+import {MAT_DIALOG_DATA, MatDialogModule, MatDialogRef} from "@angular/material/dialog";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
 import {MatButtonToggle, MatButtonToggleGroup} from "@angular/material/button-toggle";
@@ -28,8 +28,13 @@ export class TrainingConfigurationDialog {
 
   backtrack: Backtrack = Backtrack.BACKTRACK_FIRST;
   boxNumber: number = 7;
+  restartText: string;
 
-  constructor(private dialogRef: MatDialogRef<TrainingConfigurationDialog>,) {
+  constructor(private dialogRef: MatDialogRef<TrainingConfigurationDialog>, @Inject(MAT_DIALOG_DATA) public restartTraining?: boolean) {
+    if (restartTraining == true)
+      this.restartText = "Reiniciar entrenamiento";
+    else
+      this.restartText = 'Empezar entrenamiento';
   }
 
   close(cancel?: boolean) {

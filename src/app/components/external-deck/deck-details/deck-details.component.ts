@@ -176,9 +176,6 @@ export class DeckDetailsComponent {
       {
         next: (response) => {
           this.setEndpointAverageRating(response.body);
-          // this.deckAverageRating = Math.floor(response.body / 2);
-          // if (response.body % 2 != 0) this.isHalfStar = true;
-          // this.emptyStars = this.STAR_NUMBER - this.deckAverageRating + (this.isHalfStar ? 1 : 0);
         },
         error: error => console.log(error)
       }

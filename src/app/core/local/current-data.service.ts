@@ -72,7 +72,7 @@ export class CurrentDataService {
     return this._userLogged;
   }
 
-  set userLogged(value: User) {
+  set userLogged(value: User | undefined) {
     this._userLogged = value;
   }
 
