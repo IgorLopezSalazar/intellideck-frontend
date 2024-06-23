@@ -58,7 +58,7 @@ export class DeckCreationComponent {
       this.currentDataService.deck = this.receivedDeck;
       this.currentDataService.deck._id = deck._id;
 
-      this.router.navigate(['/own-deck']).then(() => {
+      this.router.navigate(['/user-decks']).then(() => {
         console.log('Navigation complete');
       }).catch(error => {
         console.error('Navigation error:', error);
@@ -134,7 +134,7 @@ export class DeckCreationComponent {
         card.image = imagePath.body;
       }
 
-      card.deckId = deckID;
+      card.deck = deckID;
       const createdCard = await this.callCreateCard(card);
       if (createdCard) {
         if (this.receivedDeck!.cards == undefined) this.receivedDeck!.cards = [];

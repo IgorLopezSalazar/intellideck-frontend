@@ -11,7 +11,7 @@ export class Card {
   private _imageFile? : File;
   private _image? : string;
   private _whereImage: WhereImageEnum;
-  private _deckId?: string;
+  private _deck?: string;
   private _isShown: boolean = true;
 
   constructor(whereImage: WhereImageEnum, question?: string, answer?: string, deck?: string,
@@ -19,7 +19,7 @@ export class Card {
     this._question = question;
     this._answer = answer;
     this._whereImage = whereImage;
-    this._deckId = deck;
+    this._deck = deck;
     this._imageFile = image;
     this._image = imagePath;
     this._isShown = isShown ?? true;
@@ -73,12 +73,12 @@ export class Card {
     this._whereImage = value;
   }
 
-  get deckId(): string | undefined {
-    return this._deckId;
+  get deck(): string | undefined {
+    return this._deck;
   }
 
-  set deckId(value: string) {
-    this._deckId = value;
+  set deck(value: string) {
+    this._deck = value;
   }
 
   get isShown(): boolean {
@@ -95,7 +95,7 @@ export class Card {
       answer : this.answer,
       image : this.image,
       whereImage: this.whereImage,
-      deckId: this.deckId
+      deckId: this.deck
     });
   }
 }

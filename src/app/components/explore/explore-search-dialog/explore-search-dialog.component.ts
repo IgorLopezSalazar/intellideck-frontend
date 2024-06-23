@@ -80,7 +80,7 @@ export class ExploreSearchDialogComponent {
     this.tagService.getTags().subscribe(
       {
         next: (response: any) => {
-          this.allTagsList = response.body.map((tag: any) => new Tag(tag.name));
+          this.allTagsList = response.status == 200 ? response.body.map((tag: any) => new Tag(tag.name)) : [];
           this.filteredTags = this.allTagsList;
         },
         error: (error: any) => { console.log(error) }
@@ -111,7 +111,8 @@ export class ExploreSearchDialogComponent {
     if (!this.deckFilters.isEmpty())
       this.deckFilters.creator = this.userFilters.username;
 
-    this.dialogRef.close({ deckFilters: this.deckFilters, userFilters: this.userFilters });
+    if (this.deckFilters.minDeckRating === undefined || (this.deckFilters.minDeckRating! >= 0 && this.deckFilters.minDeckRating! <= 5))
+      this.dialogRef.close({ deckFilters: this.deckFilters, userFilters: this.userFilters });
   }
 
   checkMinDeckRating() {

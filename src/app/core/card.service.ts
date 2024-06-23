@@ -27,7 +27,7 @@ export class CardService {
       }),
       observe: 'response'
     };
-    let endPointUrl =   this.END_POINT_DECKS + '/' + card.deckId + this.END_POINT_CARDS;
+    let endPointUrl =   this.END_POINT_DECKS + '/' + card.deck + this.END_POINT_CARDS;
     return this.http.post(endPointUrl, card.toJson(), options);
   }
 
@@ -63,6 +63,24 @@ export class CardService {
       observe: 'response'
     };
 
-    return this.http.put(this.END_POINT_DECKS + "/" + card.deckId + this.END_POINT_CARDS + "/" + card._id, card.toJson(), options);
+    return this.http.put(this.END_POINT_DECKS + "/" + card.deck + this.END_POINT_CARDS + "/" + card._id, card.toJson(), options);
+  }
+
+  deleteCard(deckID: string, cardID: string): Observable<any> {
+    let token: string | null = this.auth.getToken();
+    if (!token) {
+      return of({ error: 'No token available' });
+    }
+
+    const options: any = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': token
+      }),
+      observe: 'response'
+    };
+
+    let endPointUrl =   this.END_POINT_DECKS + '/' + deckID + this.END_POINT_CARDS + '/' + cardID;
+    return this.http.delete(endPointUrl, options);
   }
 }
