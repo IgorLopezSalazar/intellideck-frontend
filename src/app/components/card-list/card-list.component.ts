@@ -6,6 +6,7 @@ import {MatDialog} from "@angular/material/dialog";
 import {Card} from "../../models/card.model";
 import {NgFor, NgIf} from "@angular/common";
 import {Observable, Subscription} from "rxjs";
+import {CardService} from "../../core/card.service";
 
 @Component({
   selector: 'app-card-list',
@@ -34,7 +35,7 @@ export class CardListComponent {
           card.whereImage,
           card.question,
           card.answer,
-          card.deckId,
+          card.deck,
           card.imageFile,
           card.image,
           card.isShown
@@ -65,7 +66,7 @@ export class CardListComponent {
     if (this.eventsSubscription) this.eventsSubscription.unsubscribe();
   }
 
-  constructor(public dialog: MatDialog) {
+  constructor(public dialog: MatDialog, private cardService: CardService) {
   }
 
   viewCard({ index, isShown }: { index: number; isShown: boolean }) {
@@ -74,6 +75,16 @@ export class CardListComponent {
   }
 
   deleteCard(cardIndex: number) {
+    console.log(this.cardList.at(cardIndex))
+    if (this.cardList.at(cardIndex)?._id && this.cardList.at(cardIndex)?.deck) {
+      this.cardService.deleteCard(this.cardList.at(cardIndex)!.deck!, this.cardList.at(cardIndex)!._id!).subscribe(
+        {
+          next: response => console.log(response),
+          error: error => console.log(error)
+        }
+      );
+    }
+
     this.cardList.splice(cardIndex, 1);
   }
 

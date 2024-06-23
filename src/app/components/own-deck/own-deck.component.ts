@@ -85,6 +85,7 @@ export class OwnDeckComponent {
         },
         error: (error: any) => {
           console.log(error);
+          if (error.status == 400) alert('No esta permitido crear un mazo sin cartas.');
         }
       }
     );
@@ -155,7 +156,7 @@ export class OwnDeckComponent {
         card.image = imagePath.body;
       }
 
-      card.deckId = this.deck._id;
+      card.deck = this.deck._id;
       if (card._id) await this.callUpdateCard(card);
       else await this.callCreateCard(card);
     }

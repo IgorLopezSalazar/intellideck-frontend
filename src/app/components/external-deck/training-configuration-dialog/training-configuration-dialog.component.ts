@@ -31,7 +31,7 @@ export class TrainingConfigurationDialog {
   restartText: string;
 
   constructor(private dialogRef: MatDialogRef<TrainingConfigurationDialog>, @Inject(MAT_DIALOG_DATA) public restartTraining?: boolean) {
-    if (restartTraining == true)
+    if (restartTraining)
       this.restartText = "Reiniciar entrenamiento";
     else
       this.restartText = 'Empezar entrenamiento';
@@ -46,6 +46,6 @@ export class TrainingConfigurationDialog {
     if ((this.boxNumber >= 1 && this.boxNumber % 1 == 0) && (this.boxNumber <= 13 && this.boxNumber > 0))
       this.dialogRef.close({backtrack: this.backtrack, boxNumber: this.boxNumber});
     else
-      alert("¡Valor inválido! Por favor, introduce un valor entero mayor que 0.");
+      alert("¡Valor inválido! Por favor, introduce un valor entero mayor que 0 y menor que 14.");
   }
 }

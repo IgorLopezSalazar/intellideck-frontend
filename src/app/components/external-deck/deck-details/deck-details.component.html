@@ -70,7 +70,8 @@
         </div>
 
         <div class="second-column__forth-row">
-          <app-user [user]="deck.creator!"></app-user>
+          <app-user [user]="deck.creator!" *ngIf="deck.creator != undefined; else noUser"></app-user>
+          <ng-template #noUser>Unknown user</ng-template>
         </div>
 
       </div>

@@ -52,7 +52,7 @@ export class CreateCardDialog {
         this.cardToUpdate!.whereImage,
         this.cardToUpdate!.question,
         this.cardToUpdate!.answer,
-        this.cardToUpdate!.deckId,
+        this.cardToUpdate!.deck,
         this.cardToUpdate!.imageFile,
         this.cardToUpdate!.image,
       );
@@ -97,12 +97,13 @@ export class CreateCardDialog {
   isFormValid(): boolean {
     let isValid = true;
 
+    console.log(this.imageLocation)
     if (this.addImageChecked) {
       if (!this.card.image && !this.card.imageFile) {
         isValid = false;
         this.errorText = "Hubo un error con la imagen.";
-      } else if ((this.imageLocation === 'answer' && !this.card.question) ||
-        (this.imageLocation === 'question' && !this.card.answer)) {
+      } else if ((this.imageLocation === 'ANSWER' && !this.card.question) ||
+        (this.imageLocation === 'QUESTION' && !this.card.answer)) {
         isValid = false;
         this.errorText = "Es necesario rellenar el campo que no tiene imagen.";
       }
