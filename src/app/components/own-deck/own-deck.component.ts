@@ -94,7 +94,7 @@ export class OwnDeckComponent {
     this.receivedCardList = this.cardListComponent.cardList;
     if (this.receivedDeck == undefined ||
       this.receivedCardList == undefined) {
-      return ;
+      return;
     }
 
     const getTagsIdPromise = this.getDeckTagsId(this.receivedDeck);
