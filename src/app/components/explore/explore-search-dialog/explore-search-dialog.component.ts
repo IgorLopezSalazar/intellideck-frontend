@@ -111,7 +111,7 @@ export class ExploreSearchDialogComponent {
     if (!this.deckFilters.isEmpty())
       this.deckFilters.creator = this.userFilters.username;
 
-    if (this.deckFilters.minDeckRating === undefined || (this.deckFilters.minDeckRating! >= 0 && this.deckFilters.minDeckRating! <= 5))
+    if (this.deckFilters.minDeckRating === undefined || (this.deckFilters.minDeckRating >= 0 && this.deckFilters.minDeckRating <= 5))
       this.dialogRef.close({ deckFilters: this.deckFilters, userFilters: this.userFilters });
   }
 
