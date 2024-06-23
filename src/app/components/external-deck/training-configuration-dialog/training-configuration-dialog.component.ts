@@ -33,10 +33,12 @@ export class TrainingConfigurationDialog {
   }
 
   close(cancel?: boolean) {
-    if (cancel)
+    if (cancel){
       this.dialogRef.close();
+      return;
+    }
 
-    if (this.boxNumber >= 1 && this.boxNumber % 1 == 0)
+    if ((this.boxNumber >= 1 && this.boxNumber % 1 == 0) && (this.boxNumber <= 13 && this.boxNumber > 0))
       this.dialogRef.close({backtrack: this.backtrack, boxNumber: this.boxNumber});
     else
       alert("¡Valor inválido! Por favor, introduce un valor entero mayor que 0.");
