@@ -67,6 +67,7 @@ export class HeaderComponent {
   }
 
   logout() {
+    this.currentDataService.userLogged = undefined;
     this.authService.deleteToken();
     this.redirectToLogin();
   }

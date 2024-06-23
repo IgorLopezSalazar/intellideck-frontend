@@ -77,7 +77,7 @@ export class DeckDetailsFormComponent {
   async ngOnInit() {
     const [allTopics, allTags] = await Promise.all([this.getAllTopics(), this.getAllTags()]);
     this.topicList = allTopics.body.map((topic: any) => new Topic(topic._id, topic.name));
-    this.allTagsList = allTags.body.map((tag: any) => new Tag(tag.name));
+    this.allTagsList = allTags.status == 200 ? allTags.body.map((tag: any) => new Tag(tag.name)) : [];
     this.filteredTags = this.allTagsList;
 
     if (this.receivedDeck) {

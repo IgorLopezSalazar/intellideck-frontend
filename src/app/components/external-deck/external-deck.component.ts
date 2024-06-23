@@ -270,7 +270,8 @@ export class ExternalDeckComponent {
       width: '35vw',
       height: 'auto',
       maxHeight: '80vh',
-      panelClass: 'custom-dialog-container'
+      panelClass: 'custom-dialog-container',
+      data: true
     });
 
     try {

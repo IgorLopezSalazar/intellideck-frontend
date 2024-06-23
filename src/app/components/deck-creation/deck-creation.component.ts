@@ -15,6 +15,8 @@ import {ImagesService} from "../../core/images.service";
 import {Card} from "../../models/card.model";
 import {CardService} from "../../core/card.service";
 import {lastValueFrom} from "rxjs";
+import {Router} from "@angular/router";
+import {CurrentDataService} from "../../core/local/current-data.service";
 
 @Component({
   selector: 'app-deck-creation',
@@ -42,23 +44,33 @@ export class DeckCreationComponent {
   receivedDeck?: Deck;
   receivedCardList?: Card[];
 
-  constructor(private deckService: DeckService, private tagService: TagService,
-              private imagesService: ImagesService, private cardService: CardService) {
+  constructor(private deckService: DeckService, private tagService: TagService, private router: Router,
+              private imagesService: ImagesService, private cardService: CardService, private currentDataService: CurrentDataService) {
   }
 
   async handleDeckCreation(data: { deck: Deck, publish: boolean }) {
     this.receivedDeck = data.deck;
 
-    let deckID  = await this.createDeck();
-    console.dir("DeckID: " + deckID);
-    if (deckID != '') await this.createCards(deckID);
+    let deck  = await this.createDeck();
+    if (deck?._id != undefined) {
+      await this.createCards(deck._id);
+
+      this.currentDataService.deck = this.receivedDeck;
+      this.currentDataService.deck._id = deck._id;
+
+      this.router.navigate(['/own-deck']).then(() => {
+        console.log('Navigation complete');
+      }).catch(error => {
+        console.error('Navigation error:', error);
+      });
+    }
   }
 
-  async createDeck(): Promise<string> {
+  async createDeck(): Promise<Deck | undefined> {
     this.receivedCardList = this.cardListComponent.cardList;
     if (this.receivedDeck == undefined ||
         this.receivedCardList == undefined) {
-      return '';
+      return undefined;
     }
 
     console.log(this.receivedDeck)
@@ -75,13 +87,13 @@ export class DeckCreationComponent {
     return await this.callCreateDeck(deckWithTagsId);
   }
 
-  callCreateDeck(deck: Deck): Promise<string> {
+  callCreateDeck(deck: Deck): Promise<Deck> {
     return new Promise(resolve => {
       this.deckService.createDeck(deck).subscribe(
         {
           next: response => {
             console.log(response);
-            resolve(response.body._id);
+            resolve(response.body);
           },
           error: (error: any) => { console.log(error) }
         }
@@ -92,11 +104,7 @@ export class DeckCreationComponent {
   async getDeckTagsId(deck: Deck) {
     await Promise.all(
       deck.tags?.map(async tag => {
-        console.log(tag)
-
         const response = await lastValueFrom(this.tagService.getTag(tag));
-        console.log(tag)
-        console.log(response)
         tag.id = response.body._id;
       })
     );
@@ -127,18 +135,15 @@ export class DeckCreationComponent {
       }
 
       card.deckId = deckID;
-      await this.callCreateCard(card);
+      const createdCard = await this.callCreateCard(card);
+      if (createdCard) {
+        if (this.receivedDeck!.cards == undefined) this.receivedDeck!.cards = [];
+        this.receivedDeck!.cards.push(createdCard.body);
+      }
     }
   }
 
   async callCreateCard(card: Card) {
-    this.cardService.createCard(card).subscribe(
-      {
-        next: response => {
-          console.log(response);
-        },
-        error: (error: any) => { console.log(error) }
-      }
-    );
+    return await lastValueFrom(this.cardService.createCard(card));
   }
 }
