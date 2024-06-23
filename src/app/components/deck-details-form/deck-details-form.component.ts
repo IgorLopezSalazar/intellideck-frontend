@@ -138,20 +138,39 @@ export class DeckDetailsFormComponent {
     }
     this.fieldMissing = false;
 
-    const deck = this.populateDeck(deckForm);
-    console.log(deck)
-    this.deckEmitter.emit({deck: deck, publish: publish});
+
+    if (!this.areTagsDuplicated()) {
+      const deck = this.populateDeck(deckForm);
+      console.log(deck)
+      this.deckEmitter.emit({deck: deck, publish: publish});
+    }
+    else {
+      alert('No puede haber varias etiquetas con el mismo nombre.');
+    }
   }
 
   populateDeck(deckForm: NgForm): Deck {
     const deck = new Deck(deckForm.value.title, this.topicList[(this.selectedTopicIndex)]);
     deck.description = deckForm.value.description;
+
     deck.tags = this.deckTags;
     if (this.deckImage){
       deck.imageFile = this.deckImage;
     }
 
     return deck;
+  }
+
+  areTagsDuplicated() {
+    return this.deckTags.some(user => {
+      let counter  = 0;
+      for (const iterator of this.deckTags) {
+        if (iterator.name === user.name) {
+          counter += 1;
+        }
+      }
+      return counter > 1;
+    });
   }
 
   isFormValid(deckForm: NgForm): boolean {
