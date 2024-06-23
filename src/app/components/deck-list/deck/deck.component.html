@@ -3,12 +3,12 @@
     <img [src]="deck.image ? deck.image : 'assets/IntelliDeck_Logo.png'" alt="Deck">
   </div>
   <div class="deck__information">
-    <div class="deck__information__image" (click)="openUser()" (keyup)="openUser()">
+    <div class="deck__information__image" (click)="openUser($event)" (keyup)="openUser($event)">
       <img src="assets/IntelliDeck_Logo.png" alt="User profile">
     </div>
     <div class="deck__information__text">
       <span class="title">{{deck.title}}</span>
-      <span class="username">{{deck.creator?.username}}</span>
+      <span class="username" (click)="openUser($event)" (keyup)="openUser($event)">{{deck.creator?.username}}</span>
     </div>
   </div>
   <div class="deck__tags">

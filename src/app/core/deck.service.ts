@@ -20,6 +20,7 @@ export class DeckService {
   private END_POINT_RATINGS= '/ratings';
   private END_POINT_TODAY = '/today';
   private END_POINT_TIMELINE = '/timeline';
+  private END_POINT_USER = '/user';
 
   constructor(private http: HttpClient, private auth: AuthService) { }
 
@@ -56,6 +57,22 @@ export class DeckService {
     return this.http.get(this.END_POINT_DECKS + '/' + deckID, options);
   }
 
+  getUserDecks(userID: string): Observable<any> {
+    let token = this.auth.getToken();
+    if (!token) {
+      return of({ error: 'No token available' });
+    }
+
+    const options: any = {
+      headers: new HttpHeaders({
+        'Authorization': token
+      }),
+      observe: 'response'
+    };
+
+    return this.http.get(this.END_POINT_DECKS + this.END_POINT_USER + '/' + userID, options);
+  }
+
   getUserFollowedDecks(userID: string): Observable<any> {
     let token = this.auth.getToken();
     if (!token) {
@@ -72,7 +89,7 @@ export class DeckService {
     return this.http.get(this.END_POINT_DECKS + this.END_POINT_FOLLOWED + '/' + userID, options);
   }
 
-  getUserDeckList(): Observable<any> {
+  getLoggedUserDeckList(): Observable<any> {
     let token = this.auth.getToken();
     if (!token) {
       return of({ error: 'No token available' });

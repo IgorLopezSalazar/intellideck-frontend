@@ -16,6 +16,7 @@ export class CurrentDataService {
   private _isOfficialTraining: boolean = false;
   private _completionTimeSeconds?: number;
   private _userLogged?: User;
+  private _selectedUser?: User;
 
   constructor() { }
 
@@ -73,6 +74,14 @@ export class CurrentDataService {
 
   set userLogged(value: User) {
     this._userLogged = value;
+  }
+
+  get selectedUser(): User | undefined {
+    return this._selectedUser;
+  }
+
+  set selectedUser(value: User) {
+    this._selectedUser = value;
   }
 
   finishTraining(deleteDeck: boolean) {

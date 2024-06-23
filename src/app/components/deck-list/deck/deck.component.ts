@@ -43,7 +43,16 @@ export class DeckComponent {
     });
   }
 
-  openUser() {
-    console.log("user");
+  openUser(event: Event) {
+    event.stopPropagation();
+
+    if (this.deck.creator == undefined) return;
+    this.currentDataService.selectedUser = this.deck.creator;
+
+    this.router.navigate(['profile']).then(() => {
+      console.log('Navigation complete: ' + this.router.url);
+    }).catch(error => {
+      console.error('Navigation error:', error);
+    });
   }
 }

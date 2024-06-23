@@ -39,7 +39,7 @@
       {{ username }}
     </button>
     <mat-menu #menu="matMenu">
-      <button mat-menu-item  routerLink="/profile">
+      <button mat-menu-item  (click)="profile()">
         <mat-icon class="big-icon">account_circle</mat-icon>
         Perfil
       </button>

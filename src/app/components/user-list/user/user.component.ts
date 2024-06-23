@@ -4,6 +4,7 @@ import {MatButton} from "@angular/material/button";
 import {UserService} from "../../../core/user.service";
 import {CurrentDataService} from "../../../core/local/current-data.service";
 import {lastValueFrom} from "rxjs";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-user',
@@ -19,7 +20,8 @@ export class UserComponent {
   @Input() user!: User;
   isFollowing: boolean = false;
 
-  constructor(private userService: UserService, private currentDataService: CurrentDataService) {
+  constructor(private userService: UserService, private currentDataService: CurrentDataService,
+              private router: Router) {
 
   }
 
@@ -27,7 +29,9 @@ export class UserComponent {
     this.isFollowing = this.checkIfFollowing();
   }
 
-  async followUser() {
+  async followUser(event: Event) {
+    event.stopPropagation();
+
     try {
       const response = await lastValueFrom(this.userService.updateUserFollowStatus(this.user._id!, !this.isFollowing));
       this.currentDataService.userLogged = response.body;
@@ -44,5 +48,15 @@ export class UserComponent {
       return this.currentDataService.userLogged.followedUsers.some(followedUser => followedUser._id === this.user._id );
     }
     return false;
+  }
+
+  openUser() {
+    this.currentDataService.selectedUser = this.user;
+
+    this.router.navigate(['profile']).then(() => {
+      console.log('Navigation complete: ' + this.router.url);
+    }).catch(error => {
+      console.error('Navigation error:', error);
+    });
   }
 }

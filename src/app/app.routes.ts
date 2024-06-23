@@ -11,6 +11,7 @@ import {CardTrainingComponent} from "./components/card-training/card-training.co
 import {StatisticsComponent} from "./components/statistics/statistics.component";
 import {UserDecksComponent} from "./components/user-decks/user-decks.component";
 import {FollowingComponent} from "./components/following/following.component";
+import {UserProfileComponent} from "./components/user-profile/user-profile.component";
 
 export const routes: Routes = [
   { path: '', component: TimelineComponent, canActivate: [authGuard] },
@@ -23,5 +24,6 @@ export const routes: Routes = [
   { path: 'training', component: CardTrainingComponent, canActivate: [authGuard]},
   { path: 'statistics', component: StatisticsComponent, canActivate: [authGuard]},
   { path: 'user-decks', component: UserDecksComponent, canActivate: [authGuard]},
-  { path: 'following', component:FollowingComponent, canActivate: [authGuard]}
+  { path: 'following', component: FollowingComponent, canActivate: [authGuard]},
+  { path: 'profile', component: UserProfileComponent, canActivate: [authGuard]}
 ];

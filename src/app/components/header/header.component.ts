@@ -56,6 +56,16 @@ export class HeaderComponent {
     }
   }
 
+  profile() {
+    this.currentDataService.selectedUser = this.currentDataService.userLogged!;
+
+    this.router.navigate(['/profile']).then(() => {
+      console.log('Navigation complete ' + this.router.url);
+    }).catch(error => {
+      console.error('Navigation error: ', error);
+    });
+  }
+
   logout() {
     this.authService.deleteToken();
     this.redirectToLogin();

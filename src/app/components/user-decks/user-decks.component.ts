@@ -28,7 +28,7 @@ export class UserDecksComponent {
   }
 
   getUserDeckList() {
-    this.deckService.getUserDeckList().subscribe(
+    this.deckService.getLoggedUserDeckList().subscribe(
       {
         next: response => {
           console.log(response)

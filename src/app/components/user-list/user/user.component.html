@@ -1,4 +1,4 @@
-<div class="user">
+<div class="user" (click)="openUser()" (keyup)="openUser()">
   <div class="user-grid">
     <div class="user-grid__image">
       <img src='assets/IntelliDeck_Logo.png' alt="User">
@@ -9,7 +9,7 @@
     </div>
 
     <div class="user-grid__follow">
-      <button mat-flat-button class="primary-button" (click)="followUser()">
+      <button mat-flat-button class="primary-button" (click)="followUser($event)">
         {{ isFollowing ? 'Dejar de seguir' : 'Seguir' }}
       </button>
     </div>

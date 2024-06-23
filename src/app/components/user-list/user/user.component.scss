@@ -5,6 +5,7 @@ $deck-image-max-height: 25em;
 
 .user {
   padding: 1em;
+  cursor: pointer;
 
   &-grid {
     display: grid;
