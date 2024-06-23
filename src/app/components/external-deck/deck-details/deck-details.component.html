@@ -42,7 +42,7 @@
       <div class="second-column">
         <div class="second-column__first-row">
           <h2>{{deck.title}}</h2>
-          <div class="star-rating" (click)="setRating()">
+          <div class="star-rating" (click)="setRating()" (keyup)="setRating()">
             <div *ngIf="this.deckAverageRating">
               <span class="material-symbols-outlined fill-stars" *ngFor="let star of [].constructor(deckAverageRating)">
                 star
