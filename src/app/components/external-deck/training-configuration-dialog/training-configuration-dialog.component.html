@@ -1,10 +1,10 @@
 <h2 mat-dialog-title style="margin: 0">Configuración del entrenamiento</h2>
 <mat-dialog-content class="dialog__content">
   <div class="dialog__content__row">
-    <span class="dialog__content__row__text">Indica el número máximo de cajas para mover las cartas</span>
+    <span class="dialog__content__row__text">Indica el número máximo de cajas para mover las cartas (max: 13)</span>
     <mat-form-field appearance="outline" subscriptSizing="dynamic" class="field">
       <mat-label>Número de cajas</mat-label>
-      <input matInput type="number" min="0" step="1" name="boxNumber" class="form-control" placeholder="Número de cajas" [(ngModel)]="boxNumber">
+      <input matInput type="number" min="1" max="13" step="1" name="boxNumber" class="form-control" placeholder="Número de cajas" [(ngModel)]="boxNumber">
     </mat-form-field>
   </div>
   <div class="dialog__content__row">

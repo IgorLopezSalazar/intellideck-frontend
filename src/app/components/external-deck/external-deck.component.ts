@@ -159,7 +159,8 @@ export class ExternalDeckComponent {
     console.log("startTraining");
 
     if (!this.currentDataService.cardsTraining && this.cardsTrainingError === 404) {
-      await this.createDeckTraining();
+      let responseContinue = await this.createDeckTraining();
+      if (!responseContinue) return;
 
       try {
         const response = await lastValueFrom(this.cardTrainingService.getTodayDeckTrainingCards(this.deck!._id!));
@@ -208,27 +209,35 @@ export class ExternalDeckComponent {
       panelClass: 'custom-dialog-container'
     });
 
+    let continueCreate = true;
     try {
       let configuration: {backtrack: Backtrack, boxNumber: number} = await lastValueFrom(dialogRef.afterClosed());
-      if (configuration == undefined) return;
+      if (configuration != undefined) {
+        let deckTraining =  new DeckTraining(
+          configuration.boxNumber,
+          configuration.backtrack,
+          this.deck!._id!,
+          this.deckCards
+        );
 
-      let deckTraining =  new DeckTraining(
-        configuration.boxNumber,
-        configuration.backtrack,
-        this.deck!._id!,
-        this.deckCards
-      );
-
-      try {
-        const response = await lastValueFrom(this.deckTrainingService.createDeckTraining(deckTraining));
-        console.log(response);
-      } catch (error) {
-        console.log(error);
+        try {
+          const response = await lastValueFrom(this.deckTrainingService.createDeckTraining(deckTraining));
+          console.log(response);
+        } catch (error) {
+          console.log(error);
+          continueCreate = false;
+        }
+      }
+      else {
+        continueCreate = false;
       }
     }
     catch (error: any) {
       console.log(error);
+      continueCreate = false;
     }
+
+    return continueCreate;
   }
 
   handleDeleteDeckTraining() {
