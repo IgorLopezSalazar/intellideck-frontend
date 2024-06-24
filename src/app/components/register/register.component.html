@@ -1,0 +1,72 @@
+<div class="background">
+  <div class="container">
+    <div class="container__login">
+      <div class="container__login__avatar">
+        <img src="../../../assets/IntelliDeck_Logo.png" alt="IntelliDeck logo">
+      </div>
+      <form #registerForm="ngForm" (ngSubmit)="register(registerForm)">
+        <div class="container__login__row">
+          <div class="container__login__row__field form-field">
+            <span>Nombre :</span>
+            <mat-form-field appearance="outline">
+              <input matInput ngModel required type="text" name="name" class="form-control" placeholder="Nombre" >
+            </mat-form-field>
+          </div>
+
+          <div class="container__login__row__field form-field">
+            <span>Apellido :</span>
+            <mat-form-field appearance="outline">
+              <input matInput ngModel required type="text" name="surname" class="form-control" placeholder="Apellido" >
+            </mat-form-field>
+
+          </div>
+        </div>
+
+        <div class="form-field">
+          <span>Email :</span>
+          <mat-form-field appearance="outline">
+            <input matInput ngModel required email type="email" name="email" class="form-control" placeholder="Email" >
+          </mat-form-field>
+        </div>
+
+        <div class="container__login__row__field form-field">
+          <span>Nombre de usuario :</span>
+          <mat-form-field appearance="outline">
+            <input matInput ngModel required minlength="3" type="text" name="username" class="form-control" placeholder="Nombre de usuario" >
+          </mat-form-field>
+        </div>
+
+        <div class="container__login__row">
+          <div class="container__login__row__field form-field">
+            <span>Contraseña :</span>
+            <mat-form-field appearance="outline">
+              <input matInput ngModel required minlength="6" type="password" name="password" class="form-control" placeholder="Contraseña">
+            </mat-form-field>
+          </div>
+
+          <div class="container__login__row__field form-field">
+            <span>Repetir la contraseña :</span>
+            <mat-form-field appearance="outline">
+              <input matInput ngModel required type="password" name="repeated-password" class="form-control" placeholder="Repetir la contraseña">
+            </mat-form-field>
+          </div>
+        </div>
+
+        <mat-error *ngIf="showErrorMessage" class="error-message" >
+          {{errorMessageText}}
+        </mat-error>
+
+        <div class="container__login__submit">
+          <button mat-flat-button class="login-button">
+            Registrarse
+          </button>
+        </div>
+      </form>
+      <div class="text-center sign-up">
+        ¿Ya tienes cuenta en IntelliDeck? <br/>
+        <a routerLink="/login">Accede aquí.</a>
+      </div>
+    </div>
+  </div>
+</div>
+

@@ -1,0 +1,104 @@
+@use "../../../colors";
+
+.background{
+  background-color: colors.$light-purple;
+  height: 100vh;
+}
+
+.container {
+  height: 90%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &__login {
+    background-color: colors.$white-smoke;
+    width: 35%;
+    padding: 2em;
+    margin-top: 35px;
+    box-shadow: 0 0 10px 6px #c3c3c3;
+    border-radius: 0.5em;
+
+    @media (max-width: 1400px) {
+      width: 50%;
+    }
+
+    &__avatar {
+      text-align: center;
+      margin-top: -4em;
+
+      img {
+        height: 70px;
+        border-radius: 100%;
+      }
+    }
+
+    &__submit {
+      display: flex;
+      justify-content: center;
+    }
+
+    &__row {
+      display: flex;
+      justify-content: space-between;
+      gap: 3em;
+
+      &__field{
+        width: 100%;
+      }
+    }
+
+    .error-message {
+      margin: 1em 0;
+      padding: 1em;
+      background: colors.$light-red;
+      color: colors.$white-smoke;
+      border-radius: 0.5em;
+    }
+  }
+
+  .login-button {
+    font-size: 1.2rem;
+    background-color: colors.$primary-purple;
+    color: colors.$white-smoke;
+    padding: 1em;
+
+    &:hover {
+      background-color: colors.$dark-purple;
+    }
+  }
+
+  .text-right {
+    text-align: right;
+  }
+
+  .text-center {
+    text-align: center;
+  }
+
+  .forget-pass {
+
+    a {
+      color: colors.$primary-purple;
+    }
+  }
+
+  .sign-up {
+    padding-top: 1em;
+
+    a {
+      color: colors.$primary-purple;
+    }
+  }
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+
+  span {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: colors.$light-black;
+  }
+}

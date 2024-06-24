@@ -1,0 +1,54 @@
+<div class="background">
+  <div class="container">
+    <div class="user">
+      <div class="user__data">
+        <div class="user__data__image">
+          <img src='assets/IntelliDeck_Logo.png' alt="User">
+        </div>
+
+        <div class="user__data__username">
+          <h2>{{user.username}}</h2>
+        </div>
+      </div>
+
+      <div class="user__follows">
+        <div class="user__follows__stat">
+          <h3>{{userDecks.length}}</h3>
+          <span>Mazos</span>
+        </div>
+
+        <div class="user__follows__stat">
+          <h3>{{user.followedDecks.length}}</h3>
+          <span>Mazos seguidos</span>
+        </div>
+
+        <div class="user__follows__stat">
+          <h3>{{followerUsers.length}}</h3>
+          <span>Seguidores</span>
+        </div>
+
+        <div class="user__follows__stat">
+          <h3>{{user.followedUsers.length}}</h3>
+          <span>Siguiendo</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="follow-tabs">
+      <mat-tab-group>
+        <mat-tab label="Mazos">
+          <app-deck-list [deckList]="userDecks"></app-deck-list>
+        </mat-tab>
+        <mat-tab label="Mazos seguidos">
+          <app-deck-list [deckList]="followedDecks"></app-deck-list>
+        </mat-tab>
+        <mat-tab label="Usuarios seguidos">
+          <app-user-list [userList]="followedUsers"></app-user-list>
+        </mat-tab>
+        <mat-tab label="Usuarios seguidores">
+          <app-user-list [userList]="followerUsers"></app-user-list>
+        </mat-tab>
+      </mat-tab-group>
+    </div>
+  </div>
+</div>

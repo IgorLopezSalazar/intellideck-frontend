@@ -1,0 +1,20 @@
+<div class="deck" (click)="openDeck()" (keyup)="openDeck()">
+  <div class="deck__image" >
+    <img [src]="deck.image ? deck.image : 'assets/IntelliDeck_Logo.png'" alt="Deck">
+  </div>
+  <div class="deck__information">
+    <div class="deck__information__image" (click)="openUser($event)" (keyup)="openUser($event)">
+      <img src="assets/IntelliDeck_Logo.png" alt="User profile">
+    </div>
+    <div class="deck__information__text">
+      <span class="title">{{deck.title}}</span>
+      <span class="username" (click)="openUser($event)" (keyup)="openUser($event)">{{deck.creator?.username}}</span>
+    </div>
+  </div>
+  <div class="deck__tags">
+    <mat-chip-set aria-label="Topic and tags">
+      <mat-chip class="topic">{{ deck.topic.name }}</mat-chip>
+      <mat-chip class="tag" *ngFor="let tag of deck.tags">{{tag.name}}</mat-chip>
+    </mat-chip-set>
+  </div>
+</div>

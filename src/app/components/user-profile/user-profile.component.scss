@@ -1,0 +1,101 @@
+@use "../../../colors";
+
+$deck-image-width: 10em;
+$deck-image-max-height: 10em;
+
+.container {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+
+  .user {
+    padding: 2em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    &__data {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      &__image img {
+        max-height: $deck-image-max-height;
+        width: $deck-image-width;
+        border-radius: 50%;
+        display: block;
+        margin: 0;
+        object-fit: cover;
+      }
+
+      &__username {
+        padding-top: 1em;
+
+        h2 {
+          font-weight: 550;
+        }
+      }
+    }
+
+    &__follows {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+      gap: 2em;
+
+      &__stat {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px 0 colors.$grey;
+        padding: 1em;
+
+        h3 {
+          font-weight: 550;
+          font-size: 1.2em;
+          color: colors.$light-black;
+          margin-bottom: 0;
+        }
+
+        span {
+          color: colors.$dark-grey;
+        }
+      }
+    }
+  }
+
+  .follow-tabs {
+    padding: 1em;
+    width: 70vw;
+  }
+}
+
+::ng-deep {
+  .mat-mdc-tab.mdc-tab {
+    border-radius: 0.5em 0.5em 0 0;
+  }
+
+  .mat-mdc-tab-ripple {
+    border-radius: 0.5em 0.5em 0 0;
+  }
+
+  .mdc-tab-indicator__content--underline {
+    border-color: colors.$primary-purple !important;
+  }
+
+  .mdc-tab-indicator--active {
+    background-color: colors.$light-purple !important;
+  }
+
+  .mdc-tab__text-label {
+    color: colors.$dark-purple !important;
+  }
+
+  .mat-mdc-tab-body {
+    padding: 2em 0;
+  }
+
+  .mat-mdc-tab-body-content {
+    overflow: hidden !important;
+  }
+}

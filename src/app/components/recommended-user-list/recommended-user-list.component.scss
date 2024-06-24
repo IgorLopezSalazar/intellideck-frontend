@@ -1,0 +1,16 @@
+@use "../../../colors";
+
+.users-container {
+  border-right: 3px solid colors.$primary-purple;
+  width: max-content;
+
+  &__title {
+    padding-right: 1em;
+  }
+
+  .users {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+  }
+}

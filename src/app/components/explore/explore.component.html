@@ -1,0 +1,17 @@
+<div class="container">
+  <div class="side">
+    <app-recommended-user-list [userList]="recommendedUserList"></app-recommended-user-list>
+  </div>
+
+  <div class="main">
+    <mat-tab-group [selectedIndex]="selectedTab">
+      <mat-tab label="Mazos">
+        <app-deck-list [deckList]="filteredDecks"></app-deck-list>
+      </mat-tab>
+      <mat-tab label="Usuarios">
+        <app-user-list [userList]="filteredUsers"></app-user-list>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+
+</div>

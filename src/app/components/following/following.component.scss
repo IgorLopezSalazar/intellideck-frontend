@@ -1,0 +1,41 @@
+@use "../../../colors";
+
+.container {
+  display: flex;
+  justify-content: center;
+
+  .main {
+    padding: 2em 0;
+    width: 90%;
+  }
+}
+
+::ng-deep {
+  .mat-mdc-tab.mdc-tab {
+    border-radius: 0.5em 0.5em 0 0;
+  }
+
+  .mat-mdc-tab-ripple {
+    border-radius: 0.5em 0.5em 0 0;
+  }
+
+  .mdc-tab-indicator__content--underline {
+    border-color: colors.$primary-purple !important;
+  }
+
+  .mdc-tab-indicator--active {
+    background-color: colors.$light-purple !important;
+  }
+
+  .mdc-tab__text-label {
+    color: colors.$dark-purple !important;
+  }
+
+  .mat-mdc-tab-body {
+    padding: 2em 0;
+  }
+
+  .mat-mdc-tab-body-content {
+    overflow: hidden !important;
+  }
+}

@@ -1,0 +1,94 @@
+<form #searchForm="ngForm" class="container">
+  <h2 mat-dialog-title>Busqueda avanzada</h2>
+  <mat-dialog-content class="dialog__content">
+    <div class="deck-search">
+      <h2>Busqueda de mazos</h2>
+
+      <div class="deck-search__title">
+          <mat-form-field appearance="outline" subscriptSizing="dynamic" class="form-field">
+            <mat-label>Titulo</mat-label>
+            <input matInput type="text" name="title" class="form-control" placeholder="Titulo" [(ngModel)]="deckFilters.title">
+          </mat-form-field>
+      </div>
+
+      <div class="deck-search__topic">
+        <mat-form-field appearance="outline" subscriptSizing="dynamic" class="form-field">
+          <mat-label>Tema</mat-label>
+          <mat-select name="topic" [(ngModel)]="deckFilters.topic" placeholder="Tema">
+            <mat-option [value]="undefined"></mat-option>
+            <mat-option *ngFor="let topic of topicList; let i = index" [value]="topic.name">
+              {{ topic.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+      </div>
+
+      <div class="deck-search__tags">
+        <mat-form-field appearance="outline" subscriptSizing="dynamic" class="form-field">
+          <mat-label>Etiquetas</mat-label>
+          <input #tagInput matInput ngModel type="text" name="tags" class="form-control" placeholder="Añade etiquetas que describan el mazo"
+                 [(ngModel)]="deckFilters.tag"
+                 (ngModelChange)="filter(deckFilters.tag ? deckFilters.tag : '')"
+                 [matAutocomplete]="auto">
+          <mat-autocomplete #auto="matAutocomplete" (optionSelected)="autoCompleteTagSelected($event)">
+            <mat-option *ngFor="let tag of filteredTags" [value]="tag.name">
+              {{tag.name}}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+      </div>
+
+      <div class="deck-search__date">
+        <mat-form-field appearance="outline" class="form-field">
+          <mat-label>Fecha de publicación mínima</mat-label>
+          <input matInput [matDatepicker]="picker" name="deckPublicationDatec" [(ngModel)]="deckFilters.publishDate">
+          <mat-hint>DD/MM/YYYY</mat-hint>
+          <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+      </div>
+
+      <div class="deck-search__rate">
+        <mat-form-field appearance="outline" subscriptSizing="dynamic" class="form-field">
+          <mat-label>Valoración mínima</mat-label>
+          <input matInput type="number" min="0" max="5" step="0.5" name="minDeckRating" class="form-control" placeholder="Valoración mínima" [(ngModel)]="deckFilters.minDeckRating" (focusout)="checkMinDeckRating()">
+          <mat-hint>Del 0 al 5</mat-hint>
+        </mat-form-field>
+      </div>
+
+      <div class="user-search__slides">
+        <mat-slide-toggle class="slide" labelPosition="before" [(ngModel)]="deckFilters.onlyFollowerDecks" name="onlyFollowerDecks">Solo mazos seguidos</mat-slide-toggle>
+      </div>
+
+    </div>
+
+    <div class="user-search">
+      <div class="user-search__title">
+        <h2>Busqueda de usuarios</h2>
+
+        <span class="material-symbols-outlined user-search__title__icon"
+              matTooltip="{{toolTipText}}" matTooltipPosition="above">
+          help
+        </span>
+      </div>
+
+      <div class="user-search__name">
+          <mat-form-field appearance="outline" subscriptSizing="dynamic" class="form-field">
+            <mat-label>Nombre de usuario</mat-label>
+            <input matInput type="text" name="username" class="form-control" placeholder="Nombre de usuario" [(ngModel)]="userFilters.username">
+          </mat-form-field>
+      </div>
+
+      <div class="user-search__slides">
+        <mat-slide-toggle class="slide" labelPosition="before" [(ngModel)]="userFilters.onlyFollowerUsers" name="onlyFollowerUsers">Solo usuarios seguidos</mat-slide-toggle>
+        <mat-slide-toggle class="slide" labelPosition="before" [(ngModel)]="userFilters.onlyFollowingUsers" name="onlyFollowingUsers">Solo usuarios seguidores</mat-slide-toggle>
+      </div>
+    </div>
+
+  </mat-dialog-content>
+  <mat-dialog-actions class="dialog__actions">
+    <button mat-button class="secondary-button" (click)="cancel()" routerLink="/" >Cancelar</button>
+    <button mat-flat-button class="primary-button" (click)="search()">Buscar</button>
+  </mat-dialog-actions>
+</form>

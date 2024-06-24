@@ -1,0 +1,35 @@
+<div class="card">
+  <div class="card__buttons" [ngClass]="{ 'show': !card.isShown }">
+    <span class="material-symbols-outlined view" (click)="viewCard()" (keyup)="viewCard()" *ngIf="externalDeckCard">
+      {{ card.isShown ? 'visibility' : 'visibility_off' }}
+    </span>
+    <span class="material-symbols-outlined edit" (click)="editCard()" (keyup)="editCard()" *ngIf="!externalDeckCard">
+      edit_square
+    </span>
+    <span class="material-symbols-outlined delete" (click)="deleteCard()" (keyup)="deleteCard()" *ngIf="!externalDeckCard">
+      delete_forever
+    </span>
+  </div>
+
+  <div class="card__overlay" *ngIf="card.isShown"></div>
+  <div [ngClass]="{ 'card__overlay-visibility-off': !card.isShown }" *ngIf="!card.isShown">
+    <span class="material-symbols-outlined card__overlay-visibility-off__icon">
+      visibility_off
+    </span>
+  </div>
+
+  <div class="card__info">
+    <div class="card__info__question">
+      <img [src]="imageSrc" alt="Question" *ngIf="card.whereImage == WhereImageEnum.QUESTION">
+      <div class="card-text card-text__question" [ngClass]="{'without-img': card.whereImage != WhereImageEnum.QUESTION}">
+        <p>{{card.question}}</p>
+      </div>
+    </div>
+    <div class="card__info__answer">
+      <div class="card-text card-text__answer" [ngClass]="{'without-img': card.whereImage != WhereImageEnum.ANSWER}">
+        <p>{{card.answer}}</p>
+      </div>
+      <img [src]="imageSrc" alt="Answer" *ngIf="card.whereImage == WhereImageEnum.ANSWER">
+    </div>
+  </div>
+</div>

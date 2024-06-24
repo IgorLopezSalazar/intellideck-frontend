@@ -1,0 +1,30 @@
+@use "../../../colors";
+
+.container {
+  display: grid;
+  grid-template-columns: 1fr 5fr;
+  grid-template-rows: 1fr;
+  justify-items: center;
+
+  .side {
+    padding: 2em;
+  }
+
+  .main {
+    padding: 2em 0;
+    width: 90%;
+
+    .training-container {
+      &__empty {
+        color: colors.$light-red;
+        font-weight: 550;
+        padding: 2em 0;
+        font-size: 1.2em;
+      }
+    }
+
+    .decks-container {
+      padding-top: 1em;
+    }
+  }
+}

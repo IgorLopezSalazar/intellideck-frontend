@@ -1,0 +1,64 @@
+@use "../../../../colors";
+
+$deck-image-height: 11em;
+$user-image-height: 3.5em;
+
+.deck {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+  cursor: pointer;
+
+  &__image {
+    img {
+      width: 100%;
+      border-radius: 0.5em;
+      height: $deck-image-height;
+      display: block;
+      margin: 0;
+      object-fit: cover;
+    }
+  }
+
+  &__information {
+    display: flex;
+    align-content: center;
+    gap: 1em;
+
+    &__image {
+      img {
+        border-radius: 50%;
+        height: $user-image-height;
+        display: block;
+        margin: 0;
+        object-fit: cover;
+      }
+    }
+
+    &__text {
+      display: flex;
+      flex-direction: column;
+      align-content: center;
+      justify-content: space-around;
+
+      .title {
+        font-size: 1.2em;
+        font-weight: 550;
+      }
+
+      .username {
+        color: colors.$dark-grey;
+      }
+    }
+  }
+
+  &__tags {
+    .topic {
+      background-color: colors.$light-purple;
+    }
+
+    .tag {
+      background-color: colors.$white-smoke;
+    }
+  }
+}

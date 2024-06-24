@@ -1,0 +1,80 @@
+<div>
+  <div class="container__details">
+    <div class="title">
+      <h2>Datos del mazo</h2>
+      <button mat-flat-button class="secondary-button" type="button" (click)="copyDeck()">
+        Copiar mazo
+      </button>
+      <button mat-flat-button class="delete-button" type="button" *ngIf="userIsCreator()" (click)="deleteDeck()">
+        <span class="material-symbols-outlined">
+          delete_forever
+        </span>
+        Borrar mazo
+      </button>
+      <button mat-flat-button class="delete-button" type="button" *ngIf="existTrainingCards()" (click)="deleteDeckTraining()">
+        <span class="material-symbols-outlined">
+          delete_forever
+        </span>
+        Borrar estudio actual
+      </button>
+      <button mat-flat-button class="delete-button" type="button" *ngIf="existTrainingCards()" (click)="restartDeckTraining()">
+        <span class="material-symbols-outlined">
+          refresh
+        </span>
+        Reiniciar estudio actual
+      </button>
+    </div>
+    <div class="container__details__row">
+      <div class="first-column">
+        <img [src]="deck.image ? deck.image : 'assets/IntelliDeck_Logo.png'" alt="Deck">
+
+        <div class="first-column__butons">
+          <button mat-flat-button class="primary-button" (click)="startTraining()">
+            Empezar entrenamiento
+          </button>
+
+          <button mat-flat-button class="secondary-button" (click)="followDeck()">
+            {{ isFollowingDeck ? 'Dejar de seguir mazo' : 'Seguir mazo' }}
+          </button>
+        </div>
+      </div>
+
+      <div class="second-column">
+        <div class="second-column__first-row">
+          <h2>{{deck.title}}</h2>
+          <div class="star-rating" (click)="setRating()" (keyup)="setRating()">
+            <div *ngIf="this.deckAverageRating">
+              <span class="material-symbols-outlined fill-stars" *ngFor="let star of [].constructor(deckAverageRating)">
+                star
+              </span>
+            </div>
+
+            <span class="material-symbols-outlined" *ngIf="isHalfStar">
+                star_half
+              </span>
+            <span class="material-symbols-outlined" *ngFor="let star of [].constructor(emptyStars)">
+                star
+            </span>
+          </div>
+        </div>
+
+        <div class="second-column__second-row">
+          <p>{{deck.description}}</p>
+        </div>
+
+        <div class="second-column__third-row">
+          <mat-chip-set aria-label="Topic and tags">
+            <mat-chip class="topic">{{ deck.topic.name }}</mat-chip>
+            <mat-chip class="tag" *ngFor="let tag of deck.tags">{{tag.name}}</mat-chip>
+          </mat-chip-set>
+        </div>
+
+        <div class="second-column__forth-row">
+          <app-user [user]="deck.creator!" *ngIf="deck.creator != undefined; else noUser"></app-user>
+          <ng-template #noUser>Unknown user</ng-template>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

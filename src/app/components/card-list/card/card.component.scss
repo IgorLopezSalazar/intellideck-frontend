@@ -1,0 +1,159 @@
+@use "../../../../colors";
+
+$card-image-height: 12em;
+
+.card {
+  background-color: colors.$white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px 0 colors.$grey;
+  word-wrap: break-word;
+  position: relative;
+  height: 100%;
+  min-height: 350px;
+
+  img {
+    width: 100%;
+    height: $card-image-height;
+    display: block;
+    margin: 0;
+    object-fit: cover;
+  }
+
+  &__overlay-visibility-off {
+    display: flex;
+    background-color: colors.$transparent-grey;
+    border-radius: 8px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    justify-content: center;
+    align-items: center;
+
+    &__icon {
+      cursor: none;
+      font-size: 8em;
+      color: colors.$primary-purple;
+      font-variation-settings: 'FILL' 1;
+    }
+  }
+
+  &__overlay {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+    background-color: colors.$transparent-light-purple;
+    z-index: 1;
+  }
+
+  &:hover .card__overlay {
+    display: block;
+  }
+
+  &:hover .card__buttons {
+    display: flex;
+  }
+
+  .show {
+    display: flex;
+  }
+
+  &__buttons {
+    display: none;
+    justify-content: flex-end;
+    padding: 0.5em;
+    gap: 0.5em;
+    position: absolute;
+    right: 0;
+    z-index: 2;
+
+    span {
+      border-radius: 5px;
+      color: colors.$white;
+      padding: 0.1em;
+    }
+
+    .view {
+      cursor: pointer;
+      background-color: colors.$dark-grey;
+      font-variation-settings: 'FILL' 1;
+    }
+
+    .edit {
+      cursor: pointer;
+      background-color: colors.$blue-munsell;
+    }
+
+    .delete {
+      cursor: pointer;
+      background-color: colors.$light-red;
+    }
+  }
+
+  &__info {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+
+    &__question {
+      flex: 1;
+
+      p {
+        font-weight: bold;
+      }
+
+      img {
+        border-top-left-radius: 8px;
+        border-top-right-radius: 8px;
+      }
+    }
+
+    .without-img {
+      height: 100%;
+    }
+
+    &__answer {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+
+      img {
+        border-bottom-left-radius: 8px;
+        border-bottom-right-radius: 8px;
+      }
+    }
+
+    p {
+      font-size: 1rem;
+      padding: 1em 0;
+      margin: 0;
+    }
+  }
+
+  .card-text {
+    margin: 0 2em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+
+    &__question {
+      border-bottom: 3px solid colors.$primary-purple;
+    }
+
+    &__answer {
+      height: 100%;
+    }
+  }
+}
+
+.material-symbols-outlined {
+  user-select: none;
+}

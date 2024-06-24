@@ -1,0 +1,12 @@
+<div class="container">
+  <div class="main">
+    <mat-tab-group>
+      <mat-tab label="Mazos seguidos">
+        <app-deck-list [deckList]="followedDecks"></app-deck-list>
+      </mat-tab>
+      <mat-tab label="Usuarios seguidos">
+        <app-user-list [userList]="followedUsers"></app-user-list>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+</div>

@@ -1,0 +1,35 @@
+<div class="background">
+  <div class="container">
+    <div class="container__card" [ngClass]="{ 'no-pointer': showAnswer }" (click)="!showAnswer && toggleShowAnswer()"
+         (keyup)="!showAnswer && toggleShowAnswer()">
+      <div class="question">
+        <img [src]="currentCard.image" alt="Question" *ngIf="currentCard.whereImage === WhereImageEnum.QUESTION">
+
+        <div class="question__text">
+          <h1>{{currentCard.question}}</h1>
+        </div>
+      </div>
+
+      <div class="answer">
+        <div class="answer__placeholder" *ngIf="!showAnswer">
+          <span>Haz click en la carta cuando hayas pensado la respuesta</span>
+        </div>
+
+        <div class="answer__revealed" *ngIf="showAnswer">
+          <div class="answer__revealed__content">
+            <div class="answer__revealed__content__text">
+              <h2>{{currentCard.answer}}</h2>
+            </div>
+
+            <img [src]="currentCard.image" alt="Answer" *ngIf="currentCard.whereImage === WhereImageEnum.ANSWER">
+          </div>
+
+          <div class="answer__revealed__actions">
+            <button mat-button class="wrong-button" (click)="wrongAnswer($event)">Incorrecto</button>
+            <button mat-button class="correct-button" (click)="correctAnswer($event)">Correcto</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
